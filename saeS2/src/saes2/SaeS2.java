@@ -1,8 +1,8 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package saes2;
+package saeS2;
 
 import org.openstreetmap.gui.jmapviewer.*;
 
@@ -21,26 +21,42 @@ import org.graphstream.graph.implementations.*;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import javax.swing.JFrame;
-
+import javax.swing.SwingUtilities;
+import java.util.Random;
 import org.graphstream.graph.*;
 import org.graphstream.graph.implementations.*;
+import org.openstreetmap.gui.jmapviewer.interfaces.MapPolygon.*;
 
+import org.openstreetmap.gui.jmapviewer.Coordinate;
+import org.openstreetmap.gui.jmapviewer.JMapViewer;
+import org.openstreetmap.gui.jmapviewer.MapMarkerDot;
+import org.openstreetmap.gui.jmapviewer.MapPolygonImpl;
+import org.openstreetmap.gui.jmapviewer.interfaces.MapPolygon;
+import org.openstreetmap.gui.jmapviewer.interfaces.TileCache;
+
+import org.jxmapviewer.JXMapViewer;
+import org.jxmapviewer.OSMTileFactoryInfo;
+import org.jxmapviewer.viewer.DefaultTileFactory;
+import org.jxmapviewer.viewer.GeoPosition;
+import org.jxmapviewer.viewer.TileFactoryInfo;
+import org.jxmapviewer.painter.CompoundPainter;
+import org.jxmapviewer.painter.Painter;
+import org.jxmapviewer.painter.*;
 
 /**
- *
- * @author Emric
+ *C:/Users/Robi6/OneDrive/Bureau/aeroports.txt
+ *C:/Users/Robi6/OneDrive/Bureau/DataTest/vol-test1.csv
+ * @author Robi6
  */
 public class SaeS2 {
-
-    /**
-     * @param args the command line arguments
-     */
+    
     private static int minColors = Integer.MAX_VALUE;
     private static Map<Node, Integer> bestColoring = new HashMap<>();
             
@@ -191,7 +207,7 @@ public class SaeS2 {
     public static ListeVols CreateGraphText(String cheminfichiertxt){
         System.out.println("rentrez le chemin d'acces de votre graphe sous forme .txt:");
         String filtePath;
-        String FilePath = "C:/Users/Emric/OneDrive/Bureau/S2/SAE/saejava/Data Test/graph-test11.txt";
+        String FilePath = "C:/Users/Robi6/OneDrive/Bureau/DataTest/graph-test3.txt";
         /*String FilePath = ent.nextLine();*/
         
         // Créer un objet File en utilisant le chemin du fichier
@@ -259,6 +275,13 @@ public class SaeS2 {
         Graph graph = new MultiGraph("multi graphe");
         ArrayList<String> couleurs = new ArrayList<String>();
         
+        Random random = new Random();
+        
+        for (int i = 0; i < liste.maxcouleur(); i++) {
+            // Génération d'une couleur aléatoire
+            String couleur = String.format("#%02x%02x%02x", random.nextInt(256), random.nextInt(256), random.nextInt(256));
+            couleurs.add("fill-color: " + couleur + ";");
+        }
         
         // Ajouter les noms de couleurs standard à l'ArrayList
         /*
@@ -280,6 +303,7 @@ public class SaeS2 {
         couleurs.add("fill-color: silver;");
         */
         
+        /*
         couleurs.add("fill-color: #FF0000;");
         couleurs.add("fill-color: #FF8000;");
         couleurs.add("fill-color: #FFFF00;");
@@ -310,12 +334,14 @@ public class SaeS2 {
         couleurs.add("fill-color: #CD5C5C;");
         couleurs.add("fill-color: #8FBC8F;");
         couleurs.add("fill-color: #20B2AA;");
+        */
         
+        //System.out.println("feur");
         // Ajout des sommets au graphe
         for (int i = 1; i <= liste.taille(); i++) {
             graph.addNode(Integer.toString(i));
-                /*System.out.println(liste.getVolnumero(i).getcouleur());*/
-                graph.getNode(Integer.toString(i)).addAttribute("ui.style", couleurs.get(liste.getVolnumero(i).getcouleur()- 1));
+            /*System.out.println(liste.getVolnumero(i).getcouleur());*/
+            graph.getNode(Integer.toString(i)).addAttribute("ui.style", couleurs.get(liste.getVolnumero(i).getcouleur()-1));
         }
         
         // Ajout des arêtes au graphe
@@ -354,7 +380,7 @@ public class SaeS2 {
         // Chemin du fichier texte
         System.out.println("rentrez le chemin d'acces de votre fichier deaéroports sous forme .txt:");
         String filtePath;
-        String FilePath = "C:/Users/Emric/OneDrive/Bureau/S2/SAE/saejava/Data Test/aeroports.txt";
+        String FilePath = "C:/Users/Robi6/OneDrive/Bureau/aeroports.txt";
         /*String FilePath = ent.nextLine();*/
         
         // Créer un objet File en utilisant le chemin du fichier
@@ -388,7 +414,7 @@ public class SaeS2 {
         
         // Chemin du fichier texte
         System.out.println("rentrez le chemin d'acces de votre fichier de vols en format .csv:");
-        FilePath = "C:/Users/Emric/OneDrive/Bureau/S2/SAE/saejava/Data Test/vol-test7.csv";
+        FilePath = "C:/Users/Robi6/OneDrive/Bureau/DataTest/vol-test8.csv";
         /*FilePath = ent.nextLine();*/
         
         // Créer un objet File en utilisant le chemin du fichier
@@ -498,15 +524,32 @@ public class SaeS2 {
         System.out.println("fedfvergergr");
         System.out.println("nb de couleurs : "+LL.maxcouleur());
         System.out.println("kmax :  "+ LL.getkmax());
+        LL.setcouleurdefault();
         
-        System.out.println(LV.taille());
-         
+        LL.WelshPowell();
+        System.out.println("nb de couleurs : "+LL.maxcouleur());
+        System.out.println(LL.taille());
+        System.out.println(LL.getnbarrte());
+        
         /*
+        LL.setcouleurdefault();
+        System.out.println("default   "+LL.getnbconflit());
+        LL = descent(LL);
+        */
+        
+        LL.setcouleurdefault();
+        LL.MAXWelshPowell();
+        System.out.println("MAX  "+LL.getnbconflit());
+        
         Graph G = getGraphStream(LL);
+        System.out.println(LL.getnbconflit());
+        System.out.println(LL.goodcoloration());
+        
+            
         //System.out.println(LL.getdiametre());
         System.out.println(org.graphstream.algorithm.Toolkit.diameter(G));
         System.out.println(LL.maxcouleur());
-        */
+        
         
         
         
@@ -528,9 +571,9 @@ public class SaeS2 {
         
         
         
-        //G.display();
+        G.display();
         
-        
+     
         
         
         
@@ -539,6 +582,7 @@ public class SaeS2 {
         //Partie carte
         // Créer la fenêtre principale
         
+        /*
         JFrame frame = new JFrame("Carte du Monde");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(800, 600);
@@ -553,56 +597,65 @@ public class SaeS2 {
         for (int i=0; i < L.taillelisteaero(); i++){
             A = L.getaeroport(i);
             point = new MapMarkerDot(A.getlongitude(), A.getlatitude());
-            System.out.println(A.getlatitude()+ "    "+ A.getlongitude());
+            //System.out.println(A.getlatitude()+ "    "+ A.getlongitude());
             mapViewer.addMapMarker(point);
             
         }
-        
-        
-        
-                
-        
-        
         // Afficher la fenêtre
         frame.setVisible(true);
+        */
+       
+        
+        
+        
+    }
+    
+    public static ListeVols descent(ListeVols liste){
+        liste.RandomColoration(liste.getkmax());
+        
+        ListeVols meilleure_solution_voisine = new ListeVols(liste);
+        ListeVols solution_voisine;
+        
+        int meilleurConflit = liste.getnbconflit();
+        System.out.println("Début: " + meilleurConflit);
+        int nbConflits;
+        int cpt =0;
+        
+        for(int y=0; y < 90; y++){
+            for (int i = 0; i < liste.getArraylist().size(); i++) {
+                Vol v = liste.getVolindice(i);
+                
+                for (int couleur = 1; couleur <= liste.getkmax(); couleur++) {
+                    cpt++;
+                    
+                    if (couleur != v.getcouleur()) {
+                        solution_voisine = new ListeVols(meilleure_solution_voisine); // Créer une copie de la solution courante
+                        
+                        solution_voisine.getVolindice(i).setcouleur(couleur);
+                        nbConflits = solution_voisine.getnbconflit();
+                        
+                        if (nbConflits < meilleurConflit) {
+                            meilleure_solution_voisine = solution_voisine;
+                            meilleurConflit = nbConflits;
+                            System.out.println("Amélioration: " + meilleurConflit);
+                        }
+                        
+                    }
+                }
+            }
+        }
+        System.out.println("Fin: " + meilleurConflit);
+        System.out.println("Fin: " + meilleure_solution_voisine.getnbconflit());
+        System.out.println("compteur: " + cpt);
+        meilleure_solution_voisine.viewcolor();
+        return meilleure_solution_voisine;
+            
+        
         
         
         
         
     }
     
-    public static void findOptimalColoring(Graph graph) {
-        Map<Node, Integer> currentColoring = new HashMap<>();
-        backtrack(graph, currentColoring, 0);
-    }
-
-    private static void backtrack(Graph graph, Map<Node, Integer> currentColoring, int nodeIndex) {
-        if (nodeIndex == graph.getNodeCount()) {
-            // Vérifier si la coloration actuelle est meilleure que la meilleure connue
-            int currentColors = new HashSet<>(currentColoring.values()).size();
-            if (currentColors < minColors) {
-                minColors = currentColors;
-                bestColoring = new HashMap<>(currentColoring);
-            }
-            return;
-        }
-
-        Node node = graph.getNode(nodeIndex);
-        Set<Integer> usedColors = new HashSet<>();
-        for (Edge edge : node.getEachEdge()) {
-            Node neighbor = edge.getOpposite(node);
-            if (currentColoring.containsKey(neighbor)) {
-                usedColors.add(currentColoring.get(neighbor));
-            }
-        }
-
-        // Essayer toutes les couleurs possibles
-        for (int color = 0; color <= usedColors.size(); color++) {
-            if (!usedColors.contains(color)) {
-                currentColoring.put(node, color);
-                backtrack(graph, currentColoring, nodeIndex + 1);
-                currentColoring.remove(node);
-            }
-        }
-    }
+    
 }
