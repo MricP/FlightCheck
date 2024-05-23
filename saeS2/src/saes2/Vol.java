@@ -5,13 +5,16 @@
 package saes2;
 
 import java.util.ArrayList;
-
 /**
  *
- * @author Emric
+ * @author Robi6
+ * 
+ * Classe Vol:
+ * représente le vol d'un aéroport avec son nom/code, et toute les informations associées à un vol d'avion.
  */
+
 public class Vol {
-     private String nom;
+    private String nom;
     private String code_aeroport_depart;
     private String code_aeroport_arrive;
     private double heure_depart;
@@ -46,6 +49,22 @@ public class Vol {
         lastnum++;
         couleur = -1;
         composante = -1;
+    }
+     public Vol(Vol v) {
+        this.num = v.num;
+        this.couleur = v.couleur;
+        this.composante = v.composante;
+        this.nom = v.nom;
+        this.code_aeroport_depart = v.code_aeroport_depart;
+        this.code_aeroport_arrive = v.code_aeroport_arrive;
+        this.heure_depart = v.heure_depart;
+        this.heure_arrive = v.heure_arrive;
+        this.minutes_depart = v.minutes_depart;
+        this.minutes_arrive = v.minutes_arrive;
+        this.duree = v.duree;
+        this.adjacents = new ArrayList<>(v.adjacents);
+        this.distance = v.distance;
+        this.traite = v.traite;
     }
     
     /**
@@ -269,10 +288,37 @@ public class Vol {
         
     }    
     
-    public Vol getAdjacentindice(int indice){  // a completer
+    public Vol getAdjacentindice(int indice){  
         return adjacents.get(indice);
     }
     
     
+    public int zzz(int kmax){
+        ArrayList<Integer> liste =  new ArrayList<>(kmax+1);
+        int taille = adjacents.size();
+        for (int i = 0; i <= kmax; i++) {
+            liste.add(0); // Ajouter 0 à chaque indice
+        }
+        
+        for (int y=0; y  < taille; y++){
+            if (adjacents.get(y).getcouleur() != -1){
+                int valeur = liste.get(adjacents.get(y).getcouleur());
+                liste.set(adjacents.get(y).getcouleur(), valeur + 1);
+            }
+        }
+        
+        
+        
+        int indiceMin = 1;
+        int valeurMin = liste.get(1);
+        for (int i = 2; i < liste.size(); i++) {
+            if (liste.get(i) < valeurMin) {
+                valeurMin = liste.get(i);
+                indiceMin = i;
+            }
+        }
+        return indiceMin;
+             
+    }
+    
 }
-
