@@ -3,321 +3,349 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package saes2;
+
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+
 /**
  *
- * @author Robi6
- * 
- * Classe Vol:
- * représente le vol d'un aéroport avec son nom/code, et toute les informations associées à un vol d'avion.
+ * @author Emric
  */
-
-public class Vol {
-    private String nom;
-    private String code_aeroport_depart;
-    private String code_aeroport_arrive;
-    private double heure_depart;
-    private double heure_arrive;
-    private double minutes_depart;
-    private double minutes_arrive;
-    private double duree;
-    public static int lastnum=1;
-    public int num;
-    public int couleur;
-    private int composante;
-    private ArrayList<Vol> adjacents;
-    private int distance;
-    private boolean traite;
-    Vol(int num){
-        this.num = num;
-        couleur = -1;
-        adjacents= new ArrayList<Vol>();
-        composante = -1;
-    }
-    Vol(String Nnom, String Ncodedepart, String Ncodearrivee, int heuredep, int minutedep, int duree){
-        nom = Nnom;
-        code_aeroport_depart = Ncodedepart;
-        code_aeroport_arrive = Ncodearrivee;
-        heure_depart = heuredep * 100 + minutedep;
-        heure_arrive = (heuredep + (duree + minutedep) /60 ) * 100 + (duree + minutedep) % 60;
-        minutes_depart =  heuredep * 60 + minutedep;
-        minutes_arrive = minutes_depart+ duree;
-        adjacents= new ArrayList<Vol>();
-        this.duree = duree;
-        num = lastnum;
-        lastnum++;
-        couleur = -1;
-        composante = -1;
-    }
-     public Vol(Vol v) {
-        this.num = v.num;
-        this.couleur = v.couleur;
-        this.composante = v.composante;
-        this.nom = v.nom;
-        this.code_aeroport_depart = v.code_aeroport_depart;
-        this.code_aeroport_arrive = v.code_aeroport_arrive;
-        this.heure_depart = v.heure_depart;
-        this.heure_arrive = v.heure_arrive;
-        this.minutes_depart = v.minutes_depart;
-        this.minutes_arrive = v.minutes_arrive;
-        this.duree = v.duree;
-        this.adjacents = new ArrayList<>(v.adjacents);
-        this.distance = v.distance;
-        this.traite = v.traite;
+public class ListeVols {
+    private ArrayList<Vol> tab;
+    private int nbarrete = 0;
+    private int nbcomposante;
+    private int diametre;
+    private int kmax;
+    private boolean havekmax;
+    
+    
+    
+    ListeVols(){
+        tab = new ArrayList<Vol>();
+        nbcomposante = -1;
+        diametre = -1;
+        havekmax= false;
     }
     
-    /**
-     * retourne la minute a laquelle le vol part à partir de 00.00
-     * @return la minute a laquelle le vol part à partir de 00.00
-     */
-    public double getminutesdepart(){
-        return minutes_depart;
+    public int getkmax(){
+        return kmax;
     }
     
-    /**
-     * retourne la minute a laquelle le vol arrive à partir de 00.00
-     * @return la minute a laquelle le vol arrive à partir de 00.00
-     */
-    public double getminutes_arrive(){
-        return minutes_arrive;
-        
+    public boolean havekmax(){
+        return havekmax;
     }
     
-    /**
-     * retourne la duree en minute du vol
-     * @return la duree en minute du vol
-     */
-    public double getduree(){
-        return duree;
-        
+    public void setkmax(int kmax){
+        this.kmax = kmax;
+        havekmax = true;
     }
     
-    /**
-     * retourne true si le vol a deja été traité (pour la coloration ) sinon false
-     * @return true si le vol a deja été traité (pour la coloration ) sinon false
-     */
-    public boolean gettraite(){
-        return traite;
+    public int getnbarrte(){
+        return nbarrete;
     }
-    
-    /**
-     * 
-     * @param bool 
-     */
-    public void settraite(boolean bool){
-        traite = bool;
-    }
-    
-    public int getdistance(){
-        return distance;
-    }
-    
-    public void setdistance(int distance){
-        this.distance = distance;
-    }
-    
-    public int getnum(){
-        return num;
-    }
-    
-    public double getheuredepart(){
-        return heure_depart;
-    }
-    
-    public double getheurearrive(){
-        return heure_arrive;
-        
-    }
-    
-    public int getnbadjacents(){
-        return adjacents.size();
-    }
-    public String getcodedepart(){
-        return code_aeroport_depart;
-    }
-    
-    public String getcodearrive(){
-        return code_aeroport_arrive;
-    }
-    
-    public String getnom(){
-        return nom;
-    }
-    
-    public String toString(){
-        return ("nom : "+ nom + " codedepart "+ code_aeroport_depart + " codearrivée "+ code_aeroport_arrive+" heure depart : "+ heure_depart + " heure arrivee : "+ heure_arrive );
-    }
-    
-    public void addadjacent(Vol adjacent){
-        adjacents.add(adjacent);
-    }
-    
-    public boolean estAdjacent(Vol vol) {
-        return adjacents.contains(vol);
-    }
-    
-    public void setcouleur(int couleur){
-        this.couleur = couleur;
-    }
-    
-    public int getcouleur(){
-        return couleur;
-    }
-    
-    public boolean possepasdeadjcouleur(int couleur){
-        boolean res = true;
-        int i=0;
-        while (res && i < adjacents.size()){
-            if (adjacents.get(i).getcouleur() == couleur){
-                res = false;
-            }
-            i++;
+    public boolean ajMembre(Vol membreAj){
+        boolean res = false;
+        if (membreAj != null){
+            tab.add(membreAj);
         }
         return res;
+    }
+    
+    public Vol accesMembrenom(String nom) {
+        Vol membre = null;
+        for (int i=0;i< tab.size();i++){
+            
+            if (tab.get(i).getnom().equals(nom)){
+                
+                membre =  tab.get(i);
+            }
+        }
+        return membre;
+    }
+    
+    public Vol accesMembrenum(int num) {
+        Vol membre = null;
+        for (int i=0;i< tab.size();i++){
+            
+            if (tab.get(i).getnum() == num){
+                
+                membre =  tab.get(i);
+            }
+        }
+        return membre;
+    }
+    
+    public void setnbarrete(int nbarrete){
+        this.nbarrete = nbarrete;
+    }
+    
+    public int taille(){
+        return tab.size();
+    }
+    
+    public void tostring(){  /* peut etre changer tout cela en String */
+        System.out.println("les vols de la liste : ");
+        for ( int i=0; i < tab.size();i++){
+            System.out.println(tab.get(i).toString());
+        }
         
     }
     
-    public int first_available_color(){
-        int color = 0;
-        boolean res= true;
-        while (res){
-            color++;
-            res = false;
+    public Vol getVolindice(int indice){
+        return tab.get(indice);
+    }
+    
+    public Vol getVolnumero(int numero){
+        for (int i=0; i < tab.size(); i++){
+            if (tab.get(i).getnum() == numero ){
+                return tab.get(i);
+            }
+        }
+        return null;
+    }
+    
+    public void addaerrete(){
+        nbarrete++;
+    }
+    
+    
+    Comparator<Vol> comparateur = new Comparator<Vol>() {
+        
+        
+        public int compare(Vol o1, Vol o2) {
+            return Integer.compare(o2.getnbadjacents(), o1.getnbadjacents()); // Compare dans l'ordre décroissant
+        }
+    };
+    
+    
+    public int WelshPowell(){
+        Collections.sort(tab, comparateur);
+        
+        int nbCouleurs = 1;
+        int voltraite = 0;
+        boolean var;
+        boolean var2= true;
+        while (var2){
             int i=0;
-            while (i < adjacents.size() && !res){
-                if (adjacents.get(i).getcouleur() == color){
-                    res = true;
+            var= true;
+            while( i < tab.size() && var){
+                if (tab.get(i).couleur == -1 ){
+                    var = false;
+                }else{
+                    i++;
+                }
+            }
+            
+            if (i < tab.size()){
+                tab.get(i).setcouleur(nbCouleurs);
+                voltraite++;
+                i++;
+            }else{
+                var2= false;
+            }
+            
+            while (i < tab.size()){
+                if (tab.get(i).possepasdeadjcouleur(nbCouleurs) && (tab.get(i).getcouleur() == -1)  ){
+                    tab.get(i).setcouleur(nbCouleurs);
                 }
                 i++;
             }
+                
+                
+                
+            nbCouleurs++;
         }
-        return color;
+        
+        
+        
+        
+        return nbCouleurs;
     }
     
     
-    public int DSAT(){
-        if (couleur != -1){
-            return -1;
+    public void GreedyColor(){
+        for (int i =0;i<tab.size();i++){
+            tab.get(i).setcouleur(tab.get(i).first_available_color());
         }
+    }
         
-        int dsat = 0;
-        ArrayList<Integer> list = new ArrayList<Integer>();
-        
-        for (int i=0; i < adjacents.size();i++){
-            if (adjacents.get(i).getcouleur() != -1 && !list.contains(adjacents.get(i).getcouleur())){
-                list.add(adjacents.get(i).getcouleur());
-                dsat++;
+    
+    
+    public void Dsatur(){
+        for (int y=0; y < tab.size();y++){
+            int max = -1;
+            int indice= -1 ;
+            for (int i=0; i < tab.size();i++){
+                
+                if (tab.get(i).DSAT() > max){
+                    indice = i;
+                    max = tab.get(i).DSAT();
+                }
             }
+            
+            tab.get(indice).setcouleur(tab.get(indice).first_available_color());
         }
-        if (list.isEmpty()){
-            dsat = adjacents.size();
-        }
-        return dsat;
-    }   
+        
+        
+        
+    }
     
     
-    public boolean goodcolor(){
-        for(int i=0; i < adjacents.size(); i++){
-            if (adjacents.get(i).getcouleur() == couleur){
+    
+            
+    public boolean goodcoloration(){
+        for (int i=0;i < tab.size(); i++){
+            if (!tab.get(i).goodcolor()){
                 return false;
             }
         }
         return true;
     }
-    
-    
-    public int distance(Vol vol){
-        int distance = -1;
-        ArrayList<Integer> list = new ArrayList<Integer>();
-        if (adjacents.size() == 0){
-            return distance;
             
-        }
-        
-        
-        
-        return distance;
-    }
-    
-    public void setcomposante(int comp){
-        composante = comp;
-    }
-    
-    public int getcomposante(){
-        return composante;
-    }
-    
-    public boolean composante(int comp){
-        
-        if (composante == -1){
             
-            int i =0;
-            composante = 0;
-            while (i < adjacents.size()){
-                adjacents.get(i).composante(comp);
-                i++;
+    public int maxcouleur(){
+        int max = -1;
+        int i=0;
+        while ( i < tab.size()){
+            if (tab.get(i).getcouleur() > max){
+                max = tab.get(i).getcouleur();
             }
-            composante = comp;
-            return true;
+            i++;
         }
-        return false;
-       
+        return max;
     }
     
-    public void Dijkstra(){
-        settraite(true);
-        int x = distance;
-        int nb =0;
-        /*System.out.println("cacaprout");*/
-        for (int i=0; i < adjacents.size(); i++ ){
-            Vol vol = adjacents.get(i);
-            if (!vol.gettraite()){
-                if (x + 1 < vol.getdistance()){
-                    vol.setdistance(x + 1);
-                    nb++;
-                    /*System.out.println("caca");*/
+    
+    public void viewcolor(){
+        int i=0;
+        while ( i < tab.size()){
+            System.out.println(tab.get(i).getnum()+ " " + tab.get(i).getcouleur());
+            i++;
+        }
+    }
+    
+    
+    public void setcouleurdefault(){
+        int i=0;
+        while ( i < tab.size()){
+            tab.get(i).setcouleur(-1);
+            i++;
+        }
+    }
+    
+    public double getdegremoyen(){
+        int i=0;
+        double total = 0;
+        while ( i < tab.size()){
+            total = total + tab.get(i).getnbadjacents();
+            i++;
+        }
+        total = total / tab.size();
+        return total;
+    }
+    
+   
+    
+    public int getnbcomposante(){
+        int nb = 1;
+        if (nbcomposante != -1){
+            return nbcomposante;
+        }
+        int i=0;
+        int y=1;
+        while (i <  tab.size()){
+            if (tab.get(i).composante(y)){
+                y++;
+            }
+            i++;
+        }
+        nbcomposante = y - 1;
+        
+        return nbcomposante;
+    }
+    
+    public int getdiametre(){
+        if (diametre != -1){
+            return diametre;
+        }
+        int diametre;
+        int maxdiametre = 0;
+        if (nbcomposante == -1){
+            getnbcomposante();
+        }
+        ArrayList vols = new ArrayList<Vol>();
+        for (int i = 0; i< tab.size(); i++){
+            for (int y=i+1; y < tab.size(); y++){
+                diametre = Dijkstra(tab.get(i), tab.get(y));
+                if (diametre > maxdiametre){
+                    maxdiametre = diametre;
                 }
             }
         }
         
+        return maxdiametre;
         
-        
-        
-        
-        
-    }    
+    }
     
-    public Vol getAdjacentindice(int indice){  
-        return adjacents.get(indice);
+    public int Dijkstra(Vol vol1, Vol vol2){
+        //initialisation
+        if ( vol1.getcomposante() != vol2.getcomposante()){
+            return 0;
+        }
+        
+        for (int i =0; i < tab.size(); i++){
+            tab.get(i).setdistance(9999);
+            tab.get(i).settraite(false);
+            
+        }
+        tab.get(tab.indexOf(vol1)).setdistance(0);
+        tab.get(tab.indexOf(vol1)).settraite(true);
+        vol1.Dijkstra();
+        boolean var= true;
+        while (!vol2.gettraite()){
+            var =false;
+            int maxdistance = Integer.MAX_VALUE;
+            Vol sommetmin = vol1;
+            
+            for (int y = 0; y < tab.size(); y++){
+                if (!tab.get(y).gettraite() && (tab.get(y).getcomposante() == vol1.getcomposante() )){
+                    if (tab.get(y).getdistance() <= maxdistance){
+                        maxdistance = tab.get(y).getdistance();
+                        sommetmin = tab.get(y);
+                        var = true;
+                    }
+                }
+            }
+            sommetmin.Dijkstra();
+        
+            
+        }
+        
+        return vol2.getdistance();
     }
     
     
-    public int zzz(int kmax){
-        ArrayList<Integer> liste =  new ArrayList<>(kmax+1);
-        int taille = adjacents.size();
-        for (int i = 0; i <= kmax; i++) {
-            liste.add(0); // Ajouter 0 à chaque indice
-        }
-        
-        for (int y=0; y  < taille; y++){
-            if (adjacents.get(y).getcouleur() != -1){
-                int valeur = liste.get(adjacents.get(y).getcouleur());
-                liste.set(adjacents.get(y).getcouleur(), valeur + 1);
+    
+    public int getnbcomposantede(int composante){
+        int cpt =0;
+        for ( int i=0; i< tab.size(); i++){
+            if (tab.get(i).getcomposante() == composante){
+                cpt ++;
             }
         }
-        
-        
-        
-        int indiceMin = 1;
-        int valeurMin = liste.get(1);
-        for (int i = 2; i < liste.size(); i++) {
-            if (liste.get(i) < valeurMin) {
-                valeurMin = liste.get(i);
-                indiceMin = i;
-            }
-        }
-        return indiceMin;
-             
+            
+            
+            
+        return cpt;
     }
     
+    public void shownumcomposante(){
+        for ( int i=0; i < tab.size(); i++){
+            Vol v = tab.get(i);
+            
+        }
+    }
 }
+
