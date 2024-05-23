@@ -3,14 +3,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package saes2;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-
 /**
  *
- * @author Emric
+ * @author Robi6
+ * Classe ListeVols : 
+ * représente une liste d'objects de la classe Vol
+ * 
  */
 public class ListeVols {
     private ArrayList<Vol> tab;
@@ -27,8 +28,17 @@ public class ListeVols {
         nbcomposante = -1;
         diametre = -1;
         havekmax= false;
+        
     }
     
+    public ListeVols(ListeVols l) {
+    
+        this.tab = new ArrayList<>(l.tab.size());
+        for (Vol vol : l.tab) {
+            this.tab.add(new Vol(vol)); // Supposant que la classe Vol a un constructeur de copie
+        }
+        
+    }
     public int getkmax(){
         return kmax;
     }
@@ -120,6 +130,64 @@ public class ListeVols {
     };
     
     
+    public int MAXWelshPowell(){
+        Collections.sort(tab, comparateur);
+        int maxcoul = kmax;
+        int nbCouleurs = 1;
+        int voltraite = 0;
+        boolean var;
+        boolean var2= true;
+        while (var2 && (nbCouleurs <= maxcoul)){
+            int i=0;
+            var= true;
+            while( i < tab.size() && var){
+                if (tab.get(i).couleur == -1 ){
+                    var = false;
+                }else{
+                    i++;
+                }
+            }
+            
+            if (i < tab.size()){
+                tab.get(i).setcouleur(nbCouleurs);
+                voltraite++;
+                i++;
+            }else{
+                var2= false;
+            }
+            
+            while (i < tab.size()){
+                if (tab.get(i).possepasdeadjcouleur(nbCouleurs) && (tab.get(i).getcouleur() == -1)  ){
+                    tab.get(i).setcouleur(nbCouleurs);
+                }
+                i++;
+            }
+                
+                
+                
+            nbCouleurs++;
+        }
+        
+        if (var2){
+            int i=0;
+            while (i < tab.size()){
+                if (tab.get(i).getcouleur() == -1 ){
+                    int couleur = tab.get(i).zzz(kmax);
+                    tab.get(i).setcouleur(couleur);
+                    
+                }
+                i++;
+            }
+            
+            
+        }
+        
+        
+        
+        
+        return nbCouleurs;
+    }
+    
     public int WelshPowell(){
         Collections.sort(tab, comparateur);
         
@@ -165,6 +233,19 @@ public class ListeVols {
     }
     
     
+    public void RandomColoration(int max){
+        int random = 1;
+        for (int i = 0;i<tab.size();i++){
+            tab.get(i).setcouleur((random % max)+1);
+            random++;
+        }
+        
+        
+        
+        
+    }
+    
+    
     public void GreedyColor(){
         for (int i =0;i<tab.size();i++){
             tab.get(i).setcouleur(tab.get(i).first_available_color());
@@ -194,7 +275,30 @@ public class ListeVols {
     
     
     
+    
+    public int getnbconflit(){
+        int nbconflit = 0;
+        int couleurv;
+        Vol v;
+        int cpt =0;
+        for (int i=0;i < tab.size(); i++){
+            v = tab.get(i);
+            couleurv = v.getcouleur();
+            for (int y=0; y < v.getnbadjacents();y++){
+                cpt++;
+                //System.out.println(couleurv+ "      "+ v.getAdjacentindice(y).getcouleur());
+                if (v.getAdjacentindice(y).getcouleur() == couleurv){
+                    nbconflit++;
+                    //System.out.println("true");
+                }
+            }
             
+            
+        }
+        System.out.println("compteur :  "+ cpt);
+        return nbconflit/2;
+    }
+     
     public boolean goodcoloration(){
         for (int i=0;i < tab.size(); i++){
             if (!tab.get(i).goodcolor()){
@@ -300,6 +404,7 @@ public class ListeVols {
             tab.get(i).settraite(false);
             
         }
+        
         tab.get(tab.indexOf(vol1)).setdistance(0);
         tab.get(tab.indexOf(vol1)).settraite(true);
         vol1.Dijkstra();
@@ -347,5 +452,14 @@ public class ListeVols {
             
         }
     }
+    
+    public ArrayList<Vol> getArraylist(){
+        return tab;
+    }
+    
+    public ListeVols getListVols(){
+        return this;
+    }
+    
+    
 }
-
