@@ -8,7 +8,6 @@ import java.util.ArrayList;
 /**
  *
  * @author Robi6
- * 
  * Classe Vol:
  * représente le vol d'un aéroport avec son nom/code, et toute les informations associées à un vol d'avion.
  */
@@ -200,10 +199,8 @@ public class Vol {
         if (couleur != -1){
             return -1;
         }
-        
         int dsat = 0;
         ArrayList<Integer> list = new ArrayList<Integer>();
-        
         for (int i=0; i < adjacents.size();i++){
             if (adjacents.get(i).getcouleur() != -1 && !list.contains(adjacents.get(i).getcouleur())){
                 list.add(adjacents.get(i).getcouleur());
@@ -216,7 +213,6 @@ public class Vol {
         return dsat;
     }   
     
-    
     public boolean goodcolor(){
         for(int i=0; i < adjacents.size(); i++){
             if (adjacents.get(i).getcouleur() == couleur){
@@ -226,7 +222,6 @@ public class Vol {
         return true;
     }
     
-    
     public int distance(Vol vol){
         int distance = -1;
         ArrayList<Integer> list = new ArrayList<Integer>();
@@ -234,9 +229,6 @@ public class Vol {
             return distance;
             
         }
-        
-        
-        
         return distance;
     }
     
@@ -276,23 +268,16 @@ public class Vol {
                 if (x + 1 < vol.getdistance()){
                     vol.setdistance(x + 1);
                     nb++;
-                    /*System.out.println("caca");*/
                 }
             }
         }
-        
-        
-        
-        
-        
         
     }    
     
     public Vol getAdjacentindice(int indice){  
         return adjacents.get(indice);
     }
-    
-    
+ 
     public int zzz(int kmax){
         ArrayList<Integer> liste =  new ArrayList<>(kmax+1);
         int taille = adjacents.size();
@@ -306,9 +291,7 @@ public class Vol {
                 liste.set(adjacents.get(y).getcouleur(), valeur + 1);
             }
         }
-        
-        
-        
+
         int indiceMin = 1;
         int valeurMin = liste.get(1);
         for (int i = 2; i < liste.size(); i++) {
@@ -317,8 +300,7 @@ public class Vol {
                 indiceMin = i;
             }
         }
-        return indiceMin;
-             
+        return indiceMin;    
     }
     
 }

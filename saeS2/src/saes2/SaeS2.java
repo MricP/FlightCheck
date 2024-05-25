@@ -55,18 +55,15 @@ import org.jxmapviewer.painter.*;
  *C:/Users/Robi6/OneDrive/Bureau/DataTest/vol-test1.csv
  * @author Robi6
  */
+
+/**Ici la classe où est situé le main*/
 public class SaeS2 {
     
     private static int minColors = Integer.MAX_VALUE;
     private static Map<Node, Integer> bestColoring = new HashMap<>();
             
-            
+    /** */       
     public static void creationgraphe(){
-        /*
-        System.out.println(LV.getVolindice(3).toString());
-        System.out.println(LV.getVolindice(17).toString());
-        System.out.println(intersection(LV.getVolindice(3),LV.getVolindice(17)));
-        */
         
         int taille = LV.taille();
         int gpt = 0;
@@ -253,7 +250,6 @@ public class SaeS2 {
                     
                     
                 }
-                /*System.out.println(line);*/
                 
                 cpt ++;
             }
@@ -283,64 +279,10 @@ public class SaeS2 {
             couleurs.add("fill-color: " + couleur + ";");
         }
         
-        // Ajouter les noms de couleurs standard à l'ArrayList
-        /*
-        couleurs.add("fill-color: red;");
-        couleurs.add("fill-color: green;");
-        couleurs.add("fill-color: blue;");
-        couleurs.add("fill-color: yellow;");
-        couleurs.add("fill-color: cyan;");
-        couleurs.add("fill-color: magenta;");
-        couleurs.add("fill-color: white;");
-        couleurs.add("fill-color: black;");
-        couleurs.add("fill-color: gray;");
-        couleurs.add("fill-color: lightgray;");
-        couleurs.add("fill-color: darkgray;");
-        couleurs.add("fill-color: orange;");
-        couleurs.add("fill-color: pink;");
-        couleurs.add("fill-color: brown;");
-        couleurs.add("fill-color: gold;");
-        couleurs.add("fill-color: silver;");
-        */
         
-        /*
-        couleurs.add("fill-color: #FF0000;");
-        couleurs.add("fill-color: #FF8000;");
-        couleurs.add("fill-color: #FFFF00;");
-        couleurs.add("fill-color: #80FF00;");
-        couleurs.add("fill-color: #00FF00;");
-        couleurs.add("fill-color: #00FF80;");
-        couleurs.add("fill-color: #00FFFF;");
-        couleurs.add("fill-color: #0080FF;");
-        couleurs.add("fill-color: #0000FF;");
-        couleurs.add("fill-color: #8000FF;");
-        couleurs.add("fill-color: #FF00FF;");
-        couleurs.add("fill-color: #FF0080;");
-        couleurs.add("fill-color: #FF8080;");
-        couleurs.add("fill-color: #FFFF80;");
-        couleurs.add("fill-color: #80FF80;");
-        couleurs.add("fill-color: #80FFFF;");
-        couleurs.add("fill-color: #8080FF;");
-        couleurs.add("fill-color: #FF80FF;");
-        couleurs.add("fill-color: #FFB6C1;");
-        couleurs.add("fill-color: #FFA07A;");
-        couleurs.add("fill-color: #FFD700;");
-        couleurs.add("fill-color: #ADFF2F;");
-        couleurs.add("fill-color: #00FA9A;");
-        couleurs.add("fill-color: #4682B4;");
-        couleurs.add("fill-color: #6A5ACD;");
-        couleurs.add("fill-color: #EE82EE;");
-        couleurs.add("fill-color: #D2691E;");
-        couleurs.add("fill-color: #CD5C5C;");
-        couleurs.add("fill-color: #8FBC8F;");
-        couleurs.add("fill-color: #20B2AA;");
-        */
-        
-        //System.out.println("feur");
         // Ajout des sommets au graphe
         for (int i = 1; i <= liste.taille(); i++) {
             graph.addNode(Integer.toString(i));
-            /*System.out.println(liste.getVolnumero(i).getcouleur());*/
             graph.getNode(Integer.toString(i)).addAttribute("ui.style", couleurs.get(liste.getVolnumero(i).getcouleur()-1));
         }
         
@@ -356,32 +298,16 @@ public class SaeS2 {
                 }
             }
         }
-        /*System.out.println(cpt);*/
-        
-        
-        
         return graph;
     }
     
-    
-    
-    
-    
-    
-    
-    
     public static void main(String[] args) {
         Scanner ent = new Scanner(System.in);
-        
-        // TODO code application logic here
-        
-        
-        
+
         // Chemin du fichier texte
         System.out.println("rentrez le chemin d'acces de votre fichier deaéroports sous forme .txt:");
         String filtePath;
         String FilePath = "C:/Users/Robi6/OneDrive/Bureau/aeroports.txt";
-        /*String FilePath = ent.nextLine();*/
         
         // Créer un objet File en utilisant le chemin du fichier
         File file = new File(FilePath);
@@ -400,8 +326,6 @@ public class SaeS2 {
             // Lire chaque ligne du fichier tant qu'il y en a
             while ((line = reader.readLine()) != null) {
                 // Afficher chaque ligne lue
-                
-                /*System.out.println(line);*/
                 String[] tab = line.split(";");
                 Aeroport Aero = new Aeroport(tab[0],tab[1],Integer.valueOf(tab[2]),Integer.valueOf(tab[3]),Integer.valueOf(tab[4]),tab[5],Integer.valueOf(tab[6]),Integer.valueOf(tab[7]),Integer.valueOf(tab[8]),tab[9]);
                 L.ajAeroport(Aero);
@@ -415,7 +339,6 @@ public class SaeS2 {
         // Chemin du fichier texte
         System.out.println("rentrez le chemin d'acces de votre fichier de vols en format .csv:");
         FilePath = "C:/Users/Robi6/OneDrive/Bureau/DataTest/vol-test8.csv";
-        /*FilePath = ent.nextLine();*/
         
         // Créer un objet File en utilisant le chemin du fichier
         file = new File(FilePath);
@@ -434,8 +357,7 @@ public class SaeS2 {
             // Lire chaque ligne du fichier tant qu'il y en a
             while ((line = reader.readLine()) != null) {
                 // Afficher chaque ligne lue
-                
-                /*System.out.println(line);*/
+
                 String[] tab = line.split(";");
                 Vol Vol = new Vol(tab[0],tab[1],tab[2],Integer.valueOf(tab[3]),Integer.valueOf(tab[4]),Integer.valueOf(tab[5]));
                 LV.ajMembre(Vol);
@@ -445,12 +367,7 @@ public class SaeS2 {
             System.out.println("Erreur de lecture du fichier : " + e.getMessage());
         }
         
-        
-        
-        
-        
         creationgraphe();
-        
         
         System.out.println("feur");
         LV.WelshPowell();
@@ -460,8 +377,6 @@ public class SaeS2 {
         System.out.println("feur");
         System.out.println(LV.maxcouleur());
         LV.setcouleurdefault();
-        
-        
         
         LV.GreedyColor();
         System.out.println(LV.goodcoloration());
@@ -478,39 +393,13 @@ public class SaeS2 {
         System.out.println("fedfvergergr");
         System.out.println(LV.maxcouleur());
         
-        
-        
-        /*System.out.println(intersection(LV.accesMembre("AF000090"),LV.accesMembre("AF000132")));*/
-        
-        
         System.out.println("nbarretes : "+ LV.getnbarrte());
         System.out.println("degre moyen : "+LV.getdegremoyen());
         System.out.println("nb composantes  : "+LV.getnbcomposante());
-        //System.out.println(LV.getnbcomposantede(4));
-        
-        
-        
-        
-        //System.out.println("diametre : "+ LV.getdiametre());
-        
-        
-        /*
-        LV.shownumcomposante();
-        */
-        
-        
-        
-        
-        
         
         //Partie graph-test
         
         ListeVols LL = CreateGraphText("feur");
-        
-        
-        
-        
-        
         
         LL.tostring();
         System.out.println("nbarretes : "+ LL.getnbarrte());
@@ -531,12 +420,6 @@ public class SaeS2 {
         System.out.println(LL.taille());
         System.out.println(LL.getnbarrte());
         
-        /*
-        LL.setcouleurdefault();
-        System.out.println("default   "+LL.getnbconflit());
-        LL = descent(LL);
-        */
-        
         LL.setcouleurdefault();
         LL.MAXWelshPowell();
         System.out.println("MAX  "+LL.getnbconflit());
@@ -545,39 +428,12 @@ public class SaeS2 {
         System.out.println(LL.getnbconflit());
         System.out.println(LL.goodcoloration());
         
-            
-        //System.out.println(LL.getdiametre());
         System.out.println(org.graphstream.algorithm.Toolkit.diameter(G));
         System.out.println(LL.maxcouleur());
         
-        
-        
-        
-        /*
-        findOptimalColoring(G);
-        
-        // Afficher les couleurs
-        for (Node node : bestColoring.keySet()) {
-            int color = bestColoring.get(node);
-            node.setAttribute("ui.style", "fill-color: rgb(" + (color * 50) % 255 + ", " + (color * 100) % 255 + ", " + (color * 150) % 255 + ");");
-            System.out.println("Node " + node.getId() + " has color " + color);
-        }
-        
         // Affichage graphique
-        
-        
-        */
-        
-        
-        
-        
+
         G.display();
-        
-     
-        
-        
-        
-        
         
         //Partie carte
         // Créer la fenêtre principale
@@ -604,10 +460,6 @@ public class SaeS2 {
         // Afficher la fenêtre
         frame.setVisible(true);
         */
-       
-        
-        
-        
     }
     
     public static ListeVols descent(ListeVols liste){
@@ -649,12 +501,6 @@ public class SaeS2 {
         System.out.println("compteur: " + cpt);
         meilleure_solution_voisine.viewcolor();
         return meilleure_solution_voisine;
-            
-        
-        
-        
-        
-        
     }
     
     

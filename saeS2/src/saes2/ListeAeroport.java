@@ -5,15 +5,12 @@
 package saes2;
 
 import java.util.ArrayList;
-
 /**
  *
  * @author Emric
  */
 public class ListeAeroport {
     private ArrayList<Aeroport> tab;
-    
-    
     
     ListeAeroport(){
         tab = new ArrayList<Aeroport>();
@@ -55,8 +52,6 @@ public class ListeAeroport {
     public Aeroport getaeroport(int index){
         return tab.get(index);
     }
-    
-    
     
 }
 

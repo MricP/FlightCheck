@@ -3,7 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package saes2;
-
 /**
  *
  * @author Emric
@@ -11,7 +10,6 @@ package saes2;
 public class Aeroport {
     private String codeaeroport;
     private String lieu;
-    
     private double degre1;
     private double minute1;
     private double seconde1;
@@ -24,9 +22,7 @@ public class Aeroport {
     private double Latitude;
     private double X;
     private double Y;
-    
-    
-    
+
     Aeroport(String code, String Nlieu, int Ndegre1, int Nminute1, int Nseconde1, String Norientation1, int Ndegre2, int Nminute2, int Nseconde2, String Norientation2){
         codeaeroport = code;
         lieu  =Nlieu;
@@ -50,18 +46,12 @@ public class Aeroport {
         } else {
             Latitude = -1;
         }   
-        /*System.out.println(Longitude + " "+ Latitude);*/
         Longitude = (Longitude * (degre1 + (minute1/60) + (seconde1/3600))) ;
         Latitude = (Latitude * (degre2 + (minute2/60) + (seconde2/3600))) ;
         double var1 = (Math.toRadians(Longitude));
         double var2 = (Math.toRadians(Latitude));
         X = (R *  Math.cos(var1) * Math.sin(var2));
         Y = (R *  Math.cos(var1) * Math.cos(var2));
-        /*
-        System.out.println(Longitude + " "+ Latitude);
-        System.out.println(X + " "+ Y);
-        */
-        
     }  
     
     public double getlatitude(){

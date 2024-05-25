@@ -21,18 +21,14 @@ public class ListeVols {
     private int kmax;
     private boolean havekmax;
     
-    
-    
     ListeVols(){
         tab = new ArrayList<Vol>();
         nbcomposante = -1;
         diametre = -1;
         havekmax= false;
-        
     }
     
     public ListeVols(ListeVols l) {
-    
         this.tab = new ArrayList<>(l.tab.size());
         for (Vol vol : l.tab) {
             this.tab.add(new Vol(vol)); // Supposant que la classe Vol a un constructeur de copie
@@ -99,8 +95,7 @@ public class ListeVols {
         System.out.println("les vols de la liste : ");
         for ( int i=0; i < tab.size();i++){
             System.out.println(tab.get(i).toString());
-        }
-        
+        } 
     }
     
     public Vol getVolindice(int indice){
@@ -120,15 +115,12 @@ public class ListeVols {
         nbarrete++;
     }
     
-    
     Comparator<Vol> comparateur = new Comparator<Vol>() {
         
-        
-        public int compare(Vol o1, Vol o2) {
+    public int compare(Vol o1, Vol o2) {
             return Integer.compare(o2.getnbadjacents(), o1.getnbadjacents()); // Compare dans l'ordre décroissant
         }
     };
-    
     
     public int MAXWelshPowell(){
         Collections.sort(tab, comparateur);
@@ -163,8 +155,6 @@ public class ListeVols {
                 i++;
             }
                 
-                
-                
             nbCouleurs++;
         }
         
@@ -178,13 +168,7 @@ public class ListeVols {
                 }
                 i++;
             }
-            
-            
         }
-        
-        
-        
-        
         return nbCouleurs;
     }
     
@@ -219,19 +203,11 @@ public class ListeVols {
                     tab.get(i).setcouleur(nbCouleurs);
                 }
                 i++;
-            }
-                
-                
-                
+            }  
             nbCouleurs++;
         }
-        
-        
-        
-        
         return nbCouleurs;
     }
-    
     
     public void RandomColoration(int max){
         int random = 1;
@@ -239,20 +215,13 @@ public class ListeVols {
             tab.get(i).setcouleur((random % max)+1);
             random++;
         }
-        
-        
-        
-        
     }
-    
     
     public void GreedyColor(){
         for (int i =0;i<tab.size();i++){
             tab.get(i).setcouleur(tab.get(i).first_available_color());
         }
     }
-        
-    
     
     public void Dsatur(){
         for (int y=0; y < tab.size();y++){
@@ -265,16 +234,9 @@ public class ListeVols {
                     max = tab.get(i).DSAT();
                 }
             }
-            
             tab.get(indice).setcouleur(tab.get(indice).first_available_color());
         }
-        
-        
-        
     }
-    
-    
-    
     
     public int getnbconflit(){
         int nbconflit = 0;
@@ -286,14 +248,10 @@ public class ListeVols {
             couleurv = v.getcouleur();
             for (int y=0; y < v.getnbadjacents();y++){
                 cpt++;
-                //System.out.println(couleurv+ "      "+ v.getAdjacentindice(y).getcouleur());
                 if (v.getAdjacentindice(y).getcouleur() == couleurv){
                     nbconflit++;
-                    //System.out.println("true");
                 }
             }
-            
-            
         }
         System.out.println("compteur :  "+ cpt);
         return nbconflit/2;
@@ -307,8 +265,7 @@ public class ListeVols {
         }
         return true;
     }
-            
-            
+               
     public int maxcouleur(){
         int max = -1;
         int i=0;
@@ -321,7 +278,6 @@ public class ListeVols {
         return max;
     }
     
-    
     public void viewcolor(){
         int i=0;
         while ( i < tab.size()){
@@ -329,7 +285,6 @@ public class ListeVols {
             i++;
         }
     }
-    
     
     public void setcouleurdefault(){
         int i=0;
@@ -349,8 +304,6 @@ public class ListeVols {
         total = total / tab.size();
         return total;
     }
-    
-   
     
     public int getnbcomposante(){
         int nb = 1;
@@ -388,9 +341,7 @@ public class ListeVols {
                 }
             }
         }
-        
         return maxdiametre;
-        
     }
     
     public int Dijkstra(Vol vol1, Vol vol2){
@@ -398,13 +349,11 @@ public class ListeVols {
         if ( vol1.getcomposante() != vol2.getcomposante()){
             return 0;
         }
-        
+
         for (int i =0; i < tab.size(); i++){
             tab.get(i).setdistance(9999);
-            tab.get(i).settraite(false);
-            
+            tab.get(i).settraite(false); 
         }
-        
         tab.get(tab.indexOf(vol1)).setdistance(0);
         tab.get(tab.indexOf(vol1)).settraite(true);
         vol1.Dijkstra();
@@ -413,7 +362,6 @@ public class ListeVols {
             var =false;
             int maxdistance = Integer.MAX_VALUE;
             Vol sommetmin = vol1;
-            
             for (int y = 0; y < tab.size(); y++){
                 if (!tab.get(y).gettraite() && (tab.get(y).getcomposante() == vol1.getcomposante() )){
                     if (tab.get(y).getdistance() <= maxdistance){
@@ -424,14 +372,9 @@ public class ListeVols {
                 }
             }
             sommetmin.Dijkstra();
-        
-            
         }
-        
         return vol2.getdistance();
     }
-    
-    
     
     public int getnbcomposantede(int composante){
         int cpt =0;
@@ -440,16 +383,12 @@ public class ListeVols {
                 cpt ++;
             }
         }
-            
-            
-            
         return cpt;
     }
     
     public void shownumcomposante(){
         for ( int i=0; i < tab.size(); i++){
             Vol v = tab.get(i);
-            
         }
     }
     
@@ -460,6 +399,4 @@ public class ListeVols {
     public ListeVols getListVols(){
         return this;
     }
-    
-    
 }
