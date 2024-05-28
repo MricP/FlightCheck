@@ -233,11 +233,11 @@ public class InterfaceIHMSAE extends JFrame {
         listeAeroport = new ListeAeroport();
         try {
             listeAeroport.loadFromFile(filePath);
-        } catch (IOException e) {
+        }catch (IOException e) {
             e.printStackTrace();
         }
     }
-
+    
     private void addAirportMarkers() {
         if (listeAeroport == null || listeAeroport.taillelisteaero() == 0) {
             System.out.println("Aucun aéroport à afficher.");
