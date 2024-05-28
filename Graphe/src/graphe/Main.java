@@ -530,16 +530,16 @@ public class Main {
         System.out.println("default   "+LL.getnbconflit());
         LL = descent(LL);
         */
-        
+                
         /*
         LL.setcouleurdefault();
         LL.MAXWelshPowell();
         System.out.println("MAX  "+LL.getnbconflit());
         */
-        
+            
         LL = FullGreedyColor(LL);
         
-        
+            
         Graph G = getGraphStream(LV);
         System.out.println(LL.getnbconflit());
         System.out.println(LL.goodcoloration());
