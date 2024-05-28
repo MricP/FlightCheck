@@ -11,8 +11,15 @@ package graphe;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * La classe StatisticsFrame représente une fenêtre affichant diverses statistiques.
+ */
 public class StatisticsFrame extends JFrame {
 
+    /**
+     * Constructeur par défaut de la classe StatisticsFrame.
+     * Initialise les composants de l'interface utilisateur et configure la fenêtre.
+     */
     public StatisticsFrame() {
         setTitle("Statistiques");
         setSize(600, 550);
@@ -20,11 +27,11 @@ public class StatisticsFrame extends JFrame {
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
 
-        // Ajout d'une couleur background 
+        // Ajout d'une couleur de fond
         Color bgColor = Color.decode("#283C4F");
         getContentPane().setBackground(bgColor);
 
-        // Ajout du exit bouton
+        // Ajout du bouton quitter "Exit"
         JButton exitButton = new JButton("Exit");
         exitButton.setBackground(Color.decode("#007BFF"));
         exitButton.setForeground(Color.WHITE);
@@ -37,7 +44,7 @@ public class StatisticsFrame extends JFrame {
         gbc.anchor = GridBagConstraints.NORTHEAST;
         add(exitButton, gbc);
 
-        // Le titre "label"
+        // Ajout du label du titre
         JLabel titleLabel = new JLabel("Statistiques");
         titleLabel.setForeground(Color.LIGHT_GRAY);
         titleLabel.setFont(new Font("Arial", Font.BOLD, 20));
@@ -48,7 +55,7 @@ public class StatisticsFrame extends JFrame {
         gbc.anchor = GridBagConstraints.CENTER;
         add(titleLabel, gbc);
 
-        // Statistics labels and panels
+        // Labels et panneaux des statistiques
         String[] labels = {"Degré Moyen", "Composantes", "Nœuds", "Arrêtes", "Diamètre"};
         int labelCount = labels.length;
 
@@ -73,7 +80,16 @@ public class StatisticsFrame extends JFrame {
             add(statPanel, gbc);
         }
     }
+
     
+
+
+    /**
+     * Méthode principale pour exécuter l'application.
+     *
+     * @param args Les arguments de la ligne de commande.
+     */
+
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             StatisticsFrame frame = new StatisticsFrame();

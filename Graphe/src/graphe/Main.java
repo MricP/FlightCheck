@@ -52,9 +52,10 @@ public class Main {
     
     private static int minColors = Integer.MAX_VALUE;
     private static Map<Node, Integer> bestColoring = new HashMap<>();
-            
-            
-    public static void creationgraphe(){
+    private static ListeAeroport L = new ListeAeroport();
+    private static ListeVols LV = new ListeVols();        
+    
+    public static ListeVols creationgraphe(){
         /*
         System.out.println(LV.getVolindice(3).toString());
         System.out.println(LV.getVolindice(17).toString());
@@ -81,7 +82,7 @@ public class Main {
         }
         System.out.println("compteur  : "+ cpt);
         System.out.println("nbarretes  : "+ gpt);
-        
+        return LV;
         
     }
     
@@ -258,8 +259,7 @@ public class Main {
         return null;
     }
     
-    private static ListeAeroport L = new ListeAeroport();
-    private static ListeVols LV = new ListeVols();
+    
         
     
     
