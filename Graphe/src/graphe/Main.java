@@ -48,6 +48,7 @@ import org.jxmapviewer.painter.*;
  *C:/Users/Robi6/OneDrive/Bureau/DataTest/vol-test1.csv
  * @author Robi6
  */
+
 public class Main {
     
     private static int minColors = Integer.MAX_VALUE;
@@ -55,38 +56,38 @@ public class Main {
     private static ListeAeroport L = new ListeAeroport();
     private static ListeVols LV = new ListeVols();        
     
-    public static ListeVols creationgraphe(){
+    public static ListeVols creationgraphe(ListeVols liste){
         /*
         System.out.println(LV.getVolindice(3).toString());
         System.out.println(LV.getVolindice(17).toString());
         System.out.println(intersection(LV.getVolindice(3),LV.getVolindice(17)));
         */
         
-        int taille = LV.taille();
+        int taille = liste.taille();
         int gpt = 0;
-        System.out.println("taille  : "+ LV.taille());
+        System.out.println("taille  : "+ liste.taille());
         int cpt=0;
         for (int i = 0; i< taille; i++){
             for (int y=i+1; y < taille; y++){
                 cpt++;
-                if(intersection(LV.getVolindice(i),LV.getVolindice(y))){
+                if(intersection(LV.getVolindice(i),liste.getVolindice(y))){
                     gpt++;
-                    LV.getVolindice(i).addadjacent(LV.getVolindice(y));
-                    System.out.println(LV.getVolindice(i).id+ "  :  "+ LV.getVolindice(y).id);
-                    LV.getVolindice(y).addadjacent(LV.getVolindice(i));
+                    liste.getVolindice(i).addadjacent(liste.getVolindice(y));
+                    //System.out.println(liste.getVolindice(i).id+ "  :  "+ liste.getVolindice(y).id);
+                    liste.getVolindice(y).addadjacent(liste.getVolindice(i));
                     
-                    LV.addaerrete();
+                    liste.addaerrete();
                     
                 }
             }
         }
         System.out.println("compteur  : "+ cpt);
         System.out.println("nbarretes  : "+ gpt);
-        return LV;
+        return liste;
         
     }
     
-    
+    //la methode etre deplacéé
     public static boolean intersection(Vol V1, Vol V2){
         
         if (V1 == V2){
@@ -442,7 +443,7 @@ public class Main {
         
         
         
-        creationgraphe();
+        LV  = creationgraphe(LV);
         
         
         System.out.println("feur");
@@ -459,7 +460,7 @@ public class Main {
         LV.GreedyColor();
         System.out.println(LV.goodcoloration());
         System.out.println("feur");
-        LV.viewcolor();
+        
         System.out.println("feur");
         System.out.println(LV.maxcouleur());
         LV.setcouleurdefault();
@@ -539,7 +540,7 @@ public class Main {
         LL = FullGreedyColor(LL);
         
         
-        Graph G = getGraphStream(LL);
+        Graph G = getGraphStream(LV);
         System.out.println(LL.getnbconflit());
         System.out.println(LL.goodcoloration());
         
