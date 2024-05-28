@@ -1,13 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package graphe;
-
-/**
- *
- * @author Robi6
- */
 
 import org.jxmapviewer.JXMapViewer;
 import org.jxmapviewer.OSMTileFactoryInfo;
@@ -27,29 +18,16 @@ import javax.swing.event.MouseInputListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- * La classe InterfaceIHMSAE représente l'interface utilisateur principale pour l'application FlightSAE.
- * Elle inclut une carte interactive, des panneaux de contrôle et divers composants d'interface.
- */
 public class InterfaceIHMSAE extends JFrame {
 
-    /**
-     * Visionneuse de carte pour afficher et interagir avec la carte.
-     */
     private JXMapViewer mapViewer;
-
-    /**
-     * Ensemble de waypoints à afficher sur la carte.
-     */
     private Set<Waypoint> waypoints;
+    private ListeAeroport listeAeroport;
 
-    /**
-     * Constructeur par défaut de la classe InterfaceIHMSAE.
-     * Initialise les composants de l'interface utilisateur et configure la fenêtre.
-     */
     public InterfaceIHMSAE() {
         setTitle("FlightSAE 1.0.0");
         setSize(1000, 800);
@@ -57,31 +35,28 @@ public class InterfaceIHMSAE extends JFrame {
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
 
-        // Ajout d'une couleur background 
         Color bgColor = Color.decode("#283C4F");
         getContentPane().setBackground(bgColor);
 
-        // Initialisation de la visionneuse de carte
         mapViewer = new JXMapViewer();
         TileFactoryInfo info = new OSMTileFactoryInfo() {
             @Override
             public int getMinimumZoomLevel() {
-                return 5; // Zoom minimum
+                return 5;
             }
 
             @Override
             public int getMaximumZoomLevel() {
-                return 19; // Zoom maximum
+                return 19;
             }
         };
         DefaultTileFactory tileFactory = new DefaultTileFactory(info);
         mapViewer.setTileFactory(tileFactory);
-        
+
         GeoPosition france = new GeoPosition(46.603354, 1.888334);
         mapViewer.setZoom(7);
         mapViewer.setAddressLocation(france);
 
-        // Configuration des interactions de la souris
         MouseInputListener mia = new PanMouseInputListener(mapViewer);
         mapViewer.addMouseListener(mia);
         mapViewer.addMouseMotionListener(mia);
@@ -89,7 +64,6 @@ public class InterfaceIHMSAE extends JFrame {
         mapViewer.addKeyListener(new PanKeyListener(mapViewer));
         mapViewer.addMouseListener(new CenterMapListener(mapViewer));
 
-        // Carte au centre de la frame
         gbc.gridx = 1;
         gbc.gridy = 0;
         gbc.gridheight = 4;
@@ -99,7 +73,6 @@ public class InterfaceIHMSAE extends JFrame {
         gbc.fill = GridBagConstraints.BOTH;
         add(mapViewer, gbc);
 
-        // Panneau de contrôle à gauche
         JPanel leftControlPanel = new JPanel();
         leftControlPanel.setLayout(new GridBagLayout());
         leftControlPanel.setBackground(bgColor);
@@ -131,7 +104,6 @@ public class InterfaceIHMSAE extends JFrame {
         lc.gridy = 3;
         leftControlPanel.add(statsButton, lc);
 
-        // Ajout du panneau de contrôle gauche à la frame
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.gridheight = 4;
@@ -142,7 +114,6 @@ public class InterfaceIHMSAE extends JFrame {
         gbc.fill = GridBagConstraints.VERTICAL;
         add(leftControlPanel, gbc);
 
-        // Panneau de contrôle à droite
         JPanel rightControlPanel = new JPanel();
         rightControlPanel.setLayout(new GridBagLayout());
         rightControlPanel.setBackground(bgColor);
@@ -168,7 +139,6 @@ public class InterfaceIHMSAE extends JFrame {
         rc.gridy = 2;
         rightControlPanel.add(colorationCheckbox, rc);
 
-        // Ajout du panneau de contrôle droit à la frame
         gbc.gridx = 3;
         gbc.gridy = 0;
         gbc.gridheight = 4;
@@ -179,7 +149,6 @@ public class InterfaceIHMSAE extends JFrame {
         gbc.fill = GridBagConstraints.VERTICAL;
         add(rightControlPanel, gbc);
 
-        // Création du panneau inférieur
         JPanel bottomPanel = new JPanel();
         bottomPanel.setLayout(new GridBagLayout());
         bottomPanel.setBackground(bgColor);
@@ -217,7 +186,6 @@ public class InterfaceIHMSAE extends JFrame {
         b.gridy = 1;
         bottomPanel.add(kmaxSpinner, b);
 
-        // Ajout du panneau inférieur à la frame
         gbc.gridx = 1;
         gbc.gridy = 4;
         gbc.gridheight = 1;
@@ -228,7 +196,6 @@ public class InterfaceIHMSAE extends JFrame {
         gbc.fill = GridBagConstraints.HORIZONTAL;
         add(bottomPanel, gbc);
 
-        // Ajout des écouteurs d'action pour les boutons
         statsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -240,7 +207,6 @@ public class InterfaceIHMSAE extends JFrame {
         startButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Implement start button functionality here
                 JOptionPane.showMessageDialog(null, "Start button clicked!");
             }
         });
@@ -252,7 +218,6 @@ public class InterfaceIHMSAE extends JFrame {
             }
         });
 
-        // Ajout du bouton quitter "Exit"
         JButton exitButton = new JButton("Exit");
         styleButton(exitButton, Color.decode("#007BFF"));
         exitButton.addActionListener(e -> System.exit(0));
@@ -263,35 +228,37 @@ public class InterfaceIHMSAE extends JFrame {
         add(exitButton, gbc);
 
         waypoints = new HashSet<>();
+
+        String filePath = "C:/Users/Aspect-PC/Desktop/SAE-IMH/sae_mathieu_petit_pirrera/DataTest/aeroports.txt";
+        listeAeroport = new ListeAeroport();
+        try {
+            listeAeroport.loadFromFile(filePath);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    /**
-     * Ajoute des marqueurs d'aéroport à la carte.
-     */
     private void addAirportMarkers() {
-        double[][] coordinates = {
-            {49.012779, 2.55}, // CDG
-            {48.723333, 2.379444}, // Orly
-            {43.637222, 1.367778}, // Toulouse
-            {45.727222, 4.944722} // Lyon
-        };
+        if (listeAeroport == null || listeAeroport.taillelisteaero() == 0) {
+            System.out.println("Aucun aéroport à afficher.");
+            return;
+        }
 
-        for (double[] coord : coordinates) {
-            GeoPosition position = new GeoPosition(coord[0], coord[1]);
+        waypoints.clear(); 
+
+        for (int i = 0; i < listeAeroport.taillelisteaero(); i++) {
+            Aeroport aeroport = listeAeroport.getaeroport(i);
+            GeoPosition position = new GeoPosition(aeroport.getlatitude(), aeroport.getlongitude());
             waypoints.add(new DefaultWaypoint(position));
         }
 
         WaypointPainter<Waypoint> waypointPainter = new WaypointPainter<>();
         waypointPainter.setWaypoints(waypoints);
         mapViewer.setOverlayPainter(waypointPainter);
+        mapViewer.repaint();
+        System.out.println("Les aéroports sont maintenant affiché");
     }
 
-    /**
-     * Applique un style spécifique à un bouton.
-     *
-     * @param button Le bouton à styliser.
-     * @param bgColor La couleur de fond du bouton.
-     */
     private void styleButton(JButton button, Color bgColor) {
         button.setBackground(bgColor);
         button.setForeground(Color.WHITE);
@@ -299,23 +266,12 @@ public class InterfaceIHMSAE extends JFrame {
         button.setBorderPainted(false);
     }
 
-    /**
-     * Applique un style spécifique à une case à cocher.
-     *
-     * @param checkBox La case à cocher à styliser.
-     * @param bgColor La couleur de fond de la case à cocher.
-     */
     private void styleCheckBox(JCheckBox checkBox, Color bgColor) {
         checkBox.setBackground(bgColor);
         checkBox.setForeground(Color.WHITE);
         checkBox.setOpaque(true);
     }
 
-    /**
-     * Méthode principale pour exécuter l'application.
-     *
-     * @param args Les arguments de la ligne de commande.
-     */
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
