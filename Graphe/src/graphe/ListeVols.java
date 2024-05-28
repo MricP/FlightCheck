@@ -238,16 +238,16 @@ public class ListeVols {
         for (int i = 0;i<tab.size();i++){
             tab.get(i).setcouleur((random % max)+1);
             random++;
-        }
-        
-        
-        
-        
+        } 
     }
     
     public void GreedyColor(){    
         for (int i =0;i<tab.size();i++){
-            tab.get(i).setcouleur(tab.get(i).first_available_color());
+            if (havekmax){
+                tab.get(i).setcouleur(tab.get(i).first_available_color_kmax(kmax));
+            }else{
+                tab.get(i).setcouleur(tab.get(i).first_available_color());
+            }    
         }       
     }
     
@@ -296,7 +296,7 @@ public class ListeVols {
             
             
         }
-        System.out.println("compteur :  "+ cpt);
+        
         return nbconflit/2;
     }
      
@@ -461,6 +461,54 @@ public class ListeVols {
     public ListeVols getListVols(){
         return this;
     }
+    
+    /*
+    public ArrayList<Integer> getcouleurs(){
+        ArrayList<Integer> list = new  ArrayList<>();
+        for (int i=0; i < tab.size(); i++){
+            list.add(tab.get(i).getcouleur());
+        }
+        return list;
+    }
+    
+    
+    //prend un eliste comprenant des 
+    public void adresscouleurs(ArrayList<Integer> list){
+        
+        for (int i=0; i < tab.size(); i++){
+           tab.get(i).setcouleur(list.get(i));
+        }
+        
+    }
+    */
+    public  Vol getVolId(int id){
+        for (int i=0; i < tab.size(); i++){
+           if (tab.get(i).getid() == id){
+               return tab.get(i);
+           }
+        }
+        return null;
+    }
+    
+    
+    public ArrayList<Integer> getcouleurs(){
+        ArrayList<Integer> list = new  ArrayList<>();
+        for (int i=1; i <= tab.size(); i++){
+            list.add(this.getVolId(i).getcouleur());
+        }
+        return list;
+    }
+    
+    
+    //prend un eliste comprenant des 
+    public void adresscouleurs(ArrayList<Integer> list){
+        
+        for (int i=0; i < tab.size(); i++){
+           this.getVolId(i+1).setcouleur(list.get(i));
+        }
+        
+    }
+    
     
     
 }

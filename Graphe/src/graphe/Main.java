@@ -80,7 +80,7 @@ public class Main {
                     
                 }
             }
-        }
+        }     
         System.out.println("compteur  : "+ cpt);
         System.out.println("nbarretes  : "+ gpt);
         return liste;
@@ -202,7 +202,7 @@ public class Main {
     public static ListeVols CreateGraphText(String cheminfichiertxt){
         System.out.println("rentrez le chemin d'acces de votre graphe sous forme .txt:");
         String filtePath;
-        String FilePath = "C:/Users/Robi6/OneDrive/Bureau/DataTest/graph-test4.txt";
+        String FilePath = "C:/Users/Robi6/OneDrive/Bureau/DataTest/graph-test2.txt";
         /*String FilePath = ent.nextLine();*/
         
         // Créer un objet File en utilisant le chemin du fichier
@@ -536,11 +536,20 @@ public class Main {
         LL.MAXWelshPowell();
         System.out.println("MAX  "+LL.getnbconflit());
         */
-            
-        LL = FullGreedyColor(LL);
+        LL.setcouleurdefault();
         
-            
-        Graph G = getGraphStream(LV);
+        
+        LL = FullGreedyColor(LL);
+        LL.adresscouleurs(LL.getcouleurs());
+        LL.MAXWelshPowell();
+        /*
+        LL.setcouleurdefault();
+        LL.MAXWelshPowell();
+        */
+        LL.adresscouleurs(LL.getcouleurs());
+        System.out.println(LL.goodcoloration());
+        
+        Graph G = getGraphStream(LL);
         System.out.println(LL.getnbconflit());
         System.out.println(LL.goodcoloration());
         
@@ -660,6 +669,7 @@ public class Main {
                 }
             }
         }
+        
         System.out.println("Fin: " + meilleurConflit);
         System.out.println("Fin: " + meilleure_solution_voisine.getnbconflit());
         System.out.println("compteur: " + cpt);
@@ -674,21 +684,31 @@ public class Main {
     }
     
     public static ListeVols FullGreedyColor(ListeVols list){
-        ListeVols sol = null;
+        
+        int minconflits = Integer.MAX_VALUE;
+        ArrayList<Integer> best = list.getcouleurs();
         int mincouleur = Integer.MAX_VALUE;
-        for (int y =0;y<list.getArraylist().size();y++){
+        
+        for (int y =0;y<list.getArraylist().size() * 9;y++){
             list.setcouleurdefault();
             Collections.shuffle(list.getArraylist());
             list.GreedyColor();
-            if (list.maxcouleur() < mincouleur){
-                sol = new ListeVols(list);
+            if ((list.maxcouleur() < mincouleur) || (list.maxcouleur() == mincouleur && list.getnbconflit() < minconflits)){
                 mincouleur = list.maxcouleur();
                 System.out.println("min " +mincouleur);
+                best = list.getcouleurs();
+                if (mincouleur == list.getkmax()){
+                    minconflits = list.getnbconflit();
+                }
             }
             
         }
-        System.out.println("fin couleur min " +sol.maxcouleur());
-        return sol;
+        list.adresscouleurs(best);
+        System.out.println("fin couleur min " +list.maxcouleur());
+        System.out.println("fin nb conflits  " +list.getnbconflit());
+        System.out.println("fin minconflits  " +minconflits);
+        
+        return list;
         
     }
     

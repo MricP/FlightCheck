@@ -206,6 +206,49 @@ public class Vol {
         return color;
     }
     
+    public int first_available_color_kmax(int kmax){
+        int color = 0;
+        boolean res= true;
+        while (res && color <= kmax){
+            color++;
+            res = false;
+            int i=0;
+            while (i < adjacents.size() && !res){
+                if (adjacents.get(i).getcouleur() == color){
+                    res = true;
+                }
+                i++;
+            }
+        }
+        
+        if(color  > kmax){
+            ArrayList<Integer> liste =  new ArrayList<>(kmax+1);
+            int taille = adjacents.size();
+            for (int i = 0; i <= kmax; i++) {
+                liste.add(0); // Ajouter 0 à chaque indice
+            }
+            for (int y=0; y  < taille; y++){
+                if (adjacents.get(y).getcouleur() != -1){
+                    int valeur = liste.get(adjacents.get(y).getcouleur());
+                    liste.set(adjacents.get(y).getcouleur(), valeur + 1);
+                }
+            }
+
+
+
+            color = 1;
+            int valeurMin = liste.get(1);
+            for (int i = 2; i < liste.size(); i++) {
+                if (liste.get(i) < valeurMin) {
+                    valeurMin = liste.get(i);
+                    color = i;
+                }
+            }
+        }
+        
+        return color;
+    }
+    
     
     public int DSAT(){
         if (couleur != -1){
@@ -319,7 +362,7 @@ public class Vol {
         }
         
         
-        
+        System.out.println(liste.size());
         int indiceMin = 1;
         int valeurMin = liste.get(1);
         for (int i = 2; i < liste.size(); i++) {
