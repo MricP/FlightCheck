@@ -73,7 +73,7 @@ public class StatisticsFrame extends JFrame {
             add(statPanel, gbc);
         }
     }
-
+    
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             StatisticsFrame frame = new StatisticsFrame();
