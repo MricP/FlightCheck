@@ -55,7 +55,8 @@ public class Main {
     private static int minColors = Integer.MAX_VALUE;
     private static Map<Node, Integer> bestColoring = new HashMap<>();
     private static ListeAeroport L = new ListeAeroport();
-    private static ListeVols LV = new ListeVols();        
+    private static ListeVols LV = new ListeVols();       
+    private static ListeVols LL = new ListeVols();       
     
     Main(){
         
@@ -65,7 +66,50 @@ public class Main {
         return L;
     }
     
-    public static ListeVols creationgraphe(ListeVols liste){
+    public ListeVols getlisteVols(){
+        return LV;
+    }
+    
+    public ListeVols creationgraphe(ListeVols liste){
+        /*
+        System.out.println(LV.getVolindice(3).toString());
+        System.out.println(LV.getVolindice(17).toString());
+        System.out.println(intersection(LV.getVolindice(3),LV.getVolindice(17)));
+        */
+        
+        int taille = liste.taille();
+        int gpt = 0;
+        System.out.println("taille  : "+ liste.taille());
+        int cpt=0;
+        for (int i = 0; i< taille; i++){
+            for (int y=i+1; y < taille; y++){
+                cpt++;
+                if(intersection(LV.getVolindice(i),liste.getVolindice(y))){
+                    gpt++;
+                    liste.getVolindice(i).addadjacent(liste.getVolindice(y));
+                    //System.out.println(liste.getVolindice(i).id+ "  :  "+ liste.getVolindice(y).id);
+                    liste.getVolindice(y).addadjacent(liste.getVolindice(i));
+                    
+                    liste.addaerrete();
+                    
+                }
+            }
+        }     
+        System.out.println("compteur  : "+ cpt);
+        System.out.println("nbarretes  : "+ gpt);
+        return liste;
+        
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    public static ListeVols creationgraphe_static(ListeVols liste){
         /*
         System.out.println(LV.getVolindice(3).toString());
         System.out.println(LV.getVolindice(17).toString());
@@ -366,6 +410,83 @@ public class Main {
         return graph;
     }
     
+    public void setvolaeroports(){
+        String FilePath;
+        File file;
+        // Chemin du fichier texte
+        System.out.println("rentrez le chemin d'acces de votre fichier de vols en format .csv:");
+        FilePath = "C:/Users/Robi6/OneDrive/Bureau/DataTest/vol-test8.csv";
+        /*FilePath = ent.nextLine();*/
+        
+        // Créer un objet File en utilisant le chemin du fichier
+        file = new File(FilePath);
+        
+        // Vérifier si le fichier existe
+        if (!file.exists()) {
+            System.out.println("Le fichier n'existe pas.");
+            return;
+        }else{
+            System.out.println("Le fichier existe .");
+        }
+        
+        // Déclarer un BufferedReader pour lire le fichier
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            String line;
+            // Lire chaque ligne du fichier tant qu'il y en a
+            while ((line = reader.readLine()) != null) {
+                // Afficher chaque ligne lue
+                
+                /*System.out.println(line);*/
+                String[] tab = line.split(";");
+                Vol Vol = new Vol(tab[0],tab[1],tab[2],Integer.valueOf(tab[3]),Integer.valueOf(tab[4]),Integer.valueOf(tab[5]));
+                LV.ajMembre(Vol);
+            }
+            
+        } catch (IOException e) {
+            System.out.println("Erreur de lecture du fichier : " + e.getMessage());
+        }
+    }    
+    
+    public static void setvolaeroports_static(){
+        String FilePath;
+        File file;
+        // Chemin du fichier texte
+        System.out.println("rentrez le chemin d'acces de votre fichier de vols en format .csv:");
+        FilePath = "C:/Users/Robi6/OneDrive/Bureau/DataTest/vol-test8.csv";
+        /*FilePath = ent.nextLine();*/
+        
+        // Créer un objet File en utilisant le chemin du fichier
+        file = new File(FilePath);
+        
+        // Vérifier si le fichier existe
+        if (!file.exists()) {
+            System.out.println("Le fichier n'existe pas.");
+            return;
+        }else{
+            System.out.println("Le fichier existe .");
+        }
+        
+        // Déclarer un BufferedReader pour lire le fichier
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            String line;
+            // Lire chaque ligne du fichier tant qu'il y en a
+            while ((line = reader.readLine()) != null) {
+                // Afficher chaque ligne lue
+                
+                /*System.out.println(line);*/
+                String[] tab = line.split(";");
+                Vol Vol = new Vol(tab[0],tab[1],tab[2],Integer.valueOf(tab[3]),Integer.valueOf(tab[4]),Integer.valueOf(tab[5]));
+                LV.ajMembre(Vol);
+            }
+            
+        } catch (IOException e) {
+            System.out.println("Erreur de lecture du fichier : " + e.getMessage());
+        }
+    }    
+        
+    
+    
+    
     
     public void setAeroportlist(){
         System.out.println("rentrez le chemin d'acces de votre fichier deaéroports sous forme .txt:");
@@ -446,48 +567,9 @@ public class Main {
         
         
         setAeroportlist_static();
+        setvolaeroports_static();
         
-        
-        String FilePath;
-        File file;
-        // Chemin du fichier texte
-        System.out.println("rentrez le chemin d'acces de votre fichier de vols en format .csv:");
-        FilePath = "C:/Users/Robi6/OneDrive/Bureau/DataTest/vol-test8.csv";
-        /*FilePath = ent.nextLine();*/
-        
-        // Créer un objet File en utilisant le chemin du fichier
-        file = new File(FilePath);
-        
-        // Vérifier si le fichier existe
-        if (!file.exists()) {
-            System.out.println("Le fichier n'existe pas.");
-            return;
-        }else{
-            System.out.println("Le fichier existe .");
-        }
-        
-        // Déclarer un BufferedReader pour lire le fichier
-        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-            String line;
-            // Lire chaque ligne du fichier tant qu'il y en a
-            while ((line = reader.readLine()) != null) {
-                // Afficher chaque ligne lue
-                
-                /*System.out.println(line);*/
-                String[] tab = line.split(";");
-                Vol Vol = new Vol(tab[0],tab[1],tab[2],Integer.valueOf(tab[3]),Integer.valueOf(tab[4]),Integer.valueOf(tab[5]));
-                LV.ajMembre(Vol);
-            }
-            
-        } catch (IOException e) {
-            System.out.println("Erreur de lecture du fichier : " + e.getMessage());
-        }
-        
-        
-        
-        
-        
-        LV  = creationgraphe(LV);
+        LV  = creationgraphe_static(LV);
         
         
         System.out.println("feur");
@@ -543,7 +625,7 @@ public class Main {
         
         //Partie graph-test
         
-        ListeVols LL = CreateGraphText("feur");
+        LL = CreateGraphText("feur");
         
         
         

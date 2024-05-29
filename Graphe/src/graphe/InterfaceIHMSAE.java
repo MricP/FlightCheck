@@ -28,6 +28,7 @@ public class InterfaceIHMSAE extends JFrame {
     private JXMapViewer mapViewer;
     private Set<Waypoint> waypoints;
     private ListeAeroport listeAeroport;
+    private ListeVols listeVol;
     private Main main;
 
     public InterfaceIHMSAE() {
@@ -219,14 +220,14 @@ public class InterfaceIHMSAE extends JFrame {
                 JOptionPane.showMessageDialog(null, "Start button clicked!");
             }
         });
-
+            
         drawLinesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 drawLinesBetweenWaypoints();
             }
         });
-
+        
         aeroportsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -251,8 +252,13 @@ public class InterfaceIHMSAE extends JFrame {
         main.setAeroportlist();
         listeAeroport = main.getlisteaero();
         addAirportMarkers();
+        
+        main.setvolaeroports();
+        listeVol = main.getlisteVols();
+        listeVol = main.creationgraphe(listeVol);
+        
     }
-
+    
     private void addAirportMarkers() {
         if (listeAeroport == null || listeAeroport.taillelisteaero() == 0) {
             System.out.println("Aucun aéroport à afficher.");
@@ -273,39 +279,39 @@ public class InterfaceIHMSAE extends JFrame {
         mapViewer.repaint();
         System.out.println("Les aéroports sont maintenant affichés");
     }
-
+    
     private void drawLinesBetweenWaypoints() {
         if (waypoints.isEmpty()) {
             System.out.println("Aucun waypoint disponible pour dessiner des lignes.");
             return;
         }
-
+        
         List<GeoPosition> positions = new ArrayList<>();
         for (Waypoint waypoint : waypoints) {
             if (waypoint instanceof DefaultWaypoint) {
                 positions.add(((DefaultWaypoint) waypoint).getPosition());
             }
         }
-
+        
         RoutePainter routePainter = new RoutePainter(positions);
         mapViewer.setOverlayPainter(routePainter);
         mapViewer.repaint();
         System.out.println("Les lignes entre les waypoints ont été dessinées");
     }
-
+    
     private void styleButton(JButton button, Color bgColor) {
         button.setBackground(bgColor);
         button.setForeground(Color.WHITE);
         button.setOpaque(true);
         button.setBorderPainted(false);
     }
-
+    
     private void styleCheckBox(JCheckBox checkBox, Color bgColor) {
         checkBox.setBackground(bgColor);
         checkBox.setForeground(Color.WHITE);
         checkBox.setOpaque(true);
     }
-
+    
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
@@ -314,4 +320,5 @@ public class InterfaceIHMSAE extends JFrame {
             }
         });
     }
+    
 }

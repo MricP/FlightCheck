@@ -13,11 +13,11 @@ import org.jxmapviewer.viewer.GeoPosition;
 
 public class RoutePainter implements Painter<JXMapViewer> {
     private List<GeoPosition> track;
-
+    
     public RoutePainter(List<GeoPosition> track) {
         this.track = track;
     }
-
+    
     @Override
     public void paint(Graphics2D g, JXMapViewer map, int w, int h) {
         g = (Graphics2D) g.create();
@@ -30,7 +30,7 @@ public class RoutePainter implements Painter<JXMapViewer> {
 
         int lastX = -1;
         int lastY = -1;
-
+        
         for (GeoPosition gp : track) {
             Point2D pt = map.getTileFactory().geoToPixel(gp, map.getZoom());
             if (lastX != -1 && lastY != -1) {
