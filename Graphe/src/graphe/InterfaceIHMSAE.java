@@ -18,17 +18,10 @@ import javax.swing.event.MouseInputListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.util.List;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
-import org.jxmapviewer.painter.CompoundPainter;
-
-import org.jxmapviewer.JXMapViewer;
-import org.jxmapviewer.viewer.GeoPosition;
-import org.jxmapviewer.painter.CompoundPainter;
-
 
 public class InterfaceIHMSAE extends JFrame {
 
@@ -36,7 +29,7 @@ public class InterfaceIHMSAE extends JFrame {
     private Set<Waypoint> waypoints;
     private ListeAeroport listeAeroport;
     private Main main;
-    
+
     public InterfaceIHMSAE() {
         main = new Main();
         setTitle("FlightSAE 1.0.0");
@@ -172,6 +165,12 @@ public class InterfaceIHMSAE extends JFrame {
         b.gridy = 0;
         bottomPanel.add(startButton, b);
 
+        JButton drawLinesButton = new JButton("Draw Lines");
+        styleButton(drawLinesButton, bgColor);
+        b.gridx = 2;
+        b.gridy = 0;
+        bottomPanel.add(drawLinesButton, b);
+
         JLabel algorithmLabel = new JLabel("Algorithme Sélectionné : ");
         algorithmLabel.setForeground(Color.WHITE);
         b.gridx = 0;
@@ -221,6 +220,13 @@ public class InterfaceIHMSAE extends JFrame {
             }
         });
 
+        drawLinesButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                drawLinesBetweenWaypoints();
+            }
+        });
+
         aeroportsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -238,53 +244,53 @@ public class InterfaceIHMSAE extends JFrame {
         add(exitButton, gbc);
 
         waypoints = new HashSet<>();
-        
+
         String filePath = "C:/Users/Aspect-PC/Desktop/SAE-IMH/sae_mathieu_petit_pirrera/DataTest/aeroports.txt";
         listeAeroport = new ListeAeroport();
-        
+
         main.setAeroportlist();
         listeAeroport = main.getlisteaero();
         addAirportMarkers();
-        
-        
-        //ajout des aeroports sur la carte
-        for (int i=0; i < listeAeroport.taillelisteaero();i++){
-            Aeroport aero = listeAeroport.getaeroport(i);
-            GeoPosition position = new GeoPosition(aero.getlongitude(), aero.getlatitude());
-            waypoints.add(new DefaultWaypoint(position));
-        }
-        
-        
-        WaypointPainter<Waypoint> waypointPainter = new WaypointPainter<>();
-        waypointPainter.setWaypoints(waypoints);
-        mapViewer.setOverlayPainter(waypointPainter);
-        
-        
-        
-        
-        
-        
     }
-    
+
     private void addAirportMarkers() {
         if (listeAeroport == null || listeAeroport.taillelisteaero() == 0) {
             System.out.println("Aucun aéroport à afficher.");
             return;
         }
 
-        waypoints.clear(); 
+        waypoints.clear();
 
         for (int i = 0; i < listeAeroport.taillelisteaero(); i++) {
             Aeroport aeroport = listeAeroport.getaeroport(i);
-            GeoPosition position = new GeoPosition(aeroport.getlatitude(), aeroport.getlongitude());
+            GeoPosition position = new GeoPosition(aeroport.getlongitude(), aeroport.getlatitude());
             waypoints.add(new DefaultWaypoint(position));
         }
-        
+
         WaypointPainter<Waypoint> waypointPainter = new WaypointPainter<>();
         waypointPainter.setWaypoints(waypoints);
         mapViewer.setOverlayPainter(waypointPainter);
         mapViewer.repaint();
-        System.out.println("Les aéroports sont maintenant affiché");
+        System.out.println("Les aéroports sont maintenant affichés");
+    }
+
+    private void drawLinesBetweenWaypoints() {
+        if (waypoints.isEmpty()) {
+            System.out.println("Aucun waypoint disponible pour dessiner des lignes.");
+            return;
+        }
+
+        List<GeoPosition> positions = new ArrayList<>();
+        for (Waypoint waypoint : waypoints) {
+            if (waypoint instanceof DefaultWaypoint) {
+                positions.add(((DefaultWaypoint) waypoint).getPosition());
+            }
+        }
+
+        RoutePainter routePainter = new RoutePainter(positions);
+        mapViewer.setOverlayPainter(routePainter);
+        mapViewer.repaint();
+        System.out.println("Les lignes entre les waypoints ont été dessinées");
     }
 
     private void styleButton(JButton button, Color bgColor) {
