@@ -30,7 +30,6 @@ public class AeroportTest {
     @Before
     public void setUP(){
         aeroport = new Aeroport("CDG", "Paris-Charles de Gaulle",49, 0, 35, "N",2, 32, 52, "E");
-        System.out.println(aeroport.getlatitude());
     }
     @Test
     public void testOpenfile() throws IOException {
