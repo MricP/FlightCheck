@@ -29,6 +29,7 @@ public class Vol {
     private ArrayList<Integer> adjacentsid;
     private int distance;
     private boolean traite;
+    
     Vol(int num){
         this.id = num;
         couleur = -1;

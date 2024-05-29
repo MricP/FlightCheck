@@ -51,10 +51,19 @@ import org.jxmapviewer.painter.*;
 
 public class Main {
     
+    
     private static int minColors = Integer.MAX_VALUE;
     private static Map<Node, Integer> bestColoring = new HashMap<>();
     private static ListeAeroport L = new ListeAeroport();
     private static ListeVols LV = new ListeVols();        
+    
+    Main(){
+        
+    }
+    
+    public ListeAeroport getlisteaero(){
+        return L;
+    }
     
     public static ListeVols creationgraphe(ListeVols liste){
         /*
@@ -358,20 +367,7 @@ public class Main {
     }
     
     
-    
-    
-    
-    
-    
-    
-    public static void main(String[] args) {
-        Scanner ent = new Scanner(System.in);
-        
-        // TODO code application logic here
-        
-        
-        
-        // Chemin du fichier texte
+    public void setAeroportlist(){
         System.out.println("rentrez le chemin d'acces de votre fichier deaéroports sous forme .txt:");
         String filtePath;
         String FilePath = "C:/Users/Robi6/OneDrive/Bureau/aeroports.txt";
@@ -403,9 +399,57 @@ public class Main {
         } catch (IOException e) {
             System.out.println("Erreur de lecture du fichier : " + e.getMessage());
         }
+    }
+    
+    
+    public static void setAeroportlist_static(){
+        System.out.println("rentrez le chemin d'acces de votre fichier deaéroports sous forme .txt:");
+        String filtePath;
+        String FilePath = "C:/Users/Robi6/OneDrive/Bureau/aeroports.txt";
+        /*String FilePath = ent.nextLine();*/
+        
+        // Créer un objet File en utilisant le chemin du fichier
+        File file = new File(FilePath);
+        
+        // Vérifier si le fichier existe
+        if (!file.exists()) {
+            System.out.println("Le fichier n'existe pas.");
+            return;
+        }else{
+            System.out.println("Le fichier existe .");
+        }
+        
+        // Déclarer un BufferedReader pour lire le fichier
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            String line;
+            // Lire chaque ligne du fichier tant qu'il y en a
+            while ((line = reader.readLine()) != null) {
+                // Afficher chaque ligne lue
+                
+                /*System.out.println(line);*/
+                String[] tab = line.split(";");
+                Aeroport Aero = new Aeroport(tab[0],tab[1],Integer.valueOf(tab[2]),Integer.valueOf(tab[3]),Integer.valueOf(tab[4]),tab[5],Integer.valueOf(tab[6]),Integer.valueOf(tab[7]),Integer.valueOf(tab[8]),tab[9]);
+                L.ajAeroport(Aero);
+            }
+        } catch (IOException e) {
+            System.out.println("Erreur de lecture du fichier : " + e.getMessage());
+        }
+    }
+    
+    
+    
+    
+    
+    
+    public static void main(String[] args) {
+        Scanner ent = new Scanner(System.in);
         
         
+        setAeroportlist_static();
         
+        
+        String FilePath;
+        File file;
         // Chemin du fichier texte
         System.out.println("rentrez le chemin d'acces de votre fichier de vols en format .csv:");
         FilePath = "C:/Users/Robi6/OneDrive/Bureau/DataTest/vol-test8.csv";

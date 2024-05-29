@@ -19,16 +19,26 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.List;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
+import org.jxmapviewer.painter.CompoundPainter;
+
+import org.jxmapviewer.JXMapViewer;
+import org.jxmapviewer.viewer.GeoPosition;
+import org.jxmapviewer.painter.CompoundPainter;
+
 
 public class InterfaceIHMSAE extends JFrame {
 
     private JXMapViewer mapViewer;
     private Set<Waypoint> waypoints;
     private ListeAeroport listeAeroport;
-
+    private Main main;
+    
     public InterfaceIHMSAE() {
+        main = new Main();
         setTitle("FlightSAE 1.0.0");
         setSize(1000, 800);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -228,14 +238,32 @@ public class InterfaceIHMSAE extends JFrame {
         add(exitButton, gbc);
 
         waypoints = new HashSet<>();
-
+        
         String filePath = "C:/Users/Aspect-PC/Desktop/SAE-IMH/sae_mathieu_petit_pirrera/DataTest/aeroports.txt";
         listeAeroport = new ListeAeroport();
-        try {
-            listeAeroport.loadFromFile(filePath);
-        }catch (IOException e) {
-            e.printStackTrace();
+        
+        main.setAeroportlist();
+        listeAeroport = main.getlisteaero();
+        addAirportMarkers();
+        
+        
+        //ajout des aeroports sur la carte
+        for (int i=0; i < listeAeroport.taillelisteaero();i++){
+            Aeroport aero = listeAeroport.getaeroport(i);
+            GeoPosition position = new GeoPosition(aero.getlongitude(), aero.getlatitude());
+            waypoints.add(new DefaultWaypoint(position));
         }
+        
+        
+        WaypointPainter<Waypoint> waypointPainter = new WaypointPainter<>();
+        waypointPainter.setWaypoints(waypoints);
+        mapViewer.setOverlayPainter(waypointPainter);
+        
+        
+        
+        
+        
+        
     }
     
     private void addAirportMarkers() {
@@ -251,7 +279,7 @@ public class InterfaceIHMSAE extends JFrame {
             GeoPosition position = new GeoPosition(aeroport.getlatitude(), aeroport.getlongitude());
             waypoints.add(new DefaultWaypoint(position));
         }
-
+        
         WaypointPainter<Waypoint> waypointPainter = new WaypointPainter<>();
         waypointPainter.setWaypoints(waypoints);
         mapViewer.setOverlayPainter(waypointPainter);
