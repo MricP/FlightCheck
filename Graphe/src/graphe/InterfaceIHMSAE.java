@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import org.jxmapviewer.painter.CompoundPainter;
 
 public class InterfaceIHMSAE extends JFrame {
 
@@ -30,7 +31,10 @@ public class InterfaceIHMSAE extends JFrame {
     private ListeAeroport listeAeroport;
     private ListeVols listeVol;
     private Main main;
-
+    private CompoundPainter<JXMapViewer> compoundPainter ;
+    
+    private ArrayList<String> codeaero;
+    private ArrayList<GeoPosition> geoCondition;
     public InterfaceIHMSAE() {
         main = new Main();
         setTitle("FlightSAE 1.0.0");
@@ -41,7 +45,10 @@ public class InterfaceIHMSAE extends JFrame {
 
         Color bgColor = Color.decode("#283C4F");
         getContentPane().setBackground(bgColor);
-
+        compoundPainter = new CompoundPainter<>();
+        codeaero = new ArrayList<>();
+        geoCondition = new ArrayList<>();
+        
         mapViewer = new JXMapViewer();
         TileFactoryInfo info = new OSMTileFactoryInfo() {
             @Override
@@ -257,6 +264,8 @@ public class InterfaceIHMSAE extends JFrame {
         listeVol = main.getlisteVols();
         listeVol = main.creationgraphe(listeVol);
         
+        mapViewer.setOverlayPainter(compoundPainter);
+        
     }
     
     private void addAirportMarkers() {
@@ -271,11 +280,14 @@ public class InterfaceIHMSAE extends JFrame {
             Aeroport aeroport = listeAeroport.getaeroport(i);
             GeoPosition position = new GeoPosition(aeroport.getlongitude(), aeroport.getlatitude());
             waypoints.add(new DefaultWaypoint(position));
+            codeaero.add(aeroport.getcode());
+            geoCondition.add(position);
         }
-
+        
         WaypointPainter<Waypoint> waypointPainter = new WaypointPainter<>();
         waypointPainter.setWaypoints(waypoints);
-        mapViewer.setOverlayPainter(waypointPainter);
+        compoundPainter.addPainter(waypointPainter);
+        mapViewer.setOverlayPainter(compoundPainter);
         mapViewer.repaint();
         System.out.println("Les aéroports sont maintenant affichés");
     }
@@ -286,15 +298,28 @@ public class InterfaceIHMSAE extends JFrame {
             return;
         }
         
-        List<GeoPosition> positions = new ArrayList<>();
-        for (Waypoint waypoint : waypoints) {
-            if (waypoint instanceof DefaultWaypoint) {
-                positions.add(((DefaultWaypoint) waypoint).getPosition());
+        for (int i=0; i <  listeVol.taille();i++ ){
+            
+
+            List<GeoPosition> positions = new ArrayList<>();
+            Vol vol= listeVol.getVolindice(i);
+            String codedepart = vol.getcodedepart();
+            String codearrivée = vol.getcodearrive();
+            for (int y=0; y < codeaero.size();y++){
+                if (codeaero.get(y).equals(codedepart)){
+                    positions.add(geoCondition.get(y));
+                }else if(codeaero.get(y).equals(codearrivée)){
+                    positions.add(geoCondition.get(y));
+                }
             }
+            
+            RoutePainter routePainter = new RoutePainter(positions);
+            compoundPainter.addPainter(routePainter);
+            
         }
         
-        RoutePainter routePainter = new RoutePainter(positions);
-        mapViewer.setOverlayPainter(routePainter);
+        
+        mapViewer.setOverlayPainter(compoundPainter);
         mapViewer.repaint();
         System.out.println("Les lignes entre les waypoints ont été dessinées");
     }
