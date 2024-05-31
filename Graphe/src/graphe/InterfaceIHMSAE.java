@@ -248,6 +248,13 @@ public class InterfaceIHMSAE extends JFrame {
             }
         });
 
+        volsButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                openFileChooserVols();
+            }
+        });
+
         JButton exitButton = new JButton("Exit");
         styleButton(exitButton, Color.decode("#007BFF"));
         exitButton.addActionListener(e -> System.exit(0));
@@ -285,6 +292,15 @@ public class InterfaceIHMSAE extends JFrame {
         }
     }
     
+    private void openFileChooserVols() {
+        JFileChooser fileChooser = new JFileChooser();
+        int result = fileChooser.showOpenDialog(this);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fileChooser.getSelectedFile();
+            loadVolsFile(selectedFile);
+        }
+    }
+
     private void loadAeroportFile(File file) {
         if (!file.exists()) {
             System.out.println("Le fichier n'existe pas.");
@@ -307,6 +323,27 @@ public class InterfaceIHMSAE extends JFrame {
         }
     }
     
+    private void loadVolsFile(File file) {
+        if (!file.exists()) {
+            System.out.println("Le fichier n'existe pas.");
+            return;
+        }
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            String line;
+            listeVol = new ListeVols();
+            while ((line = reader.readLine()) != null) {
+                String[] tab = line.split(";");
+                Vol vol = new Vol(tab[0],tab[1],tab[2],Integer.valueOf(tab[3]),Integer.valueOf(tab[4]),Integer.valueOf(tab[5]));
+                listeVol.ajMembre(vol);
+            }
+            listeVol = main.creationgraphe(listeVol);
+            drawLinesAllVols();
+        } catch (IOException e) {
+            System.out.println("Erreur de lecture du fichier : " + e.getMessage());
+        }
+    }
+
     private void addAirportMarkers() {
         if (listeAeroport == null || listeAeroport.taillelisteaero() == 0) {
             System.out.println("Aucun aéroport à afficher.");
