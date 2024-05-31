@@ -30,7 +30,7 @@ public class Vol {
     private int distance;
     private boolean traite;
     
-    Vol(int num){
+    public Vol(int num){
         this.id = num;
         couleur = -1;
         adjacents= new ArrayList<Vol>();
@@ -40,7 +40,7 @@ public class Vol {
         
     }
     
-    Vol(String Nnom, String Ncodedepart, String Ncodearrivee, int heuredep, int minutedep, int duree){
+    public Vol(String Nnom, String Ncodedepart, String Ncodearrivee, int heuredep, int minutedep, int duree){
         nom = Nnom;
         code_aeroport_depart = Ncodedepart;
         code_aeroport_arrive = Ncodearrivee;
@@ -56,23 +56,7 @@ public class Vol {
         couleur = -1;
         composante = -1;
     }
-     public Vol(Vol v) {
-        this.id = v.id;
-        this.couleur = v.couleur;
-        this.composante = v.composante;
-        this.nom = v.nom;
-        this.code_aeroport_depart = v.code_aeroport_depart;
-        this.code_aeroport_arrive = v.code_aeroport_arrive;
-        this.heure_depart = v.heure_depart;
-        this.heure_arrive = v.heure_arrive;
-        this.minutes_depart = v.minutes_depart;
-        this.minutes_arrive = v.minutes_arrive;
-        this.duree = v.duree;
-        this.adjacents = new ArrayList<>(v.adjacents);
-        this.adjacentsid = new ArrayList<Integer>();
-        this.distance = v.distance;
-        this.traite = v.traite;
-    }
+    
     
     /**
      * retourne la minute a laquelle le vol part à partir de 00.00

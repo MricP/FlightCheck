@@ -231,7 +231,7 @@ public class InterfaceIHMSAE extends JFrame {
         drawLinesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                drawLinesBetweenWaypoints();
+                drawLinesAllVols();
             }
         });
         
@@ -252,17 +252,27 @@ public class InterfaceIHMSAE extends JFrame {
         add(exitButton, gbc);
 
         waypoints = new HashSet<>();
-
-        String filePath = "C:/Users/Aspect-PC/Desktop/SAE-IMH/sae_mathieu_petit_pirrera/DataTest/aeroports.txt";
-        listeAeroport = new ListeAeroport();
-
+        
         main.setAeroportlist();
         listeAeroport = main.getlisteaero();
         addAirportMarkers();
-        
+        //on rentre le fichier aeroport
         main.setvolaeroports();
         listeVol = main.getlisteVols();
+        
+        //on rentre le fichier Vol et on 
         listeVol = main.creationgraphe(listeVol);
+        
+        //
+        
+        //Vols en fonction de la couleur. param -> (couche ciblée)
+        //drawLinesVolsColor(5);
+        
+        //Vols en fonction de l'heure. parma -> (heure , minutes)
+        //drawLinesVolsHeure(13,1);
+        
+        
+     
         
         mapViewer.setOverlayPainter(compoundPainter);
         
@@ -292,7 +302,7 @@ public class InterfaceIHMSAE extends JFrame {
         System.out.println("Les aéroports sont maintenant affichés");
     }
     
-    private void drawLinesBetweenWaypoints() {
+    private void drawLinesAllVols() {
         if (waypoints.isEmpty()) {
             System.out.println("Aucun waypoint disponible pour dessiner des lignes.");
             return;
@@ -314,8 +324,85 @@ public class InterfaceIHMSAE extends JFrame {
             }
             
             RoutePainter routePainter = new RoutePainter(positions);
+            
             compoundPainter.addPainter(routePainter);
             
+        }
+        
+        
+        mapViewer.setOverlayPainter(compoundPainter);
+        mapViewer.repaint();
+        System.out.println("Les lignes entre les waypoints ont été dessinées");
+    }
+    
+    private void drawLinesVolsColor(int color) {
+        if (waypoints.isEmpty()) {
+            System.out.println("Aucun waypoint disponible pour dessiner des lignes.");
+            return;
+        }
+        if (!listeVol.goodcoloration()){
+            System.out.println("La coloration n'est pas bonne.");
+            return;
+        }
+        
+        
+        for (int i=0; i <  listeVol.taille();i++ ){
+            
+            
+            List<GeoPosition> positions = new ArrayList<>();
+            Vol vol= listeVol.getVolindice(i);
+            if (vol.getcouleur() == color){
+                String codedepart = vol.getcodedepart();
+                String codearrivée = vol.getcodearrive();
+                for (int y=0; y < codeaero.size();y++){
+                    if (codeaero.get(y).equals(codedepart)){
+                        positions.add(geoCondition.get(y));
+                    }else if(codeaero.get(y).equals(codearrivée)){
+                        positions.add(geoCondition.get(y));
+                    }
+                }
+
+                RoutePainter routePainter = new RoutePainter(positions);
+
+                compoundPainter.addPainter(routePainter);
+            }
+        }
+        
+        
+        mapViewer.setOverlayPainter(compoundPainter);
+        mapViewer.repaint();
+        System.out.println("Les lignes entre les waypoints ont été dessinées");
+    }
+    
+    private void drawLinesVolsHeure(int heure, int minute) {
+        if (waypoints.isEmpty()) {
+            System.out.println("Aucun waypoint disponible pour dessiner des lignes.");
+            return;
+        }
+        
+        
+        int totalminutes = heure * 60 + minute;
+        
+        for (int i=0; i <  listeVol.taille();i++ ){
+            
+            
+            List<GeoPosition> positions = new ArrayList<>();
+            Vol vol= listeVol.getVolindice(i);
+            if (vol.getminutesdepart() <= totalminutes && vol.getminutes_arrive() >= totalminutes){
+                String codedepart = vol.getcodedepart();
+                String codearrivée = vol.getcodearrive();
+                for (int y=0; y < codeaero.size();y++){
+                    if (codeaero.get(y).equals(codedepart)){
+                        positions.add(geoCondition.get(y));
+                    }else if(codeaero.get(y).equals(codearrivée)){
+                        positions.add(geoCondition.get(y));
+                    }
+                }
+
+                RoutePainter routePainter = new RoutePainter(positions);
+
+                compoundPainter.addPainter(routePainter);
+            }
         }
         
         

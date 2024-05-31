@@ -665,7 +665,7 @@ public class Main {
         LL.setcouleurdefault();
         
         
-        LL = FullGreedyColor(LL);
+        LL = FullGreedyColor_static(LL);
         LL.adresscouleurs(LL.getcouleurs());
         LL.MAXWelshPowell();
         /*
@@ -759,57 +759,37 @@ public class Main {
     }
     
     
-    
-    
-    public static ListeVols descent(ListeVols liste){
-        liste.RandomColoration(liste.getkmax());
+    public ListeVols FullGreedyColor(ListeVols list){
         
-        ListeVols meilleure_solution_voisine = new ListeVols(liste);
-        ListeVols solution_voisine;
+        int minconflits = Integer.MAX_VALUE;
+        ArrayList<Integer> best = list.getcouleurs();
+        int mincouleur = Integer.MAX_VALUE;
         
-        int meilleurConflit = liste.getnbconflit();
-        System.out.println("Début: " + meilleurConflit);
-        int nbConflits;
-        int cpt =0;
-        
-        for(int y=0; y < 90; y++){
-            for (int i = 0; i < liste.getArraylist().size(); i++) {
-                Vol v = liste.getVolindice(i);
-                
-                for (int couleur = 1; couleur <= liste.getkmax(); couleur++) {
-                    cpt++;
-                    
-                    if (couleur != v.getcouleur()) {
-                        solution_voisine = new ListeVols(meilleure_solution_voisine); // Créer une copie de la solution courante
-                        
-                        solution_voisine.getVolindice(i).setcouleur(couleur);
-                        nbConflits = solution_voisine.getnbconflit();
-                        
-                        if (nbConflits < meilleurConflit) {
-                            meilleure_solution_voisine = solution_voisine;
-                            meilleurConflit = nbConflits;
-                            System.out.println("Amélioration: " + meilleurConflit);
-                        }
-                        
-                    }
+        for (int y =0;y<list.getArraylist().size() * 9;y++){
+            list.setcouleurdefault();
+            Collections.shuffle(list.getArraylist());
+            list.GreedyColor();
+            if ((list.maxcouleur() < mincouleur) || (list.maxcouleur() == mincouleur && list.getnbconflit() < minconflits)){
+                mincouleur = list.maxcouleur();
+                System.out.println("min " +mincouleur);
+                best = list.getcouleurs();
+                if (mincouleur == list.getkmax()){
+                    minconflits = list.getnbconflit();
                 }
             }
-        }
-        
-        System.out.println("Fin: " + meilleurConflit);
-        System.out.println("Fin: " + meilleure_solution_voisine.getnbconflit());
-        System.out.println("compteur: " + cpt);
-        meilleure_solution_voisine.viewcolor();
-        return meilleure_solution_voisine;
             
+        }
+        list.adresscouleurs(best);
+        System.out.println("fin couleur min " +list.maxcouleur());
+        System.out.println("fin nb conflits  " +list.getnbconflit());
+        System.out.println("fin minconflits  " +minconflits);
         
-        
-        
-        
+        return list;
         
     }
+  
     
-    public static ListeVols FullGreedyColor(ListeVols list){
+    public static ListeVols FullGreedyColor_static(ListeVols list){
         
         int minconflits = Integer.MAX_VALUE;
         ArrayList<Integer> best = list.getcouleurs();

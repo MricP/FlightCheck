@@ -30,7 +30,7 @@ public class Aeroport {
     
     
     
-    Aeroport(String code, String Nlieu, int Ndegre1, int Nminute1, int Nseconde1, String Norientation1, int Ndegre2, int Nminute2, int Nseconde2, String Norientation2){
+    public Aeroport(String code, String Nlieu, int Ndegre1, int Nminute1, int Nseconde1, String Norientation1, int Ndegre2, int Nminute2, int Nseconde2, String Norientation2){
         codeaeroport = code;
         lieu  =Nlieu;
         degre1 = Ndegre1;

@@ -23,7 +23,7 @@ public class ListeVols {
     
     
     
-    ListeVols(){
+    public ListeVols(){
         tab = new ArrayList<Vol>();
         nbcomposante = -1;
         diametre = -1;
@@ -31,14 +31,7 @@ public class ListeVols {
         
     }
     
-    public ListeVols(ListeVols l) {
     
-        this.tab = new ArrayList<>(l.tab.size());
-        for (Vol vol : l.tab) {
-            this.tab.add(new Vol(vol)); // Supposant que la classe Vol a un constructeur de copie
-        }
-        
-    }
     public int getkmax(){
         return kmax;
     }
