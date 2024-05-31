@@ -1,37 +1,26 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package graphe;
 
-/**
- *
- * @author Robi6
- */
 import javax.swing.*;
 import java.awt.*;
 
-/**
- * La classe StatisticsFrame représente une fenêtre affichant diverses statistiques.
- */
 public class StatisticsFrame extends JFrame {
 
-    /**
-     * Constructeur par défaut de la classe StatisticsFrame.
-     * Initialise les composants de l'interface utilisateur et configure la fenêtre.
-     */
-    public StatisticsFrame() {
+    private JLabel degreMoyenLabel;
+    private JLabel nbComposantesLabel;
+    private JLabel nbNoeudsLabel;
+    private JLabel nbAretesLabel;
+    private JLabel diametreLabel;
+
+    public StatisticsFrame(Statistiques stats) {
         setTitle("Statistiques");
         setSize(600, 550);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
 
-        // Ajout d'une couleur de fond
         Color bgColor = Color.decode("#283C4F");
         getContentPane().setBackground(bgColor);
 
-        // Ajout du bouton quitter "Exit"
         JButton exitButton = new JButton("Exit");
         exitButton.setBackground(Color.decode("#007BFF"));
         exitButton.setForeground(Color.WHITE);
@@ -44,7 +33,6 @@ public class StatisticsFrame extends JFrame {
         gbc.anchor = GridBagConstraints.NORTHEAST;
         add(exitButton, gbc);
 
-        // Ajout du label du titre
         JLabel titleLabel = new JLabel("Statistiques");
         titleLabel.setForeground(Color.LIGHT_GRAY);
         titleLabel.setFont(new Font("Arial", Font.BOLD, 20));
@@ -55,9 +43,15 @@ public class StatisticsFrame extends JFrame {
         gbc.anchor = GridBagConstraints.CENTER;
         add(titleLabel, gbc);
 
-        // Labels et panneaux des statistiques
         String[] labels = {"Degré Moyen", "Composantes", "Nœuds", "Arrêtes", "Diamètre"};
-        int labelCount = labels.length;
+        JLabel[] statLabels = {degreMoyenLabel, nbComposantesLabel, nbNoeudsLabel, nbAretesLabel, diametreLabel};
+        String[] values = {
+            String.valueOf(stats.getDegreMoyen()),
+            String.valueOf(stats.getNbComposantes()),
+            String.valueOf(stats.getNbNoeuds()),
+            String.valueOf(stats.getNbAretes()),
+            String.valueOf(stats.getDiametre())
+        };
 
         gbc.gridwidth = 1;
         gbc.insets = new Insets(10, 10, 10, 10);
@@ -65,7 +59,7 @@ public class StatisticsFrame extends JFrame {
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
 
-        for (int i = 0; i < labelCount; i++) {
+        for (int i = 0; i < labels.length; i++) {
             gbc.gridx = i % 3;
             gbc.gridy = 1 + (i / 3) * 2;
 
@@ -77,24 +71,18 @@ public class StatisticsFrame extends JFrame {
             JPanel statPanel = new JPanel();
             statPanel.setPreferredSize(new Dimension(150, 150));
             statPanel.setBackground(Color.LIGHT_GRAY);
+
+            statLabels[i] = new JLabel(values[i], SwingConstants.CENTER);
+            statPanel.add(statLabels[i]);
             add(statPanel, gbc);
         }
     }
 
-    
-
-
-    /**
-     * Méthode principale pour exécuter l'application.
-     *
-     * @param args Les arguments de la ligne de commande.
-     */
-
     public static void main(String[] args) {
+        Statistiques stats = new Statistiques(3.5, 2, 100, 150, 12.3); // Exemple de statistiques
         SwingUtilities.invokeLater(() -> {
-            StatisticsFrame frame = new StatisticsFrame();
+            StatisticsFrame frame = new StatisticsFrame(stats);
             frame.setVisible(true);
         });
     }
 }
-
