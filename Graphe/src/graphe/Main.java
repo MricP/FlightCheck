@@ -255,7 +255,7 @@ public class Main {
     public static ListeVols CreateGraphText(String cheminfichiertxt){
         System.out.println("rentrez le chemin d'acces de votre graphe sous forme .txt:");
         String filtePath;
-        String FilePath = "C:/Users/Robi6/OneDrive/Bureau/DataTest/graph-test2.txt";
+        String FilePath = "C:/Users/Aspect-PC/Desktop/SAE-IMH/sae_mathieu_petit_pirrera/DataTest/graph-test2.txt";
         /*String FilePath = ent.nextLine();*/
         
         // Créer un objet File en utilisant le chemin du fichier
@@ -787,6 +787,16 @@ public class Main {
         return list;
         
     }
+    
+        public Statistiques calculerStatistiques() {
+        double degreMoyen = LV.getdegremoyen();
+        int nbComposantes = LV.getnbcomposante();
+        int nbNoeuds = LV.taille();
+        int nbAretes = LV.getnbarrte();
+        double diametre = LV.getdiametre(); // Assurez-vous que cette méthode existe et fonctionne
+
+        return new Statistiques(degreMoyen, nbComposantes, nbNoeuds, nbAretes, diametre);
+    }
   
     
     public static ListeVols FullGreedyColor_static(ListeVols list){
@@ -819,4 +829,6 @@ public class Main {
     }
     
     
+    
 }
+
