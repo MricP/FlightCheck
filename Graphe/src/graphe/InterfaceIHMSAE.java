@@ -18,6 +18,10 @@ import javax.swing.event.MouseInputListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -31,10 +35,11 @@ public class InterfaceIHMSAE extends JFrame {
     private ListeAeroport listeAeroport;
     private ListeVols listeVol;
     private Main main;
-    private CompoundPainter<JXMapViewer> compoundPainter ;
+    private CompoundPainter<JXMapViewer> compoundPainter;
     
     private ArrayList<String> codeaero;
     private ArrayList<GeoPosition> geoCondition;
+
     public InterfaceIHMSAE() {
         main = new Main();
         setTitle("FlightSAE 1.0.0");
@@ -238,7 +243,14 @@ public class InterfaceIHMSAE extends JFrame {
         aeroportsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                addAirportMarkers();
+                openFileChooser("aeroports");
+            }
+        });
+
+        volsButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                openFileChooser("vols");
             }
         });
 
@@ -253,29 +265,71 @@ public class InterfaceIHMSAE extends JFrame {
 
         waypoints = new HashSet<>();
         
+        // Initialisation avec des fichiers par défaut
         main.setAeroportlist();
         listeAeroport = main.getlisteaero();
         addAirportMarkers();
-        //on rentre le fichier aeroport
         main.setvolaeroports();
         listeVol = main.getlisteVols();
-        
-        //on rentre le fichier Vol et on 
         listeVol = main.creationgraphe(listeVol);
         
-        //
-        
-        //Vols en fonction de la couleur. param -> (couche ciblée)
-        //drawLinesVolsColor(5);
-        
-        //Vols en fonction de l'heure. parma -> (heure , minutes)
-        //drawLinesVolsHeure(13,1);
-        
-        
-     
-        
         mapViewer.setOverlayPainter(compoundPainter);
-        
+    }
+    
+    private void openFileChooser(String type) {
+        JFileChooser fileChooser = new JFileChooser();
+        int result = fileChooser.showOpenDialog(this);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fileChooser.getSelectedFile();
+            if ("aeroports".equals(type)) {
+                loadAeroportFile(selectedFile);
+            } else if ("vols".equals(type)) {
+                loadVolFile(selectedFile);
+            }
+        }
+    }
+
+    private void loadVolFile(File file) {
+        if (!file.exists()) {
+            System.out.println("Le fichier n'existe pas.");
+            return;
+        }
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            String line;
+            listeVol = new ListeVols();
+            while ((line = reader.readLine()) != null) {
+                String[] tab = line.split(";");
+                Vol vol = new Vol(tab[0], tab[1], tab[2], Integer.valueOf(tab[3]), Integer.valueOf(tab[4]), Integer.valueOf(tab[5]));
+                listeVol.ajMembre(vol);
+            }
+            listeVol = main.creationgraphe(listeVol);
+            System.out.println("Les vols sont maintenant chargés.");
+        } catch (IOException e) {
+            System.out.println("Erreur de lecture du fichier : " + e.getMessage());
+        }
+    }
+    
+    private void loadAeroportFile(File file) {
+        if (!file.exists()) {
+            System.out.println("Le fichier n'existe pas.");
+            return;
+        }
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            String line;
+            listeAeroport = new ListeAeroport();
+            codeaero.clear();
+            geoCondition.clear();
+            while ((line = reader.readLine()) != null) {
+                String[] tab = line.split(";");
+                Aeroport Aero = new Aeroport(tab[0],tab[1],Integer.valueOf(tab[2]),Integer.valueOf(tab[3]),Integer.valueOf(tab[4]),tab[5],Integer.valueOf(tab[6]),Integer.valueOf(tab[7]),Integer.valueOf(tab[8]),tab[9]);
+                listeAeroport.ajAeroport(Aero);
+            }
+            addAirportMarkers();
+        } catch (IOException e) {
+            System.out.println("Erreur de lecture du fichier : " + e.getMessage());
+        }
     }
     
     private void addAirportMarkers() {
@@ -285,6 +339,8 @@ public class InterfaceIHMSAE extends JFrame {
         }
 
         waypoints.clear();
+        codeaero.clear();
+        geoCondition.clear();
 
         for (int i = 0; i < listeAeroport.taillelisteaero(); i++) {
             Aeroport aeroport = listeAeroport.getaeroport(i);
@@ -308,27 +364,32 @@ public class InterfaceIHMSAE extends JFrame {
             return;
         }
         
-        for (int i=0; i <  listeVol.taille();i++ ){
-            
-
+        for (int i = 0; i < listeVol.taille(); i++) {
             List<GeoPosition> positions = new ArrayList<>();
-            Vol vol= listeVol.getVolindice(i);
+            Vol vol = listeVol.getVolindice(i);
             String codedepart = vol.getcodedepart();
-            String codearrivée = vol.getcodearrive();
-            for (int y=0; y < codeaero.size();y++){
-                if (codeaero.get(y).equals(codedepart)){
-                    positions.add(geoCondition.get(y));
-                }else if(codeaero.get(y).equals(codearrivée)){
-                    positions.add(geoCondition.get(y));
+            String codearrivee = vol.getcodearrive();
+            GeoPosition positionDepart = null;
+            GeoPosition positionArrivee = null;
+
+            for (int y = 0; y < codeaero.size(); y++) {
+                if (codeaero.get(y).equals(codedepart)) {
+                    positionDepart = geoCondition.get(y);
+                } else if (codeaero.get(y).equals(codearrivee)) {
+                    positionArrivee = geoCondition.get(y);
                 }
             }
-            
-            RoutePainter routePainter = new RoutePainter(positions);
-            
-            compoundPainter.addPainter(routePainter);
-            
+
+            if (positionDepart != null && positionArrivee != null) {
+                positions.add(positionDepart);
+                positions.add(positionArrivee);
+
+                RoutePainter routePainter = new RoutePainter(positions);
+                compoundPainter.addPainter(routePainter);
+            } else {
+                System.out.println("Erreur : Impossible de trouver les positions pour le vol " + vol.toString());
+            }
         }
-        
         
         mapViewer.setOverlayPainter(compoundPainter);
         mapViewer.repaint();
@@ -345,29 +406,34 @@ public class InterfaceIHMSAE extends JFrame {
             return;
         }
         
-        
-        for (int i=0; i <  listeVol.taille();i++ ){
-            
-            
+        for (int i = 0; i < listeVol.taille(); i++) {
             List<GeoPosition> positions = new ArrayList<>();
-            Vol vol= listeVol.getVolindice(i);
-            if (vol.getcouleur() == color){
+            Vol vol = listeVol.getVolindice(i);
+            if (vol.getcouleur() == color) {
                 String codedepart = vol.getcodedepart();
-                String codearrivée = vol.getcodearrive();
-                for (int y=0; y < codeaero.size();y++){
-                    if (codeaero.get(y).equals(codedepart)){
-                        positions.add(geoCondition.get(y));
-                    }else if(codeaero.get(y).equals(codearrivée)){
-                        positions.add(geoCondition.get(y));
+                String codearrivee = vol.getcodearrive();
+                GeoPosition positionDepart = null;
+                GeoPosition positionArrivee = null;
+
+                for (int y = 0; y < codeaero.size(); y++) {
+                    if (codeaero.get(y).equals(codedepart)) {
+                        positionDepart = geoCondition.get(y);
+                    } else if (codeaero.get(y).equals(codearrivee)) {
+                        positionArrivee = geoCondition.get(y);
                     }
                 }
 
-                RoutePainter routePainter = new RoutePainter(positions);
+                if (positionDepart != null && positionArrivee != null) {
+                    positions.add(positionDepart);
+                    positions.add(positionArrivee);
 
-                compoundPainter.addPainter(routePainter);
+                    RoutePainter routePainter = new RoutePainter(positions);
+                    compoundPainter.addPainter(routePainter);
+                } else {
+                    System.out.println("Erreur : Impossible de trouver les positions pour le vol " + vol.toString());
+                }
             }
         }
-        
         
         mapViewer.setOverlayPainter(compoundPainter);
         mapViewer.repaint();
@@ -380,31 +446,36 @@ public class InterfaceIHMSAE extends JFrame {
             return;
         }
         
-        
         int totalminutes = heure * 60 + minute;
         
-        for (int i=0; i <  listeVol.taille();i++ ){
-            
-            
+        for (int i = 0; i < listeVol.taille(); i++) {
             List<GeoPosition> positions = new ArrayList<>();
-            Vol vol= listeVol.getVolindice(i);
-            if (vol.getminutesdepart() <= totalminutes && vol.getminutes_arrive() >= totalminutes){
+            Vol vol = listeVol.getVolindice(i);
+            if (vol.getminutesdepart() <= totalminutes && vol.getminutes_arrive() >= totalminutes) {
                 String codedepart = vol.getcodedepart();
-                String codearrivée = vol.getcodearrive();
-                for (int y=0; y < codeaero.size();y++){
-                    if (codeaero.get(y).equals(codedepart)){
-                        positions.add(geoCondition.get(y));
-                    }else if(codeaero.get(y).equals(codearrivée)){
-                        positions.add(geoCondition.get(y));
+                String codearrivee = vol.getcodearrive();
+                GeoPosition positionDepart = null;
+                GeoPosition positionArrivee = null;
+
+                for (int y = 0; y < codeaero.size(); y++) {
+                    if (codeaero.get(y).equals(codedepart)) {
+                        positionDepart = geoCondition.get(y);
+                    } else if (codeaero.get(y).equals(codearrivee)) {
+                        positionArrivee = geoCondition.get(y);
                     }
                 }
 
-                RoutePainter routePainter = new RoutePainter(positions);
+                if (positionDepart != null && positionArrivee != null) {
+                    positions.add(positionDepart);
+                    positions.add(positionArrivee);
 
-                compoundPainter.addPainter(routePainter);
+                    RoutePainter routePainter = new RoutePainter(positions);
+                    compoundPainter.addPainter(routePainter);
+                } else {
+                    System.out.println("Erreur : Impossible de trouver les positions pour le vol " + vol.toString());
+                }
             }
         }
-        
         
         mapViewer.setOverlayPainter(compoundPainter);
         mapViewer.repaint();
@@ -432,5 +503,4 @@ public class InterfaceIHMSAE extends JFrame {
             }
         });
     }
-    
 }
