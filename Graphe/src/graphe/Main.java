@@ -415,7 +415,7 @@ public class Main {
         File file;
         // Chemin du fichier texte
         System.out.println("rentrez le chemin d'acces de votre fichier de vols en format .csv:");
-        FilePath = "C:/Users/Robi6/OneDrive/Bureau/DataTest/vol-test8.csv";
+        FilePath = "C:/Users/Aspect-PC/Desktop/SAE-IMH/sae_mathieu_petit_pirrera/DataTest/vol-test8.csv";
         /*FilePath = ent.nextLine();*/
         
         // Créer un objet File en utilisant le chemin du fichier
@@ -452,7 +452,7 @@ public class Main {
         File file;
         // Chemin du fichier texte
         System.out.println("rentrez le chemin d'acces de votre fichier de vols en format .csv:");
-        FilePath = "C:/Users/Robi6/OneDrive/Bureau/DataTest/vol-test8.csv";
+        FilePath = "C:/Users/Aspect-PC/Desktop/SAE-IMH/sae_mathieu_petit_pirrera/DataTest/vol-test8.csv";
         /*FilePath = ent.nextLine();*/
         
         // Créer un objet File en utilisant le chemin du fichier
@@ -491,7 +491,7 @@ public class Main {
     public void setAeroportlist(){
         System.out.println("rentrez le chemin d'acces de votre fichier deaéroports sous forme .txt:");
         String filtePath;
-        String FilePath = "C:/Users/Robi6/OneDrive/Bureau/aeroports.txt";
+        String FilePath = "C:/Users/Aspect-PC/Desktop/SAE-IMH/sae_mathieu_petit_pirrera/DataTest/aeroports.txt";
         /*String FilePath = ent.nextLine();*/
         
         // Créer un objet File en utilisant le chemin du fichier
@@ -526,7 +526,7 @@ public class Main {
     public static void setAeroportlist_static(){
         System.out.println("rentrez le chemin d'acces de votre fichier deaéroports sous forme .txt:");
         String filtePath;
-        String FilePath = "C:/Users/Robi6/OneDrive/Bureau/aeroports.txt";
+        String FilePath = "C:/Users/Aspect-PC/Desktop/SAE-IMH/sae_mathieu_petit_pirrera/DataTest/aeroports.txt";
         /*String FilePath = ent.nextLine();*/
         
         // Créer un objet File en utilisant le chemin du fichier
@@ -681,7 +681,7 @@ public class Main {
         
                 
         //System.out.println(LL.getdiametre());
-        System.out.println(org.graphstream.algorithm.Toolkit.diameter(G));
+//        System.out.println(org.graphstream.algorithm.Toolkit.diameter(G));
         System.out.println(LL.maxcouleur());
         
         G.display();
