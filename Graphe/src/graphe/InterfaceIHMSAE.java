@@ -221,7 +221,8 @@ public class InterfaceIHMSAE extends JFrame {
         statsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                StatisticsFrame statsFrame = new StatisticsFrame();
+                Statistiques stats = main.calculerStatistiques();
+                StatisticsFrame statsFrame = new StatisticsFrame(stats);
                 statsFrame.setVisible(true);
             }
         });
@@ -232,7 +233,7 @@ public class InterfaceIHMSAE extends JFrame {
                 JOptionPane.showMessageDialog(null, "Start button clicked!");
             }
         });
-            
+
         drawLinesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -243,14 +244,7 @@ public class InterfaceIHMSAE extends JFrame {
         aeroportsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                openFileChooser("aeroports");
-            }
-        });
-
-        volsButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                openFileChooser("vols");
+                openFileChooser();
             }
         });
 
@@ -276,37 +270,12 @@ public class InterfaceIHMSAE extends JFrame {
         mapViewer.setOverlayPainter(compoundPainter);
     }
     
-    private void openFileChooser(String type) {
+    private void openFileChooser() {
         JFileChooser fileChooser = new JFileChooser();
         int result = fileChooser.showOpenDialog(this);
         if (result == JFileChooser.APPROVE_OPTION) {
             File selectedFile = fileChooser.getSelectedFile();
-            if ("aeroports".equals(type)) {
-                loadAeroportFile(selectedFile);
-            } else if ("vols".equals(type)) {
-                loadVolFile(selectedFile);
-            }
-        }
-    }
-
-    private void loadVolFile(File file) {
-        if (!file.exists()) {
-            System.out.println("Le fichier n'existe pas.");
-            return;
-        }
-
-        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-            String line;
-            listeVol = new ListeVols();
-            while ((line = reader.readLine()) != null) {
-                String[] tab = line.split(";");
-                Vol vol = new Vol(tab[0], tab[1], tab[2], Integer.valueOf(tab[3]), Integer.valueOf(tab[4]), Integer.valueOf(tab[5]));
-                listeVol.ajMembre(vol);
-            }
-            listeVol = main.creationgraphe(listeVol);
-            System.out.println("Les vols sont maintenant chargés.");
-        } catch (IOException e) {
-            System.out.println("Erreur de lecture du fichier : " + e.getMessage());
+            loadAeroportFile(selectedFile);
         }
     }
     
