@@ -254,8 +254,9 @@ public class Main {
     
     public static ListeVols CreateGraphText(String cheminfichiertxt){
         System.out.println("rentrez le chemin d'acces de votre graphe sous forme .txt:");
-        String filtePath;
-        String FilePath = "C:/Users/Aspect-PC/Desktop/SAE-IMH/sae_mathieu_petit_pirrera/DataTest/graph-test2.txt";
+        
+        String FilePath = "C:/Users/Robi6/OneDrive/Bureau/DataTest/graph-test2.txt";
+        //String FilePath = "C:/Users/Aspect-PC/Desktop/SAE-IMH/sae_mathieu_petit_pirrera/DataTest/graph-test2.txt";
         /*String FilePath = ent.nextLine();*/
         
         // Créer un objet File en utilisant le chemin du fichier
@@ -315,10 +316,7 @@ public class Main {
     
     
         
-    
-    
-    
-    public static Graph getGraphStream(ListeVols liste) {
+    public static Graph getGraphStream_static(ListeVols liste) {
         Graph graph = new MultiGraph("multi graphe");
         ArrayList<String> couleurs = new ArrayList<String>();
         
@@ -330,61 +328,49 @@ public class Main {
             couleurs.add("fill-color: " + couleur + ";");
         }
         
-        // Ajouter les noms de couleurs standard à l'ArrayList
-        /*
-        couleurs.add("fill-color: red;");
-        couleurs.add("fill-color: green;");
-        couleurs.add("fill-color: blue;");
-        couleurs.add("fill-color: yellow;");
-        couleurs.add("fill-color: cyan;");
-        couleurs.add("fill-color: magenta;");
-        couleurs.add("fill-color: white;");
-        couleurs.add("fill-color: black;");
-        couleurs.add("fill-color: gray;");
-        couleurs.add("fill-color: lightgray;");
-        couleurs.add("fill-color: darkgray;");
-        couleurs.add("fill-color: orange;");
-        couleurs.add("fill-color: pink;");
-        couleurs.add("fill-color: brown;");
-        couleurs.add("fill-color: gold;");
-        couleurs.add("fill-color: silver;");
-        */
+        for (int i = 1; i <= liste.taille(); i++) {
+            graph.addNode(Integer.toString(i));
+            /*System.out.println(liste.getVolnumero(i).getcouleur());*/
+            if(liste.getVolnumero(i).getcouleur()>= 1){
+                graph.getNode(Integer.toString(i)).addAttribute("ui.style", couleurs.get(liste.getVolnumero(i).getcouleur()-1));
+            }
+        }
         
-        /*
-        couleurs.add("fill-color: #FF0000;");
-        couleurs.add("fill-color: #FF8000;");
-        couleurs.add("fill-color: #FFFF00;");
-        couleurs.add("fill-color: #80FF00;");
-        couleurs.add("fill-color: #00FF00;");
-        couleurs.add("fill-color: #00FF80;");
-        couleurs.add("fill-color: #00FFFF;");
-        couleurs.add("fill-color: #0080FF;");
-        couleurs.add("fill-color: #0000FF;");
-        couleurs.add("fill-color: #8000FF;");
-        couleurs.add("fill-color: #FF00FF;");
-        couleurs.add("fill-color: #FF0080;");
-        couleurs.add("fill-color: #FF8080;");
-        couleurs.add("fill-color: #FFFF80;");
-        couleurs.add("fill-color: #80FF80;");
-        couleurs.add("fill-color: #80FFFF;");
-        couleurs.add("fill-color: #8080FF;");
-        couleurs.add("fill-color: #FF80FF;");
-        couleurs.add("fill-color: #FFB6C1;");
-        couleurs.add("fill-color: #FFA07A;");
-        couleurs.add("fill-color: #FFD700;");
-        couleurs.add("fill-color: #ADFF2F;");
-        couleurs.add("fill-color: #00FA9A;");
-        couleurs.add("fill-color: #4682B4;");
-        couleurs.add("fill-color: #6A5ACD;");
-        couleurs.add("fill-color: #EE82EE;");
-        couleurs.add("fill-color: #D2691E;");
-        couleurs.add("fill-color: #CD5C5C;");
-        couleurs.add("fill-color: #8FBC8F;");
-        couleurs.add("fill-color: #20B2AA;");
-        */
+        // Ajout des arêtes au graphe
+        int cpt =0;
+        for (int i = 1; i <= liste.taille(); i++) {
+            Vol v = liste.getVolnumero(i);
+            for (int y = 0; y < v.getnbadjacents(); y++) {
+                Vol v2 = v.getAdjacentindice(y);
+                if (!graph.getNode(Integer.toString(i)).hasEdgeBetween(Integer.toString(v2.getid()))) {
+                    graph.addEdge("edge_" + i + "_" + v2.getid(), Integer.toString(i), Integer.toString(v2.getid()));
+                    cpt++;
+                }
+            }
+        }
         
-        //System.out.println("feur");
-        // Ajout des sommets au graphe
+        return graph;
+    }
+    
+    public double getDiametre(ListeVols liste){
+        Graph G = getGraphStream_static(liste);
+        return org.graphstream.algorithm.Toolkit.diameter(G);
+    }
+    
+    
+    
+    public Graph getGraphStream(ListeVols liste) {
+        Graph graph = new MultiGraph("multi graphe");
+        ArrayList<String> couleurs = new ArrayList<String>();
+        
+        Random random = new Random();
+        
+        for (int i = 0; i < liste.maxcouleur(); i++) {
+            // Génération d'une couleur aléatoire
+            String couleur = String.format("#%02x%02x%02x", random.nextInt(256), random.nextInt(256), random.nextInt(256));
+            couleurs.add("fill-color: " + couleur + ";");
+        }
+        
         for (int i = 1; i <= liste.taille(); i++) {
             graph.addNode(Integer.toString(i));
             /*System.out.println(liste.getVolnumero(i).getcouleur());*/
@@ -403,9 +389,6 @@ public class Main {
                 }
             }
         }
-        /*System.out.println(cpt);*/
-        
-        
         
         return graph;
     }
@@ -415,7 +398,8 @@ public class Main {
         File file;
         // Chemin du fichier texte
         System.out.println("rentrez le chemin d'acces de votre fichier de vols en format .csv:");
-        FilePath = "C:/Users/Aspect-PC/Desktop/SAE-IMH/sae_mathieu_petit_pirrera/DataTest/vol-test8.csv";
+        FilePath = "C:/Users/Robi6/OneDrive/Bureau/DataTest/vol-test8.csv";
+        //FilePath = "C:/Users/Aspect-PC/Desktop/SAE-IMH/sae_mathieu_petit_pirrera/DataTest/vol-test8.csv";
         /*FilePath = ent.nextLine();*/
         
         // Créer un objet File en utilisant le chemin du fichier
@@ -452,7 +436,8 @@ public class Main {
         File file;
         // Chemin du fichier texte
         System.out.println("rentrez le chemin d'acces de votre fichier de vols en format .csv:");
-        FilePath = "C:/Users/Aspect-PC/Desktop/SAE-IMH/sae_mathieu_petit_pirrera/DataTest/vol-test8.csv";
+        FilePath = "C:/Users/Robi6/OneDrive/Bureau/DataTest/vol-test8.csv";
+        //FilePath = "C:/Users/Aspect-PC/Desktop/SAE-IMH/sae_mathieu_petit_pirrera/DataTest/vol-test8.csv";
         /*FilePath = ent.nextLine();*/
         
         // Créer un objet File en utilisant le chemin du fichier
@@ -490,8 +475,9 @@ public class Main {
     
     public void setAeroportlist(){
         System.out.println("rentrez le chemin d'acces de votre fichier deaéroports sous forme .txt:");
-        String filtePath;
-        String FilePath = "C:/Users/Aspect-PC/Desktop/SAE-IMH/sae_mathieu_petit_pirrera/DataTest/aeroports.txt";
+        
+        String FilePath = "C:/Users/Robi6/OneDrive/Bureau/aeroports.txt";
+        //String FilePath = "C:/Users/Aspect-PC/Desktop/SAE-IMH/sae_mathieu_petit_pirrera/DataTest/aeroports.txt";
         /*String FilePath = ent.nextLine();*/
         
         // Créer un objet File en utilisant le chemin du fichier
@@ -675,7 +661,7 @@ public class Main {
         LL.adresscouleurs(LL.getcouleurs());
         System.out.println(LL.goodcoloration());
         
-        Graph G = getGraphStream(LL);
+        Graph G = getGraphStream_static(LL);
         System.out.println(LL.getnbconflit());
         System.out.println(LL.goodcoloration());
         

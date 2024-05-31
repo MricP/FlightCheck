@@ -217,7 +217,7 @@ public class InterfaceIHMSAE extends JFrame {
         gbc.anchor = GridBagConstraints.SOUTH;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         add(bottomPanel, gbc);
-
+        
         statsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -268,6 +268,12 @@ public class InterfaceIHMSAE extends JFrame {
         listeVol = main.creationgraphe(listeVol);
         
         mapViewer.setOverlayPainter(compoundPainter);
+        
+        
+        //le diametre en plsu rapide
+        main.getDiametre(listeVol);
+        System.out.println(main.getDiametre(listeVol));
+        
     }
     
     private void openFileChooser() {
