@@ -36,12 +36,14 @@ public class InterfaceIHMSAE extends JFrame {
     private ListeVols listeVol;
     private Main main;
     private CompoundPainter<JXMapViewer> compoundPainter;
-    
+    private static List<Color> colorList;
     private ArrayList<String> codeaero;
     private ArrayList<GeoPosition> geoCondition;
+    private JCheckBox colorationCheckbox;
 
     public InterfaceIHMSAE() {
         main = new Main();
+        colorList = new ArrayList<>();
         setTitle("FlightSAE 1.0.0");
         setSize(1000, 800);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -55,27 +57,18 @@ public class InterfaceIHMSAE extends JFrame {
         geoCondition = new ArrayList<>();
         
         mapViewer = new JXMapViewer();
-        TileFactoryInfo info = new OSMTileFactoryInfo() {
-            @Override
-            public int getMinimumZoomLevel() {
-                return 5;
-            }
-
-            @Override
-            public int getMaximumZoomLevel() {
-                return 19;
-            }
-        };
+        TileFactoryInfo info = new OSMTileFactoryInfo();
+        
         DefaultTileFactory tileFactory = new DefaultTileFactory(info);
         mapViewer.setTileFactory(tileFactory);
 
         GeoPosition france = new GeoPosition(46.603354, 1.888334);
-        mapViewer.setZoom(7);
+        mapViewer.setZoom(13);
         mapViewer.setAddressLocation(france);
 
-        MouseInputListener mia = new PanMouseInputListener(mapViewer);
-        mapViewer.addMouseListener(mia);
-        mapViewer.addMouseMotionListener(mia);
+        MouseInputListener mil = new PanMouseInputListener(mapViewer);
+        mapViewer.addMouseListener(mil);
+        mapViewer.addMouseMotionListener(mil);
         mapViewer.addMouseWheelListener(new ZoomMouseWheelListenerCenter(mapViewer));
         mapViewer.addKeyListener(new PanKeyListener(mapViewer));
         mapViewer.addMouseListener(new CenterMapListener(mapViewer));
@@ -149,7 +142,7 @@ public class InterfaceIHMSAE extends JFrame {
         rc.gridy = 1;
         rightControlPanel.add(conflitsCheckbox, rc);
 
-        JCheckBox colorationCheckbox = new JCheckBox("coloration");
+        colorationCheckbox = new JCheckBox("coloration");
         styleCheckBox(colorationCheckbox, bgColor);
         rc.gridx = 0;
         rc.gridy = 2;
@@ -171,16 +164,17 @@ public class InterfaceIHMSAE extends JFrame {
         GridBagConstraints b = new GridBagConstraints();
         b.insets = new Insets(5, 5, 5, 5);
         b.fill = GridBagConstraints.HORIZONTAL;
-
+/*
         JButton startButton = new JButton("Start");
         styleButton(startButton, bgColor);
         b.gridx = 1;
         b.gridy = 0;
         bottomPanel.add(startButton, b);
+*/
 
         JButton drawLinesButton = new JButton("Draw Lines");
         styleButton(drawLinesButton, bgColor);
-        b.gridx = 2;
+        b.gridx = 1;
         b.gridy = 0;
         bottomPanel.add(drawLinesButton, b);
 
@@ -226,18 +220,23 @@ public class InterfaceIHMSAE extends JFrame {
                 statsFrame.setVisible(true);
             }
         });
-
+ /*
         startButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JOptionPane.showMessageDialog(null, "Start button clicked!");
             }
         });
+*/
 
         drawLinesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                drawLinesAllVols();
+                if (colorationCheckbox.isSelected()) {
+                    drawLinesAllVolsWithColoration();
+                } else {
+                    drawLinesAllVolsInBlue();
+                }
             }
         });
         
@@ -252,6 +251,17 @@ public class InterfaceIHMSAE extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 openFileChooserVols();
+            }
+        });
+
+        colorationCheckbox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (colorationCheckbox.isSelected()) {
+                    drawLinesAllVolsWithColoration();
+                } else {
+                    drawLinesAllVolsInBlue();
+                }
             }
         });
 
@@ -272,12 +282,20 @@ public class InterfaceIHMSAE extends JFrame {
         addAirportMarkers();
         main.setvolaeroports();
         listeVol = main.getlisteVols();
+        
+        //permet de mettre des couleurs dans notre liste de couleurs
+        setcolorlist();
+        
+        //crée le grpahe avec l'ajout des arretes
         listeVol = main.creationgraphe(listeVol);
+        
+        //colorie le graphe
+        listeVol  = main.FullGreedyColor(listeVol);
         
         mapViewer.setOverlayPainter(compoundPainter);
         
         
-        //le diametre en plsu rapide
+        //le diametre en plus rapide
         main.getDiametre(listeVol);
         System.out.println(main.getDiametre(listeVol));
         
@@ -338,7 +356,7 @@ public class InterfaceIHMSAE extends JFrame {
                 listeVol.ajMembre(vol);
             }
             listeVol = main.creationgraphe(listeVol);
-            drawLinesAllVols();
+            drawLinesAllVolsInBlue();
         } catch (IOException e) {
             System.out.println("Erreur de lecture du fichier : " + e.getMessage());
         }
@@ -370,129 +388,93 @@ public class InterfaceIHMSAE extends JFrame {
         System.out.println("Les aéroports sont maintenant affichés");
     }
     
-    private void drawLinesAllVols() {
-        if (waypoints.isEmpty()) {
-            System.out.println("Aucun waypoint disponible pour dessiner des lignes.");
-            return;
-        }
-        
-        for (int i = 0; i < listeVol.taille(); i++) {
-            List<GeoPosition> positions = new ArrayList<>();
-            Vol vol = listeVol.getVolindice(i);
-            String codedepart = vol.getcodedepart();
-            String codearrivee = vol.getcodearrive();
-            GeoPosition positionDepart = null;
-            GeoPosition positionArrivee = null;
-
-            for (int y = 0; y < codeaero.size(); y++) {
-                if (codeaero.get(y).equals(codedepart)) {
-                    positionDepart = geoCondition.get(y);
-                } else if (codeaero.get(y).equals(codearrivee)) {
-                    positionArrivee = geoCondition.get(y);
-                }
-            }
-
-            if (positionDepart != null && positionArrivee != null) {
-                positions.add(positionDepart);
-                positions.add(positionArrivee);
-
-                RoutePainter routePainter = new RoutePainter(positions);
-                compoundPainter.addPainter(routePainter);
-            } else {
-                System.out.println("Erreur : Impossible de trouver les positions pour le vol " + vol.toString());
-            }
-        }
-        
-        mapViewer.setOverlayPainter(compoundPainter);
-        mapViewer.repaint();
-        System.out.println("Les lignes entre les waypoints ont été dessinées");
+private void drawLinesAllVolsInBlue() {
+    if (waypoints.isEmpty()) {
+        System.out.println("Aucun waypoint disponible pour dessiner des lignes.");
+        return;
     }
-    
-    private void drawLinesVolsColor(int color) {
-        if (waypoints.isEmpty()) {
-            System.out.println("Aucun waypoint disponible pour dessiner des lignes.");
-            return;
-        }
-        if (!listeVol.goodcoloration()){
-            System.out.println("La coloration n'est pas bonne.");
-            return;
-        }
-        
-        for (int i = 0; i < listeVol.taille(); i++) {
-            List<GeoPosition> positions = new ArrayList<>();
-            Vol vol = listeVol.getVolindice(i);
-            if (vol.getcouleur() == color) {
-                String codedepart = vol.getcodedepart();
-                String codearrivee = vol.getcodearrive();
-                GeoPosition positionDepart = null;
-                GeoPosition positionArrivee = null;
 
-                for (int y = 0; y < codeaero.size(); y++) {
-                    if (codeaero.get(y).equals(codedepart)) {
-                        positionDepart = geoCondition.get(y);
-                    } else if (codeaero.get(y).equals(codearrivee)) {
-                        positionArrivee = geoCondition.get(y);
-                    }
-                }
+    compoundPainter = new CompoundPainter<>(); // Crée une nouvelle instance de CompoundPainter
 
-                if (positionDepart != null && positionArrivee != null) {
-                    positions.add(positionDepart);
-                    positions.add(positionArrivee);
+    for (int i = 0; i < listeVol.taille(); i++) {
+        List<GeoPosition> positions = new ArrayList<>();
+        Vol vol = listeVol.getVolindice(i);
+        String codedepart = vol.getcodedepart();
+        String codearrivee = vol.getcodearrive();
+        GeoPosition positionDepart = null;
+        GeoPosition positionArrivee = null;
 
-                    RoutePainter routePainter = new RoutePainter(positions);
-                    compoundPainter.addPainter(routePainter);
-                } else {
-                    System.out.println("Erreur : Impossible de trouver les positions pour le vol " + vol.toString());
-                }
+        for (int y = 0; y < codeaero.size(); y++) {
+            if (codeaero.get(y).equals(codedepart)) {
+                positionDepart = geoCondition.get(y);
+            } else if (codeaero.get(y).equals(codearrivee)) {
+                positionArrivee = geoCondition.get(y);
             }
         }
-        
-        mapViewer.setOverlayPainter(compoundPainter);
-        mapViewer.repaint();
-        System.out.println("Les lignes entre les waypoints ont été dessinées");
-    }
-    
-    private void drawLinesVolsHeure(int heure, int minute) {
-        if (waypoints.isEmpty()) {
-            System.out.println("Aucun waypoint disponible pour dessiner des lignes.");
-            return;
+
+        if (positionDepart != null && positionArrivee != null) {
+            positions.add(positionDepart);
+            positions.add(positionArrivee);
+
+            RoutePainter routePainter = new RoutePainter(positions, Color.BLUE);
+            compoundPainter.addPainter(routePainter);
+        } else {
+            System.out.println("Erreur : Impossible de trouver les positions pour le vol " + vol.toString());
         }
-        
-        int totalminutes = heure * 60 + minute;
-        
-        for (int i = 0; i < listeVol.taille(); i++) {
-            List<GeoPosition> positions = new ArrayList<>();
-            Vol vol = listeVol.getVolindice(i);
-            if (vol.getminutesdepart() <= totalminutes && vol.getminutes_arrive() >= totalminutes) {
-                String codedepart = vol.getcodedepart();
-                String codearrivee = vol.getcodearrive();
-                GeoPosition positionDepart = null;
-                GeoPosition positionArrivee = null;
+    }
 
-                for (int y = 0; y < codeaero.size(); y++) {
-                    if (codeaero.get(y).equals(codedepart)) {
-                        positionDepart = geoCondition.get(y);
-                    } else if (codeaero.get(y).equals(codearrivee)) {
-                        positionArrivee = geoCondition.get(y);
-                    }
-                }
+    WaypointPainter<Waypoint> waypointPainter = new WaypointPainter<>();
+    waypointPainter.setWaypoints(waypoints);
+    compoundPainter.addPainter(waypointPainter);
 
-                if (positionDepart != null && positionArrivee != null) {
-                    positions.add(positionDepart);
-                    positions.add(positionArrivee);
+    mapViewer.setOverlayPainter(compoundPainter);
+    mapViewer.repaint();
+    System.out.println("Les lignes entre les waypoints ont été dessinées en bleu");
+}
 
-                    RoutePainter routePainter = new RoutePainter(positions);
-                    compoundPainter.addPainter(routePainter);
-                } else {
-                    System.out.println("Erreur : Impossible de trouver les positions pour le vol " + vol.toString());
-                }
+private void drawLinesAllVolsWithColoration() {
+    if (waypoints.isEmpty()) {
+        System.out.println("Aucun waypoint disponible pour dessiner des lignes.");
+        return;
+    }
+
+    compoundPainter = new CompoundPainter<>();
+
+    for (int i = 0; i < listeVol.taille(); i++) {
+        List<GeoPosition> positions = new ArrayList<>();
+        Vol vol = listeVol.getVolindice(i);
+        String codedepart = vol.getcodedepart();
+        String codearrivee = vol.getcodearrive();
+        GeoPosition positionDepart = null;
+        GeoPosition positionArrivee = null;
+
+        for (int y = 0; y < codeaero.size(); y++) {
+            if (codeaero.get(y).equals(codedepart)) {
+                positionDepart = geoCondition.get(y);
+            } else if (codeaero.get(y).equals(codearrivee)) {
+                positionArrivee = geoCondition.get(y);
             }
         }
-        
-        mapViewer.setOverlayPainter(compoundPainter);
-        mapViewer.repaint();
-        System.out.println("Les lignes entre les waypoints ont été dessinées");
+
+        if (positionDepart != null && positionArrivee != null) {
+            positions.add(positionDepart);
+            positions.add(positionArrivee);
+
+            RoutePainter routePainter = new RoutePainter(positions, colorList.get(vol.getcouleur() + 1));
+            compoundPainter.addPainter(routePainter);
+        } else {
+            System.out.println("Erreur : Impossible de trouver les positions pour le vol " + vol.toString());
+        }
     }
+
+    WaypointPainter<Waypoint> waypointPainter = new WaypointPainter<>();
+    waypointPainter.setWaypoints(waypoints);
+    compoundPainter.addPainter(waypointPainter);
+
+    mapViewer.setOverlayPainter(compoundPainter);
+    mapViewer.repaint();
+    System.out.println("Les lignes entre les waypoints ont été dessinées avec coloration");
+}
     
     private void styleButton(JButton button, Color bgColor) {
         button.setBackground(bgColor);
@@ -514,5 +496,20 @@ public class InterfaceIHMSAE extends JFrame {
                 new InterfaceIHMSAE().setVisible(true);
             }
         });
+    }
+    
+    private static Color getRandomColor() {
+        int red = (int) (Math.random() * 256);
+        int green = (int) (Math.random() * 256);
+        int blue = (int) (Math.random() * 256);
+
+        return new Color(red, green, blue);
+    }
+    
+    private static void setcolorlist(){
+        for (int i = 0; i < 100; i++) {
+            Color randomColor = getRandomColor();
+            colorList.add(randomColor);
+        }
     }
 }

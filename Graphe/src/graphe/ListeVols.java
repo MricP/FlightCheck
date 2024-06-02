@@ -455,25 +455,6 @@ public class ListeVols {
         return this;
     }
     
-    /*
-    public ArrayList<Integer> getcouleurs(){
-        ArrayList<Integer> list = new  ArrayList<>();
-        for (int i=0; i < tab.size(); i++){
-            list.add(tab.get(i).getcouleur());
-        }
-        return list;
-    }
-    
-    
-    //prend un eliste comprenant des 
-    public void adresscouleurs(ArrayList<Integer> list){
-        
-        for (int i=0; i < tab.size(); i++){
-           tab.get(i).setcouleur(list.get(i));
-        }
-        
-    }
-    */
     public  Vol getVolId(int id){
         for (int i=0; i < tab.size(); i++){
            if (tab.get(i).getid() == id){

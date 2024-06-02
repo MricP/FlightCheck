@@ -79,7 +79,7 @@ public class Main {
         
         int taille = liste.taille();
         int gpt = 0;
-        System.out.println("taille  : "+ liste.taille());
+        //System.out.println("taille  : "+ liste.taille());
         int cpt=0;
         for (int i = 0; i< taille; i++){
             for (int y=i+1; y < taille; y++){
@@ -95,8 +95,8 @@ public class Main {
                 }
             }
         }     
-        System.out.println("compteur  : "+ cpt);
-        System.out.println("nbarretes  : "+ gpt);
+        //System.out.println("compteur  : "+ cpt);
+        //System.out.println("nbarretes  : "+ gpt);
         return liste;
         
     }
@@ -118,7 +118,7 @@ public class Main {
         
         int taille = liste.taille();
         int gpt = 0;
-        System.out.println("taille  : "+ liste.taille());
+        //System.out.println("taille  : "+ liste.taille());
         int cpt=0;
         for (int i = 0; i< taille; i++){
             for (int y=i+1; y < taille; y++){
@@ -134,8 +134,8 @@ public class Main {
                 }
             }
         }     
-        System.out.println("compteur  : "+ cpt);
-        System.out.println("nbarretes  : "+ gpt);
+        //System.out.println("compteur  : "+ cpt);
+        //System.out.println("nbarretes  : "+ gpt);
         return liste;
         
     }
@@ -255,7 +255,7 @@ public class Main {
     public static ListeVols CreateGraphText(String cheminfichiertxt){
         System.out.println("rentrez le chemin d'acces de votre graphe sous forme .txt:");
         
-        String FilePath = "C:/Users/Robi6/OneDrive/Bureau/DataTest/graph-test2.txt";
+        String FilePath = "C:/Users/Aspect-PC/Desktop/SAE-GIT/sae_mathieu_petit_pirrera/DataTest/graph-test2.txt";
         //String FilePath = "C:/Users/Aspect-PC/Desktop/SAE-IMH/sae_mathieu_petit_pirrera/DataTest/graph-test2.txt";
         /*String FilePath = ent.nextLine();*/
         
@@ -398,7 +398,7 @@ public class Main {
         File file;
         // Chemin du fichier texte
         System.out.println("rentrez le chemin d'acces de votre fichier de vols en format .csv:");
-        FilePath = "C:/Users/Robi6/OneDrive/Bureau/DataTest/vol-test8.csv";
+        FilePath = "C:/Users/Aspect-PC/Desktop/SAE-GIT/sae_mathieu_petit_pirrera/DataTest/vol-test8.csv";
         //FilePath = "C:/Users/Aspect-PC/Desktop/SAE-IMH/sae_mathieu_petit_pirrera/DataTest/vol-test8.csv";
         /*FilePath = ent.nextLine();*/
         
@@ -436,7 +436,7 @@ public class Main {
         File file;
         // Chemin du fichier texte
         System.out.println("rentrez le chemin d'acces de votre fichier de vols en format .csv:");
-        FilePath = "C:/Users/Robi6/OneDrive/Bureau/DataTest/vol-test8.csv";
+        FilePath = "C:/Users/Aspect-PC/Desktop/SAE-GIT/sae_mathieu_petit_pirrera/DataTest/vol-test8.csv";
         //FilePath = "C:/Users/Aspect-PC/Desktop/SAE-IMH/sae_mathieu_petit_pirrera/DataTest/vol-test8.csv";
         /*FilePath = ent.nextLine();*/
         
@@ -476,7 +476,7 @@ public class Main {
     public void setAeroportlist(){
         System.out.println("rentrez le chemin d'acces de votre fichier deaéroports sous forme .txt:");
         
-        String FilePath = "C:/Users/Robi6/OneDrive/Bureau/aeroports.txt";
+        String FilePath = "C:/Users/Aspect-PC/Desktop/SAE-GIT/sae_mathieu_petit_pirrera/DataTest/aeroports.txt";
         //String FilePath = "C:/Users/Aspect-PC/Desktop/SAE-IMH/sae_mathieu_petit_pirrera/DataTest/aeroports.txt";
         /*String FilePath = ent.nextLine();*/
         
@@ -512,7 +512,7 @@ public class Main {
     public static void setAeroportlist_static(){
         System.out.println("rentrez le chemin d'acces de votre fichier deaéroports sous forme .txt:");
         String filtePath;
-        String FilePath = "C:/Users/Aspect-PC/Desktop/SAE-IMH/sae_mathieu_petit_pirrera/DataTest/aeroports.txt";
+        String FilePath = "C:/Users/Aspect-PC/Desktop/SAE-GIT/sae_mathieu_petit_pirrera/DataTest/aeroports.txt";
         /*String FilePath = ent.nextLine();*/
         
         // Créer un objet File en utilisant le chemin du fichier
@@ -558,40 +558,40 @@ public class Main {
         LV  = creationgraphe_static(LV);
         
         
-        System.out.println("feur");
+        //System.out.println("feur");
         LV.WelshPowell();
-        System.out.println(LV.goodcoloration());
-        System.out.println("feur");
+        //System.out.println(LV.goodcoloration());
+        //System.out.println("feur");
         
-        System.out.println("feur");
-        System.out.println(LV.maxcouleur());
+        //System.out.println("feur");
+        //System.out.println(LV.maxcouleur());
         LV.setcouleurdefault();
         
         
         
         LV.GreedyColor();
-        System.out.println(LV.goodcoloration());
-        System.out.println("feur");
+        //System.out.println(LV.goodcoloration());
+        //System.out.println("feur");
         
-        System.out.println("feur");
-        System.out.println(LV.maxcouleur());
+        //System.out.println("feur");
+        //System.out.println(LV.maxcouleur());
         LV.setcouleurdefault();
         
         LV.Dsatur();
-        System.out.println(LV.goodcoloration());
-        System.out.println("feur");
+        //System.out.println(LV.goodcoloration());
+        //System.out.println("feur");
         
-        System.out.println("fedfvergergr");
-        System.out.println(LV.maxcouleur());
+        //System.out.println("fedfvergergr");
+        //System.out.println(LV.maxcouleur());
         
         
         
         /*System.out.println(intersection(LV.accesMembre("AF000090"),LV.accesMembre("AF000132")));*/
         
         
-        System.out.println("nbarretes : "+ LV.getnbarrte());
-        System.out.println("degre moyen : "+LV.getdegremoyen());
-        System.out.println("nb composantes  : "+LV.getnbcomposante());
+        //System.out.println("nbarretes : "+ LV.getnbarrte());
+        //System.out.println("degre moyen : "+LV.getdegremoyen());
+        //System.out.println("nb composantes  : "+LV.getnbcomposante());
         //System.out.println(LV.getnbcomposantede(4));
         
         
@@ -619,23 +619,23 @@ public class Main {
         
         
         LL.tostring();
-        System.out.println("nbarretes : "+ LL.getnbarrte());
-        System.out.println("degre moyen : "+LL.getdegremoyen());
-        System.out.println("nb composantes  : "+LL.getnbcomposante());
+        //System.out.println("nbarretes : "+ LL.getnbarrte());
+        //System.out.println("degre moyen : "+LL.getdegremoyen());
+        //System.out.println("nb composantes  : "+LL.getnbcomposante());
         
         LL.Dsatur();
-        System.out.println(LL.goodcoloration());
-        System.out.println("feur");
+        //System.out.println(LL.goodcoloration());
+        //System.out.println("feur");
         
-        System.out.println("fedfvergergr");
-        System.out.println("nb de couleurs : "+LL.maxcouleur());
-        System.out.println("kmax :  "+ LL.getkmax());
+        //System.out.println("fedfvergergr");
+        //System.out.println("nb de couleurs : "+LL.maxcouleur());
+        //System.out.println("kmax :  "+ LL.getkmax());
         LL.setcouleurdefault();
         
         LL.WelshPowell();
-        System.out.println("nb de couleurs : "+LL.maxcouleur());
-        System.out.println(LL.taille());
-        System.out.println(LL.getnbarrte());
+        //System.out.println("nb de couleurs : "+LL.maxcouleur());
+        //System.out.println(LL.taille());
+        //System.out.println(LL.getnbarrte());
         
         /*
         LL.setcouleurdefault();
@@ -659,88 +659,18 @@ public class Main {
         LL.MAXWelshPowell();
         */
         LL.adresscouleurs(LL.getcouleurs());
-        System.out.println(LL.goodcoloration());
+        //System.out.println(LL.goodcoloration());
         
         Graph G = getGraphStream_static(LL);
-        System.out.println(LL.getnbconflit());
-        System.out.println(LL.goodcoloration());
+        //System.out.println(LL.getnbconflit());
+        //System.out.println(LL.goodcoloration());
         
                 
         //System.out.println(LL.getdiametre());
 //        System.out.println(org.graphstream.algorithm.Toolkit.diameter(G));
-        System.out.println(LL.maxcouleur());
+        //System.out.println(LL.maxcouleur());
         
         G.display();
-        
-        
-        
-        
-        
-        
-        
-        //Partie carte
-        // Créer la fenêtre principale
-        
-        /*
-        JFrame frame = new JFrame("Carte du Monde");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(800, 600);
-        
-        // Créer le composant JMapViewer
-        JMapViewer mapViewer = new JMapViewer();
-        frame.add(mapViewer, BorderLayout.CENTER);
-        
-        // Ajouter des points sur la carte
-        MapMarkerDot point;
-        Aeroport A ;
-        
-        List<MapMarkerDot> points = new ArrayList<>();
-        for (int i=0; i < L.taillelisteaero(); i++){
-            A = L.getaeroport(i);
-            point = new MapMarkerDot(A.getlongitude(), A.getlatitude());
-            point.setName(A.getcode());
-            points.add(point);
-            //System.out.println(A.getlatitude()+ "    "+ A.getlongitude());
-            mapViewer.addMapMarker(point);
-            
-        }
-        
-        for (int i=0; i < points.size();i++){
-            System.out.println(points.get(i).getName());
-        }
-        
-        Coordinate point1 = points.get(2).getCoordinate();
-        Coordinate point2 = points.get(3).getCoordinate();
-        Coordinate point3 = points.get(4).getCoordinate();
-
-        List<Coordinate> route = new ArrayList<>();
-        route.add(point1);
-        route.add(point2);
-        route.add(point2);
-        
-        MapPolygonImpl polyline = new MapPolygonImpl(route);
-        polyline.setColor(Color.RED);
-        mapViewer.addMapPolygon(polyline);
-        
-        route = new ArrayList<>();
-        route.add(point2);
-        route.add(point3);
-        route.add(point3);
-        
-        polyline = new MapPolygonImpl(route);
-        polyline.setColor(Color.RED);
-        mapViewer.addMapPolygon(polyline);
-        
-        
-        
-        
-        
-        // Afficher la fenêtre
-        frame.setVisible(true);
-        */
-       
-        
-        
         
     }
     
@@ -757,7 +687,7 @@ public class Main {
             list.GreedyColor();
             if ((list.maxcouleur() < mincouleur) || (list.maxcouleur() == mincouleur && list.getnbconflit() < minconflits)){
                 mincouleur = list.maxcouleur();
-                System.out.println("min " +mincouleur);
+                //System.out.println("min " +mincouleur);
                 best = list.getcouleurs();
                 if (mincouleur == list.getkmax()){
                     minconflits = list.getnbconflit();
@@ -768,8 +698,8 @@ public class Main {
         list.adresscouleurs(best);
         System.out.println("fin couleur min " +list.maxcouleur());
         System.out.println("fin nb conflits  " +list.getnbconflit());
-        System.out.println("fin minconflits  " +minconflits);
-        
+        //System.out.println("fin minconflits  " +minconflits);
+        System.out.println(list.goodcoloration());
         return list;
         
     }
@@ -797,7 +727,7 @@ public class Main {
             list.GreedyColor();
             if ((list.maxcouleur() < mincouleur) || (list.maxcouleur() == mincouleur && list.getnbconflit() < minconflits)){
                 mincouleur = list.maxcouleur();
-                System.out.println("min " +mincouleur);
+                //System.out.println("min " +mincouleur);
                 best = list.getcouleurs();
                 if (mincouleur == list.getkmax()){
                     minconflits = list.getnbconflit();
@@ -808,7 +738,7 @@ public class Main {
         list.adresscouleurs(best);
         System.out.println("fin couleur min " +list.maxcouleur());
         System.out.println("fin nb conflits  " +list.getnbconflit());
-        System.out.println("fin minconflits  " +minconflits);
+        //System.out.println("fin minconflits  " +minconflits);
         
         return list;
         
@@ -817,4 +747,3 @@ public class Main {
     
     
 }
-

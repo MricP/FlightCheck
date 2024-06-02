@@ -315,7 +315,7 @@ public class Vol {
                 if (x + 1 < vol.getdistance()){
                     vol.setdistance(x + 1);
                     nb++;
-                    /*System.out.println("caca");*/
+                    
                 }
             }
         }
@@ -361,3 +361,4 @@ public class Vol {
     }
     
 }
+
