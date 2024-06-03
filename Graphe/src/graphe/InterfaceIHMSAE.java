@@ -277,14 +277,14 @@ public class InterfaceIHMSAE extends JFrame {
         waypoints = new HashSet<>();
         
         // Initialisation avec des fichiers par défaut
-        String FilePath = "C:/Users/Aspect-PC/Desktop/SAE-GIT/sae_mathieu_petit_pirrera/DataTest/aeroports.txt";
+        String FilePath = "C:/Users/Robi6/OneDrive/Bureau/aeroports.txt";
         File file = new File(FilePath);
         
         main.setAeroportlist(file);
         listeAeroport = main.getlisteaero();
         addAirportMarkers();
         
-        FilePath = "C:/Users/Aspect-PC/Desktop/SAE-GIT/sae_mathieu_petit_pirrera/DataTest/vol-test8.csv";
+        FilePath = "C:/Users/Robi6/OneDrive/Bureau/DataTest/vol-test8.csv";
         file = new File(FilePath);
         
         main.setvolaeroports(file);
@@ -297,8 +297,8 @@ public class InterfaceIHMSAE extends JFrame {
         listeVol = main.creationgraphe(listeVol);
         
         //colorie le graphe
-        listeVol  = main.FullGreedyColor(listeVol);
-        
+        //listeVol  = main.FullGreedyColor(listeVol);
+        listeVol.MAXWelshPowell();
         mapViewer.setOverlayPainter(compoundPainter);
         
         

@@ -125,7 +125,13 @@ public class ListeVols {
     
     public int MAXWelshPowell(){
         Collections.sort(tab, comparateur);
-        int maxcoul = kmax;
+        
+        int maxcoul;
+        if (havekmax){
+            maxcoul = kmax;
+        }else{
+            maxcoul = Integer.MAX_VALUE;
+        }
         int nbCouleurs = 1;
         int voltraite = 0;
         boolean var;
