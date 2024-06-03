@@ -33,7 +33,8 @@ public class InterfaceIHMSAE extends JFrame {
     private JXMapViewer mapViewer;
     private Set<Waypoint> waypoints;
     private ListeAeroport listeAeroport;
-    private ListeVols listeVol;
+    private ListeVols listeVolCarte;
+    private ListeVols listeVolGraphe;
     private Main main;
     private CompoundPainter<JXMapViewer> compoundPainter;
     private static List<Color> colorList;
@@ -288,23 +289,34 @@ public class InterfaceIHMSAE extends JFrame {
         file = new File(FilePath);
         
         main.setvolaeroports(file);
-        listeVol = main.getlisteVols();
+        listeVolCarte = main.getlisteVols();
         
         //permet de mettre des couleurs dans notre liste de couleurs
         setcolorlist();
         
         //crée le grpahe avec l'ajout des arretes
-        listeVol = main.creationgraphe(listeVol);
+        listeVolCarte = main.creationgraphe(listeVolCarte);
         
         //colorie le graphe
-        //listeVol  = main.FullGreedyColor(listeVol);
-        listeVol.MAXWelshPowell();
+        //listeVol  = main.FullGreedyColor(listeVolCarte);
+        listeVolCarte.MAXWelshPowell();
         mapViewer.setOverlayPainter(compoundPainter);
         
         
-        //le diametre en plus rapide
-        main.getDiametre(listeVol);
-        System.out.println(main.getDiametre(listeVol));
+        //changer le kmax
+        listeVolCarte.setkmax(listeVolCarte.getkmax());
+        
+        //enlever/ mettre le kmax
+        listeVolCarte.sethavekmax(true);
+        
+        //l'autre qui comporte le graphe qui ne se modelise pas avec la carte, uniquement avec Graphstream
+        FilePath = "C:/Users/Robi6/OneDrive/Bureau/DataTest/graph-test2.txt";
+        file = new File(FilePath);
+        listeVolGraphe = main.CreateGraphText(file);
+        
+        
+        
+        
         
     }
     
@@ -356,13 +368,13 @@ public class InterfaceIHMSAE extends JFrame {
 
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             String line;
-            listeVol = new ListeVols();
+            listeVolCarte = new ListeVols();
             while ((line = reader.readLine()) != null) {
                 String[] tab = line.split(";");
                 Vol vol = new Vol(tab[0],tab[1],tab[2],Integer.valueOf(tab[3]),Integer.valueOf(tab[4]),Integer.valueOf(tab[5]));
-                listeVol.ajMembre(vol);
+                listeVolCarte.ajMembre(vol);
             }
-            listeVol = main.creationgraphe(listeVol);
+            listeVolCarte = main.creationgraphe(listeVolCarte);
             drawLinesAllVolsInBlue();
         } catch (IOException e) {
             System.out.println("Erreur de lecture du fichier : " + e.getMessage());
@@ -403,9 +415,9 @@ private void drawLinesAllVolsInBlue() {
 
     compoundPainter = new CompoundPainter<>(); // Crée une nouvelle instance de CompoundPainter
 
-    for (int i = 0; i < listeVol.taille(); i++) {
+    for (int i = 0; i < listeVolCarte.taille(); i++) {
         List<GeoPosition> positions = new ArrayList<>();
-        Vol vol = listeVol.getVolindice(i);
+        Vol vol = listeVolCarte.getVolindice(i);
         String codedepart = vol.getcodedepart();
         String codearrivee = vol.getcodearrive();
         GeoPosition positionDepart = null;
@@ -447,9 +459,9 @@ private void drawLinesAllVolsWithColoration() {
 
     compoundPainter = new CompoundPainter<>();
 
-    for (int i = 0; i < listeVol.taille(); i++) {
+    for (int i = 0; i < listeVolCarte.taille(); i++) {
         List<GeoPosition> positions = new ArrayList<>();
-        Vol vol = listeVol.getVolindice(i);
+        Vol vol = listeVolCarte.getVolindice(i);
         String codedepart = vol.getcodedepart();
         String codearrivee = vol.getcodearrive();
         GeoPosition positionDepart = null;

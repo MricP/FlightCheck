@@ -56,6 +56,10 @@ public class ListeVols {
         return res;
     }
     
+    public void sethavekmax(boolean bool){
+        havekmax  = bool;
+    }
+    
     public Vol accesMembrenom(String nom) {
         Vol membre = null;
         for (int i=0;i< tab.size();i++){
