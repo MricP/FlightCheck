@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import org.graphstream.graph.Graph;
 import org.jxmapviewer.painter.CompoundPainter;
 
 public class InterfaceIHMSAE extends JFrame {
@@ -41,7 +42,7 @@ public class InterfaceIHMSAE extends JFrame {
     private ArrayList<String> codeaero;
     private ArrayList<GeoPosition> geoCondition;
     private JCheckBox colorationCheckbox;
-
+    
     public InterfaceIHMSAE() {
         main = new Main();
         colorList = new ArrayList<>();
@@ -148,7 +149,7 @@ public class InterfaceIHMSAE extends JFrame {
         rc.gridx = 0;
         rc.gridy = 2;
         rightControlPanel.add(colorationCheckbox, rc);
-
+        
         gbc.gridx = 3;
         gbc.gridy = 0;
         gbc.gridheight = 4;
@@ -158,7 +159,7 @@ public class InterfaceIHMSAE extends JFrame {
         gbc.anchor = GridBagConstraints.NORTH;
         gbc.fill = GridBagConstraints.VERTICAL;
         add(rightControlPanel, gbc);
-
+        
         JPanel bottomPanel = new JPanel();
         bottomPanel.setLayout(new GridBagLayout());
         bottomPanel.setBackground(bgColor);
@@ -313,6 +314,13 @@ public class InterfaceIHMSAE extends JFrame {
         FilePath = "C:/Users/Robi6/OneDrive/Bureau/DataTest/graph-test2.txt";
         file = new File(FilePath);
         listeVolGraphe = main.CreateGraphText(file);
+        listeVolGraphe.MAXWelshPowell();
+        
+        //les Graph provenant de Graphstream des 2 graphes
+        Graph G1 = main.getGraphStream(listeVolCarte);
+        Graph G2 = main.getGraphStream(listeVolGraphe);
+        G1.display();
+        G2.display();
         
         
         
