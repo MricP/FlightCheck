@@ -739,6 +739,34 @@ public class Main {
         
     }
     
+    public ListeVols FullWelshPowell(ListeVols list){
+        
+        int minconflits = Integer.MAX_VALUE;
+        ArrayList<Integer> best = list.getcouleurs();
+        int mincouleur = Integer.MAX_VALUE;
+        
+        for (int y =0;y<list.getArraylist().size() * 99;y++){
+            list.setcouleurdefault();
+            Collections.shuffle(list.getArraylist());
+            list.MAXWelshPowell();
+            if ((list.maxcouleur() < mincouleur) || (list.maxcouleur() == mincouleur && list.getnbconflit() < minconflits)){
+                mincouleur = list.maxcouleur();
+                //System.out.println("min " +mincouleur);
+                best = list.getcouleurs();
+                if (mincouleur == list.getkmax()){
+                    minconflits = list.getnbconflit();
+                }
+            }
+            
+        }
+        list.adresscouleurs(best);
+        System.out.println("fin couleur min " +list.maxcouleur());
+        System.out.println("fin nb conflits  " +list.getnbconflit());
+        //System.out.println("fin minconflits  " +minconflits);
+        System.out.println(list.goodcoloration());
+        return list;
+        
+    }
     
     public ListeVols FullGreedyColor(ListeVols list){
         
@@ -746,7 +774,7 @@ public class Main {
         ArrayList<Integer> best = list.getcouleurs();
         int mincouleur = Integer.MAX_VALUE;
         
-        for (int y =0;y<list.getArraylist().size() * 9;y++){
+        for (int y =0;y<list.getArraylist().size() * 99;y++){
             list.setcouleurdefault();
             Collections.shuffle(list.getArraylist());
             list.GreedyColor();
@@ -769,7 +797,7 @@ public class Main {
         
     }
     
-        public Statistiques calculerStatistiques() {
+    public Statistiques calculerStatistiques() {
         double degreMoyen = LV.getdegremoyen();
         int nbComposantes = LV.getnbcomposante();
         int nbNoeuds = LV.taille();
@@ -778,7 +806,7 @@ public class Main {
 
         return new Statistiques(degreMoyen, nbComposantes, nbNoeuds, nbAretes, diametre);
     }
-  
+     
     
     public static ListeVols FullGreedyColor_static(ListeVols list){
         

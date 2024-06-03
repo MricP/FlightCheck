@@ -347,7 +347,7 @@ public class Vol {
         }
         
         
-        System.out.println(liste.size());
+        
         int indiceMin = 1;
         int valeurMin = liste.get(1);
         for (int i = 2; i < liste.size(); i++) {

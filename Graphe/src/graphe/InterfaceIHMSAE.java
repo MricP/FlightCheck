@@ -311,16 +311,24 @@ public class InterfaceIHMSAE extends JFrame {
         listeVolCarte.sethavekmax(true);
         
         //l'autre qui comporte le graphe qui ne se modelise pas avec la carte, uniquement avec Graphstream
-        FilePath = "C:/Users/Robi6/OneDrive/Bureau/DataTest/graph-test2.txt";
+        FilePath = "C:/Users/Robi6/OneDrive/Bureau/DataTest/graph-test10.txt";
         file = new File(FilePath);
         listeVolGraphe = main.CreateGraphText(file);
-        listeVolGraphe.MAXWelshPowell();
+        //listeVolGraphe = main.FullGreedyColor(listeVolGraphe);
+        //listeVolGraphe.setcouleurdefault();
+            
+        //listeVolGraphe = main.FullWelshPowell(listeVolGraphe);
+        listeVolGraphe = main.FullWelshPowell(listeVolGraphe);
         
         //les Graph provenant de Graphstream des 2 graphes
+        /*
         Graph G1 = main.getGraphStream(listeVolCarte);
         Graph G2 = main.getGraphStream(listeVolGraphe);
-        G1.display();
-        G2.display();
+        */
+        System.out.println("nb conflitts : "+listeVolGraphe.getnbconflit());
+        System.out.println(listeVolGraphe.goodcoloration());
+        //G1.display();
+        //G2.display();
         
         
         
