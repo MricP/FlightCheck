@@ -252,7 +252,7 @@ public class Main {
            
     }
     
-    public static ListeVols CreateGraphText(String cheminfichiertxt){
+    public static ListeVols CreateGraphText_static(){
         System.out.println("rentrez le chemin d'acces de votre graphe sous forme .txt:");
         
         String FilePath = "C:/Users/Aspect-PC/Desktop/SAE-GIT/sae_mathieu_petit_pirrera/DataTest/graph-test2.txt";
@@ -262,6 +262,69 @@ public class Main {
         // Créer un objet File en utilisant le chemin du fichier
         File file = new File(FilePath);
         
+        // Vérifier si le fichier existe
+        if (!file.exists()) {
+            System.out.println("Le fichier n'existe pas.");
+            return null;
+        }else{
+            System.out.println("Le fichier existe .");
+        }
+        
+        // Déclarer un BufferedReader pour lire le fichier
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            String line;
+            // Lire chaque ligne du fichier tant qu'il y en a
+            ListeVols LVol = new ListeVols();
+            int cpt = 0;
+            while ((line = reader.readLine()) != null) {
+                // Afficher chaque ligne lue
+                if (cpt ==0){
+                    int kmax = Integer.valueOf(line);
+                    LVol.setkmax(kmax);
+                    
+                    
+                }else if (cpt == 1){
+                    int nbsommets = Integer.valueOf(line);
+                    LVol.setnbarrete(nbsommets);
+                    for (int i =1; i <= nbsommets;i++){
+                        Vol Vol = new Vol(i);
+                        LVol.ajMembre(Vol);
+                    }
+                    
+                }else{
+                    String[] tab = line.split(" ");
+                    int x = Integer.valueOf(tab[0]);
+                    int y = Integer.valueOf(tab[1]);
+                    Vol Vol1 = LVol.getVolnumero(x);
+                    Vol Vol2 = LVol.getVolnumero(y);
+                    Vol1.addadjacent(Vol2);
+                    Vol2.addadjacent(Vol1);
+                    
+                    
+                }
+                /*System.out.println(line);*/
+                
+                cpt ++;
+            }
+            
+            return LVol;
+        } catch (IOException e) {
+            System.out.println("Erreur de lecture du fichier : " + e.getMessage());
+        }
+        return null;
+    }
+    
+    public ListeVols CreateGraphText(File file){
+        /*
+        System.out.println("rentrez le chemin d'acces de votre graphe sous forme .txt:");
+        
+        String FilePath = "C:/Users/Aspect-PC/Desktop/SAE-GIT/sae_mathieu_petit_pirrera/DataTest/graph-test2.txt";
+        //String FilePath = "C:/Users/Aspect-PC/Desktop/SAE-IMH/sae_mathieu_petit_pirrera/DataTest/graph-test2.txt";
+        
+        
+        // Créer un objet File en utilisant le chemin du fichier
+        File file = new File(FilePath);
+        */
         // Vérifier si le fichier existe
         if (!file.exists()) {
             System.out.println("Le fichier n'existe pas.");
@@ -393,18 +456,19 @@ public class Main {
         return graph;
     }
     
-    public void setvolaeroports(){
+    public void setvolaeroports(File file){
+        /*
         String FilePath;
         File file;
         // Chemin du fichier texte
         System.out.println("rentrez le chemin d'acces de votre fichier de vols en format .csv:");
         FilePath = "C:/Users/Aspect-PC/Desktop/SAE-GIT/sae_mathieu_petit_pirrera/DataTest/vol-test8.csv";
         //FilePath = "C:/Users/Aspect-PC/Desktop/SAE-IMH/sae_mathieu_petit_pirrera/DataTest/vol-test8.csv";
-        /*FilePath = ent.nextLine();*/
+        
         
         // Créer un objet File en utilisant le chemin du fichier
         file = new File(FilePath);
-        
+        */
         // Vérifier si le fichier existe
         if (!file.exists()) {
             System.out.println("Le fichier n'existe pas.");
@@ -473,16 +537,17 @@ public class Main {
     
     
     
-    public void setAeroportlist(){
+    public void setAeroportlist(File file){
+        /*
         System.out.println("rentrez le chemin d'acces de votre fichier deaéroports sous forme .txt:");
         
         String FilePath = "C:/Users/Aspect-PC/Desktop/SAE-GIT/sae_mathieu_petit_pirrera/DataTest/aeroports.txt";
         //String FilePath = "C:/Users/Aspect-PC/Desktop/SAE-IMH/sae_mathieu_petit_pirrera/DataTest/aeroports.txt";
-        /*String FilePath = ent.nextLine();*/
+        
         
         // Créer un objet File en utilisant le chemin du fichier
         File file = new File(FilePath);
-        
+        */
         // Vérifier si le fichier existe
         if (!file.exists()) {
             System.out.println("Le fichier n'existe pas.");
@@ -611,7 +676,7 @@ public class Main {
         
         //Partie graph-test
         
-        LL = CreateGraphText("feur");
+        LL = CreateGraphText_static();
         
         
         

@@ -277,10 +277,17 @@ public class InterfaceIHMSAE extends JFrame {
         waypoints = new HashSet<>();
         
         // Initialisation avec des fichiers par défaut
-        main.setAeroportlist();
+        String FilePath = "C:/Users/Aspect-PC/Desktop/SAE-GIT/sae_mathieu_petit_pirrera/DataTest/aeroports.txt";
+        File file = new File(FilePath);
+        
+        main.setAeroportlist(file);
         listeAeroport = main.getlisteaero();
         addAirportMarkers();
-        main.setvolaeroports();
+        
+        FilePath = "C:/Users/Aspect-PC/Desktop/SAE-GIT/sae_mathieu_petit_pirrera/DataTest/vol-test8.csv";
+        file = new File(FilePath);
+        
+        main.setvolaeroports(file);
         listeVol = main.getlisteVols();
         
         //permet de mettre des couleurs dans notre liste de couleurs
