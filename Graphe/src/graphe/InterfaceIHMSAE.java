@@ -302,7 +302,7 @@ public class InterfaceIHMSAE extends JFrame {
         add(exitButton, gbc);
 
         waypoints = new HashSet<>();
-        
+        /*
         // Initialisation avec des fichiers par défaut
         String FilePath = "C:/Users/Robi6/OneDrive/Bureau/aeroports.txt";
         File file = new File(FilePath);
@@ -355,6 +355,7 @@ public class InterfaceIHMSAE extends JFrame {
         System.out.println(listeVolGraphe.goodcoloration());
         //G1.display();
         G2.display();
+        */
             
         
         
@@ -367,7 +368,11 @@ public class InterfaceIHMSAE extends JFrame {
         int result = fileChooser.showOpenDialog(this);
         if (result == JFileChooser.APPROVE_OPTION) {
             File selectedFile = fileChooser.getSelectedFile();
-            loadAeroportFile(selectedFile);
+            //loadAeroportFile(selectedFile);
+            main.setAeroportlist(selectedFile);
+            listeAeroport = main.getlisteaero();
+            addAirportMarkers();
+            
         }
     }
     
@@ -376,7 +381,10 @@ public class InterfaceIHMSAE extends JFrame {
         int result = fileChooser.showOpenDialog(this);
         if (result == JFileChooser.APPROVE_OPTION) {
             File selectedFile = fileChooser.getSelectedFile();
-            loadVolsFile(selectedFile);
+            main.setvolaeroports(selectedFile);
+            listeVolCarte = main.getlisteVols();
+            listeVolCarte = main.creationgraphe(listeVolCarte);
+            
         }
     }
 
