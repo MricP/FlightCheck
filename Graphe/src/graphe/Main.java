@@ -58,16 +58,23 @@ public class Main {
     private static ListeVols LV = new ListeVols();       
     private static ListeVols LL = new ListeVols();       
     
-    Main(){
+    public Main(){
         
     }
     
     public ListeAeroport getlisteaero(){
         return L;
     }
+    public void setlisteaero(ListeAeroport liste){
+        L = liste;
+    }
     
     public ListeVols getlisteVols(){
         return LV;
+    }
+    
+    public void setlistevols(ListeVols liste){
+        LV = liste;
     }
     
     public ListeVols creationgraphe(ListeVols liste){

@@ -279,14 +279,14 @@ public class InterfaceIHMSAE extends JFrame {
         waypoints = new HashSet<>();
         
         // Initialisation avec des fichiers par défaut
-        String FilePath = "C:/Users/Robi6/OneDrive/Bureau/aeroports.txt";
+        String FilePath = "C:/Users/Emric/OneDrive/Bureau/S2/SaeFinal/sae_mathieu_petit_pirrera/DataTest/aeroports.txt";
         File file = new File(FilePath);
         
         main.setAeroportlist(file);
         listeAeroport = main.getlisteaero();
         addAirportMarkers();
         
-        FilePath = "C:/Users/Robi6/OneDrive/Bureau/DataTest/vol-test8.csv";
+        FilePath = "C:/Users/Emric/OneDrive/Bureau/S2/SaeFinal/sae_mathieu_petit_pirrera/DataTest/vol-test8.csv";
         file = new File(FilePath);
         
         main.setvolaeroports(file);
@@ -311,7 +311,7 @@ public class InterfaceIHMSAE extends JFrame {
         listeVolCarte.sethavekmax(true);
         
         //l'autre qui comporte le graphe qui ne se modelise pas avec la carte, uniquement avec Graphstream
-        FilePath = "C:/Users/Robi6/OneDrive/Bureau/DataTest/graph-test1.txt";
+        FilePath = "C:/Users/Emric/OneDrive/Bureau/S2/SaeFinal/sae_mathieu_petit_pirrera/DataTest/graph-test1.txt";
         //C:/Users/Emric/OneDrive/Bureau/S2/SaeFinal/sae_mathieu_petit_pirrera/DataTest/vol-test8.csv
         file = new File(FilePath);
         listeVolGraphe = main.CreateGraphText(file);

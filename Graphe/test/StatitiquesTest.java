@@ -25,8 +25,6 @@ public class StatitiquesTest {
         stat = new Statistiques(2.0,2,5,4,2);
     }
     
-       
-    
     @Test
     public void getDegreMoyenTest() {
         assertTrue(stat.getDegreMoyen() == 2.0);
