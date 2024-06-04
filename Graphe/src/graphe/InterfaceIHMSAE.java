@@ -131,23 +131,24 @@ public class InterfaceIHMSAE extends JFrame {
         GridBagConstraints rc = new GridBagConstraints();
         rc.insets = new Insets(5, 5, 5, 5);
         rc.fill = GridBagConstraints.HORIZONTAL;
-
+        
         JCheckBox kmaxCheckbox = new JCheckBox("kmax");
         styleCheckBox(kmaxCheckbox, bgColor);
         rc.gridx = 0;
         rc.gridy = 0;
         rightControlPanel.add(kmaxCheckbox, rc);
-
+        /*
         JCheckBox conflitsCheckbox = new JCheckBox("conflits");
         styleCheckBox(conflitsCheckbox, bgColor);
         rc.gridx = 0;
         rc.gridy = 1;
         rightControlPanel.add(conflitsCheckbox, rc);
-
+        */
+        
         colorationCheckbox = new JCheckBox("coloration");
         styleCheckBox(colorationCheckbox, bgColor);
         rc.gridx = 0;
-        rc.gridy = 2;
+        rc.gridy = 1;
         rightControlPanel.add(colorationCheckbox, rc);
         
         gbc.gridx = 3;
@@ -174,36 +175,60 @@ public class InterfaceIHMSAE extends JFrame {
         bottomPanel.add(startButton, b);
 */
 
-        JButton drawLinesButton = new JButton("Draw Lines");
+        JButton drawLinesButton = new JButton("Draw all Lines");
         styleButton(drawLinesButton, bgColor);
         b.gridx = 1;
         b.gridy = 0;
         bottomPanel.add(drawLinesButton, b);
-
+        
+        JButton drawLinesHourButton = new JButton("Draw Lines with hour");
+        styleButton(drawLinesButton, bgColor);
+        b.gridx = 2;
+        b.gridy = 0;
+        bottomPanel.add(drawLinesHourButton, b);
+        
+        JButton drawLinescouleurButton = new JButton("Draw Lines with couleur");
+        styleButton(drawLinesButton, bgColor);
+        b.gridx = 3;
+        b.gridy = 0;
+        bottomPanel.add(drawLinescouleurButton, b);
+        
+        JButton showGraphstream = new JButton("show Graphstream");
+        styleButton(drawLinesButton, bgColor);
+        b.gridx = 0;
+        b.gridy = 0;
+        bottomPanel.add(showGraphstream, b);
+        
+        
         JLabel algorithmLabel = new JLabel("Algorithme Sélectionné : ");
         algorithmLabel.setForeground(Color.WHITE);
         b.gridx = 0;
         b.gridy = 1;
         b.anchor = GridBagConstraints.EAST;
         bottomPanel.add(algorithmLabel, b);
-
-        JComboBox<String> algorithmComboBox = new JComboBox<>(new String[]{"Dijkstra", "A*"});
+        
+        JComboBox<String> algorithmComboBox = new JComboBox<>(new String[]{"Welsh et Powell", "Glouton"});
         b.gridx = 1;
         b.gridy = 1;
         bottomPanel.add(algorithmComboBox, b);
-
+        
         JLabel kmaxLabel = new JLabel("K-max : ");
         kmaxLabel.setForeground(Color.WHITE);
         b.gridx = 2;
         b.gridy = 1;
         b.anchor = GridBagConstraints.EAST;
         bottomPanel.add(kmaxLabel, b);
-
+        
         JSpinner kmaxSpinner = new JSpinner(new SpinnerNumberModel(3, 1, 10, 1));
         b.gridx = 3;
         b.gridy = 1;
         bottomPanel.add(kmaxSpinner, b);
-
+        
+        JButton appliquer  = new JButton("Appliquer");
+        b.gridx = 4;
+        b.gridy = 1;
+        bottomPanel.add(appliquer, b);
+        
         gbc.gridx = 1;
         gbc.gridy = 4;
         gbc.gridheight = 1;
@@ -222,7 +247,7 @@ public class InterfaceIHMSAE extends JFrame {
                 statsFrame.setVisible(true);
             }
         });
- /*
+ /*     
         startButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -230,7 +255,7 @@ public class InterfaceIHMSAE extends JFrame {
             }
         });
 */
-
+                
         drawLinesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -248,7 +273,7 @@ public class InterfaceIHMSAE extends JFrame {
                 openFileChooser();
             }
         });
-
+        
         volsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
