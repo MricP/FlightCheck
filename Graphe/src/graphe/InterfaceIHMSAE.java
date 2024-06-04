@@ -43,6 +43,11 @@ public class InterfaceIHMSAE extends JFrame {
     private ArrayList<GeoPosition> geoCondition;
     private JCheckBox colorationCheckbox;
     private boolean allgood;
+    private JTextField heureField;
+    private JTextField minuteField;
+    private JSpinner kmaxSpinner;
+    
+    
     public InterfaceIHMSAE() {
         allgood = false;
         main = new Main();
@@ -133,11 +138,6 @@ public class InterfaceIHMSAE extends JFrame {
         rc.insets = new Insets(5, 5, 5, 5);
         rc.fill = GridBagConstraints.HORIZONTAL;
         
-        JCheckBox kmaxCheckbox = new JCheckBox("kmax");
-        styleCheckBox(kmaxCheckbox, bgColor);
-        rc.gridx = 0;
-        rc.gridy = 0;
-        rightControlPanel.add(kmaxCheckbox, rc);
         /*
         JCheckBox conflitsCheckbox = new JCheckBox("conflits");
         styleCheckBox(conflitsCheckbox, bgColor);
@@ -145,6 +145,18 @@ public class InterfaceIHMSAE extends JFrame {
         rc.gridy = 1;
         rightControlPanel.add(conflitsCheckbox, rc);
         */
+        
+        JLabel kmaxLabel = new JLabel("K-max : ");
+        kmaxLabel.setForeground(Color.WHITE);
+        rc.gridx = 0;
+        rc.gridy = 2;
+        rc.anchor = GridBagConstraints.EAST;
+        rightControlPanel.add(kmaxLabel, rc);
+
+        kmaxSpinner = new JSpinner(new SpinnerNumberModel(3, 1, 10, 1));
+        rc.gridx = 1;
+        rc.gridy = 2;
+        rightControlPanel.add(kmaxSpinner, rc);
         
         colorationCheckbox = new JCheckBox("coloration");
         styleCheckBox(colorationCheckbox, bgColor);
@@ -212,7 +224,7 @@ public class InterfaceIHMSAE extends JFrame {
         b.gridx = 1;
         b.gridy = 1;
         bottomPanel.add(algorithmComboBox, b);
-        
+      /*  
         JLabel kmaxLabel = new JLabel("K-max : ");
         kmaxLabel.setForeground(Color.WHITE);
         b.gridx = 2;
@@ -225,8 +237,10 @@ public class InterfaceIHMSAE extends JFrame {
         b.gridy = 1;
         bottomPanel.add(kmaxSpinner, b);
         
+        */
+       
         JButton appliquer  = new JButton("Appliquer");
-        b.gridx = 4;
+        b.gridx = 2;
         b.gridy = 1;
         bottomPanel.add(appliquer, b);
                 
@@ -272,10 +286,8 @@ public class InterfaceIHMSAE extends JFrame {
         drawLinesHourButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (allgood){
-                    //regle a 12h09
-                    drawLinesHourVolsWithColoration(12, 9);
-                    
+                if (allgood) {
+                    openHourMinuteDialog();
                 }
             }
         });
@@ -289,23 +301,41 @@ public class InterfaceIHMSAE extends JFrame {
                 JOptionPane.showMessageDialog(null, "Start button clicked!");
             }
         });
-*/  
+ 
         appliquer.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(allgood){
-                    
-                    if (kmaxCheckbox.isSelected()){
-                        int kmax= (int) kmaxSpinner.getValue();
+                if (allgood) {
+                    if (kmaxCheckbox.isSelected()) {
+                        int kmax = (int) kmaxSpinner.getValue();
                         listeVolCarte.setkmax(kmax);
                     }
-                    if (algorithmComboBox.getSelectedItem().equals("Glouton")){
+                    if (algorithmComboBox.getSelectedItem().equals("Glouton")) {
                         listeVolCarte = main.FullGreedyColor(listeVolCarte);
-                    }else{
+                    } else {
                         listeVolCarte = main.FullWelshPowell(listeVolCarte);
-
                     }
-                }else{
+                } else {
+                    System.out.println("please enter your files");
+                }
+            }
+        });
+        
+        */ 
+        
+        appliquer.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (allgood) { // Remplacer true par la condition allgood
+                    int kmax = (int) kmaxSpinner.getValue();
+                    listeVolCarte.setkmax(kmax);
+
+                    if (algorithmComboBox.getSelectedItem().equals("Glouton")) {
+                        listeVolCarte = main.FullGreedyColor(listeVolCarte);
+                    } else {
+                        listeVolCarte = main.FullWelshPowell(listeVolCarte);
+                    }
+                } else {
                     System.out.println("please enter your files");
                 }
             }
@@ -358,6 +388,8 @@ public class InterfaceIHMSAE extends JFrame {
         add(exitButton, gbc);
 
         waypoints = new HashSet<>();
+        
+        
         /*
         // Initialisation avec des fichiers par défaut
         String FilePath = "C:/Users/Emric/OneDrive/Bureau/S2/SaeFinal/sae_mathieu_petit_pirrera/DataTest/aeroports.txt";
@@ -401,7 +433,7 @@ public class InterfaceIHMSAE extends JFrame {
             
         //listeVolGraphe = main.FullWelshPowell(listeVolGraphe);
         listeVolGraphe = main.FullWelshPowell(listeVolGraphe);
-        
+        https://forge.univ-lyon1.fr/p2306053/sae_mathieu_petit_pirrera.git
         //les Graph provenant de Graphstream des 2 graphes
         
         Graph G1 = main.getGraphStream(listeVolCarte);
@@ -432,6 +464,56 @@ public class InterfaceIHMSAE extends JFrame {
         
         
         
+    }
+    
+        private void openHourMinuteDialog() {
+        JDialog dialog = new JDialog(this, "Saisir Heure et Minute", true);
+        dialog.setSize(300, 200);
+        dialog.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(5, 5, 5, 5);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+
+        JLabel heureLabel = new JLabel("Heure : ");
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        dialog.add(heureLabel, gbc);
+
+        JTextField heureField = new JTextField(5);
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        dialog.add(heureField, gbc);
+
+        JLabel minuteLabel = new JLabel("Minute : ");
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        dialog.add(minuteLabel, gbc);
+
+        JTextField minuteField = new JTextField(5);
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        dialog.add(minuteField, gbc);
+
+        JButton appliquerButton = new JButton("Appliquer");
+        appliquerButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    int heure = Integer.parseInt(heureField.getText());
+                    int minute = Integer.parseInt(minuteField.getText());
+                    drawLinesHourVolsWithColoration(heure, minute);
+                    dialog.dispose();
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(dialog, "Veuillez entrer des valeurs valides pour l'heure et les minutes.");
+                }
+            }
+        });
+        gbc.gridx = 1;
+        gbc.gridy = 2;
+        dialog.add(appliquerButton, gbc);
+
+        dialog.setLocationRelativeTo(this);
+        dialog.setVisible(true);
     }
     
     private void openFileChooser() {
