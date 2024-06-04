@@ -749,8 +749,9 @@ public class Main {
         int minconflits = Integer.MAX_VALUE;
         ArrayList<Integer> best = list.getcouleurs();
         int mincouleur = Integer.MAX_VALUE;
-        
+        int cpt = 0;
         for (int y =0;y<list.getArraylist().size() * 99;y++){
+            cpt++;
             list.setcouleurdefault();
             Collections.shuffle(list.getArraylist());
             list.MAXWelshPowell();
@@ -764,6 +765,8 @@ public class Main {
             }
             
         }
+        System.out.println("nb de boucles"+ cpt);
+        System.out.println("nb arretes"+ list.getnbarrte());
         list.adresscouleurs(best);
         System.out.println("fin couleur min " +list.maxcouleur());
         System.out.println("fin nb conflits  " +list.getnbconflit());
