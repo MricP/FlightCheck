@@ -278,7 +278,7 @@ public class InterfaceIHMSAE extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 if (allgood){
                     //regle a 1
-                    drawLinesColorVolsWithColoration(1);
+                    openNumberDialog();
                 }
             }
         });
@@ -459,61 +459,7 @@ public class InterfaceIHMSAE extends JFrame {
         Graph G2 = main.getGraphStream(listeVolGraphe);
         G2.display();
         */
-            
-        
-        
-        
-        
-    }
-    
-        private void openHourMinuteDialog() {
-        JDialog dialog = new JDialog(this, "Saisir Heure et Minute", true);
-        dialog.setSize(300, 200);
-        dialog.setLayout(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(5, 5, 5, 5);
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-
-        JLabel heureLabel = new JLabel("Heure : ");
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        dialog.add(heureLabel, gbc);
-
-        JTextField heureField = new JTextField(5);
-        gbc.gridx = 1;
-        gbc.gridy = 0;
-        dialog.add(heureField, gbc);
-
-        JLabel minuteLabel = new JLabel("Minute : ");
-        gbc.gridx = 0;
-        gbc.gridy = 1;
-        dialog.add(minuteLabel, gbc);
-
-        JTextField minuteField = new JTextField(5);
-        gbc.gridx = 1;
-        gbc.gridy = 1;
-        dialog.add(minuteField, gbc);
-
-        JButton appliquerButton = new JButton("Appliquer");
-        appliquerButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    int heure = Integer.parseInt(heureField.getText());
-                    int minute = Integer.parseInt(minuteField.getText());
-                    drawLinesHourVolsWithColoration(heure, minute);
-                    dialog.dispose();
-                } catch (NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(dialog, "Veuillez entrer des valeurs valides pour l'heure et les minutes.");
-                }
-            }
-        });
-        gbc.gridx = 1;
-        gbc.gridy = 2;
-        dialog.add(appliquerButton, gbc);
-
-        dialog.setLocationRelativeTo(this);
-        dialog.setVisible(true);
+ 
     }
     
     private void openFileChooser() {
@@ -656,6 +602,69 @@ private void drawLinesAllVolsWithColoration() {
     mapViewer.setOverlayPainter(compoundPainter);
     mapViewer.repaint();
     System.out.println("Les lignes entre les waypoints ont été dessinées avec coloration");
+}
+
+private void openNumberDialog() {
+    int kmax = listeVolCarte.maxcouleur();
+    JTextField numberField = new JTextField(5);
+
+    JPanel myPanel = new JPanel();
+    myPanel.add(new JLabel("Entrer un nombre entre 1 et " + kmax + ":"));
+    myPanel.add(numberField);
+
+    int result = JOptionPane.showConfirmDialog(null, myPanel, 
+             "Veuillez entrer un nombre", JOptionPane.OK_CANCEL_OPTION);
+    if (result == JOptionPane.OK_OPTION) {
+        try {
+            int number = Integer.parseInt(numberField.getText());
+            if (number >= 1 && number <= kmax) {
+                drawLinesColorVolsWithColoration(number);
+            } else {
+                JOptionPane.showMessageDialog(null, "Le nombre doit être entre 1 et " + kmax, "Erreur", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Veuillez entrer un nombre valide", "Erreur", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+}
+
+private void openHourMinuteDialog() {
+    JPanel myPanel = new JPanel(new GridBagLayout());
+    GridBagConstraints gbc = new GridBagConstraints();
+    gbc.insets = new Insets(5, 5, 5, 5);
+    gbc.fill = GridBagConstraints.HORIZONTAL;
+
+    JLabel heureLabel = new JLabel("Heure : ");
+    gbc.gridx = 0;
+    gbc.gridy = 0;
+    myPanel.add(heureLabel, gbc);
+
+    JTextField heureField = new JTextField(5);
+    gbc.gridx = 1;
+    gbc.gridy = 0;
+    myPanel.add(heureField, gbc);
+
+    JLabel minuteLabel = new JLabel("Minute : ");
+    gbc.gridx = 0;
+    gbc.gridy = 1;
+    myPanel.add(minuteLabel, gbc);
+
+    JTextField minuteField = new JTextField(5);
+    gbc.gridx = 1;
+    gbc.gridy = 1;
+    myPanel.add(minuteField, gbc);
+
+    int result = JOptionPane.showConfirmDialog(null, myPanel, 
+             "Veuillez entrer l'heure et les minutes", JOptionPane.OK_CANCEL_OPTION);
+    if (result == JOptionPane.OK_OPTION) {
+        try {
+            int heure = Integer.parseInt(heureField.getText());
+            int minute = Integer.parseInt(minuteField.getText());
+            drawLinesHourVolsWithColoration(heure, minute);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Veuillez entrer des valeurs valides pour l'heure et les minutes.", "Erreur", JOptionPane.ERROR_MESSAGE);
+        }
+    }
 }
 
 
