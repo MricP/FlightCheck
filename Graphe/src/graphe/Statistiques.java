@@ -6,7 +6,7 @@ public class Statistiques {
     private int nbNoeuds;
     private int nbAretes;
     private double diametre;
-
+    
     public Statistiques(double degreMoyen, int nbComposantes, int nbNoeuds, int nbAretes, double diametre) {
         this.degreMoyen = degreMoyen;
         this.nbComposantes = nbComposantes;
@@ -14,11 +14,11 @@ public class Statistiques {
         this.nbAretes = nbAretes;
         this.diametre = diametre;
     }
-
+    
     public double getDegreMoyen() {
         return degreMoyen;
     }
-
+    
     public int getNbComposantes() {
         return nbComposantes;
     }

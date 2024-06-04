@@ -10,14 +10,14 @@ public class StatisticsFrame extends JFrame {
     private JLabel nbNoeudsLabel;
     private JLabel nbAretesLabel;
     private JLabel diametreLabel;
-
+    
     public StatisticsFrame(Statistiques stats) {
         setTitle("Statistiques");
         setSize(600, 550);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
-
+        
         Color bgColor = Color.decode("#283C4F");
         getContentPane().setBackground(bgColor);
 
@@ -52,7 +52,7 @@ public class StatisticsFrame extends JFrame {
             String.valueOf(stats.getNbAretes()),
             String.valueOf(stats.getDiametre())
         };
-
+        
         gbc.gridwidth = 1;
         gbc.insets = new Insets(10, 10, 10, 10);
         gbc.fill = GridBagConstraints.BOTH;

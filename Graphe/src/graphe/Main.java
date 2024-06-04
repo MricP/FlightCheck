@@ -420,6 +420,11 @@ public class Main {
         return org.graphstream.algorithm.Toolkit.diameter(G);
     }
     
+    public static double getDiametre_static(ListeVols liste){
+        Graph G = getGraphStream_static(liste);
+        return org.graphstream.algorithm.Toolkit.diameter(G);
+    }
+    
     
     
     public Graph getGraphStream(ListeVols liste) {
@@ -802,8 +807,8 @@ public class Main {
         int nbComposantes = LV.getnbcomposante();
         int nbNoeuds = LV.taille();
         int nbAretes = LV.getnbarrte();
-        double diametre = LV.getdiametre(); // Assurez-vous que cette méthode existe et fonctionne
-
+        double diametre = getDiametre_static(LV); // Assurez-vous que cette méthode existe et fonctionne
+        
         return new Statistiques(degreMoyen, nbComposantes, nbNoeuds, nbAretes, diametre);
     }
      
