@@ -91,17 +91,17 @@ public class InterfaceIHMSAE extends JFrame {
         lc.insets = new Insets(5, 5, 5, 5);
         lc.fill = GridBagConstraints.HORIZONTAL;
 
-        JButton volsButton = new JButton("Vols");
-        styleButton(volsButton, bgColor);
-        lc.gridx = 0;
-        lc.gridy = 0;
-        leftControlPanel.add(volsButton, lc);
-        
         JButton aeroportsButton = new JButton("Aéroports");
         styleButton(aeroportsButton, bgColor);
         lc.gridx = 0;
-        lc.gridy = 1;
+        lc.gridy = 0;
         leftControlPanel.add(aeroportsButton, lc);
+
+        JButton volsButton = new JButton("Vols");
+        styleButton(volsButton, bgColor);
+        lc.gridx = 0;
+        lc.gridy = 1;
+        leftControlPanel.add(volsButton, lc);
         
         JButton graphesButton = new JButton("Graphes");
         styleButton(graphesButton, bgColor);
@@ -182,19 +182,19 @@ public class InterfaceIHMSAE extends JFrame {
         bottomPanel.add(drawLinesButton, b);
         
         JButton drawLinesHourButton = new JButton("Draw Lines with hour");
-        styleButton(drawLinesButton, bgColor);
+        styleButton(drawLinesHourButton, bgColor);
         b.gridx = 2;
         b.gridy = 0;
         bottomPanel.add(drawLinesHourButton, b);
         
         JButton drawLinescouleurButton = new JButton("Draw Lines with couleur");
-        styleButton(drawLinesButton, bgColor);
+        styleButton(drawLinescouleurButton, bgColor);
         b.gridx = 3;
         b.gridy = 0;
         bottomPanel.add(drawLinescouleurButton, b);
         
         JButton showGraphstream = new JButton("show Graphstream");
-        styleButton(drawLinesButton, bgColor);
+        styleButton(showGraphstream, bgColor);
         b.gridx = 0;
         b.gridy = 0;
         bottomPanel.add(showGraphstream, b);
