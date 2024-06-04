@@ -96,25 +96,25 @@ public class InterfaceIHMSAE extends JFrame {
         lc.gridx = 0;
         lc.gridy = 0;
         leftControlPanel.add(volsButton, lc);
-
+        
         JButton aeroportsButton = new JButton("Aéroports");
         styleButton(aeroportsButton, bgColor);
         lc.gridx = 0;
         lc.gridy = 1;
         leftControlPanel.add(aeroportsButton, lc);
-
+        
         JButton graphesButton = new JButton("Graphes");
         styleButton(graphesButton, bgColor);
         lc.gridx = 0;
         lc.gridy = 2;
         leftControlPanel.add(graphesButton, lc);
-
+        
         JButton statsButton = new JButton("Statistiques");
         styleButton(statsButton, bgColor);
         lc.gridx = 0;
         lc.gridy = 3;
         leftControlPanel.add(statsButton, lc);
-
+        
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.gridheight = 4;
@@ -311,7 +311,8 @@ public class InterfaceIHMSAE extends JFrame {
         listeVolCarte.sethavekmax(true);
         
         //l'autre qui comporte le graphe qui ne se modelise pas avec la carte, uniquement avec Graphstream
-        FilePath = "C:/Users/Robi6/OneDrive/Bureau/DataTest/graph-test10.txt";
+        FilePath = "C:/Users/Robi6/OneDrive/Bureau/DataTest/graph-test1.txt";
+        //C:/Users/Emric/OneDrive/Bureau/S2/SaeFinal/sae_mathieu_petit_pirrera/DataTest/vol-test8.csv
         file = new File(FilePath);
         listeVolGraphe = main.CreateGraphText(file);
         //listeVolGraphe = main.FullGreedyColor(listeVolGraphe);
@@ -321,15 +322,15 @@ public class InterfaceIHMSAE extends JFrame {
         listeVolGraphe = main.FullWelshPowell(listeVolGraphe);
         
         //les Graph provenant de Graphstream des 2 graphes
-        /*
+        
         Graph G1 = main.getGraphStream(listeVolCarte);
         Graph G2 = main.getGraphStream(listeVolGraphe);
-        */
+        
         System.out.println("nb conflitts : "+listeVolGraphe.getnbconflit());
         System.out.println(listeVolGraphe.goodcoloration());
         //G1.display();
-        //G2.display();
-        
+        G2.display();
+            
         
         
         
