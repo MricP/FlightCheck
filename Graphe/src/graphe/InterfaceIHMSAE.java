@@ -51,7 +51,7 @@ public class InterfaceIHMSAE extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
-
+        
         Color bgColor = Color.decode("#283C4F");
         getContentPane().setBackground(bgColor);
         compoundPainter = new CompoundPainter<>();
@@ -384,6 +384,8 @@ public class InterfaceIHMSAE extends JFrame {
             main.setvolaeroports(selectedFile);
             listeVolCarte = main.getlisteVols();
             listeVolCarte = main.creationgraphe(listeVolCarte);
+            listeVolCarte = main.FullGreedyColor(listeVolCarte);
+            setcolorlist();
             
         }
     }
@@ -506,9 +508,9 @@ private void drawLinesAllVolsWithColoration() {
         System.out.println("Aucun waypoint disponible pour dessiner des lignes.");
         return;
     }
-
+    
     compoundPainter = new CompoundPainter<>();
-
+    
     for (int i = 0; i < listeVolCarte.taille(); i++) {
         List<GeoPosition> positions = new ArrayList<>();
         Vol vol = listeVolCarte.getVolindice(i);
@@ -524,7 +526,7 @@ private void drawLinesAllVolsWithColoration() {
                 positionArrivee = geoCondition.get(y);
             }
         }
-
+        
         if (positionDepart != null && positionArrivee != null) {
             positions.add(positionDepart);
             positions.add(positionArrivee);
@@ -535,11 +537,11 @@ private void drawLinesAllVolsWithColoration() {
             System.out.println("Erreur : Impossible de trouver les positions pour le vol " + vol.toString());
         }
     }
-
+    
     WaypointPainter<Waypoint> waypointPainter = new WaypointPainter<>();
     waypointPainter.setWaypoints(waypoints);
     compoundPainter.addPainter(waypointPainter);
-
+    
     mapViewer.setOverlayPainter(compoundPainter);
     mapViewer.repaint();
     System.out.println("Les lignes entre les waypoints ont été dessinées avec coloration");
