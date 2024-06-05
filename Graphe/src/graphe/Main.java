@@ -818,8 +818,9 @@ public class Main {
         int nbNoeuds = LV.taille();
         int nbAretes = LV.getnbarrte();
         double diametre = getDiametre_static(LV); // Assurez-vous que cette méthode existe et fonctionne
+        int nbConflits = LV.getnbconflit();
         
-        return new Statistiques(degreMoyen, nbComposantes, nbNoeuds, nbAretes, diametre);
+        return new Statistiques(degreMoyen, nbComposantes, nbNoeuds, nbAretes, diametre, nbConflits);
     }
      
     
