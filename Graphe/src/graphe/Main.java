@@ -810,7 +810,7 @@ public class Main {
         
                 
         //System.out.println(LL.getdiametre());
-//        System.out.println(org.graphstream.algorithm.Toolkit.diameter(G));
+//      //System.out.println(org.graphstream.algorithm.Toolkit.diameter(G));
         //System.out.println(LL.maxcouleur());
         
         G.display();

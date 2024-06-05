@@ -242,9 +242,14 @@ public class ListeVols {
 
         if (var2) {
             int i = 0;
+            int couleur;
             while (i < tab.size()) {
                 if (tab.get(i).getcouleur() == -1) {
-                    int couleur = tab.get(i).zzz(kmax);
+                    if (havekmax){
+                        couleur = tab.get(i).zzz(kmax);
+                    }else{
+                        couleur = tab.get(i).zzz(Integer.MAX_VALUE);
+                    }
                     tab.get(i).setcouleur(couleur);
                 }
                 i++;

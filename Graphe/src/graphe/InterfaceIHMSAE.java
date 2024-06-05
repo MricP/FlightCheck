@@ -30,6 +30,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import org.graphstream.graph.Graph;
 
 
@@ -436,11 +438,30 @@ public class InterfaceIHMSAE extends JFrame {
         colorationCheckbox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (colorationCheckbox.isSelected()) {
-                    drawLinesAllVolsWithColoration();
-                } else {
-                    drawLinesAllVolsInBlue();
+                if(allgood){
+                    if (colorationCheckbox.isSelected()) {
+                        drawLinesAllVolsWithColoration();
+                    } else {
+                        drawLinesAllVolsInBlue();
+                    }
                 }
+            }
+        });
+        
+        kmaxSpinner.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                int value = (int) ((JSpinner) e.getSource()).getValue();
+                if (allgood){
+                    
+                    listeVolCarte.setkmax(value);
+                    
+                    if (listeVolCarte.havekmax()){
+                        coloration();
+                    }
+                }
+                System.out.println("Valeur actuelle : " + value);
+                
             }
         });
         
@@ -450,11 +471,15 @@ public class InterfaceIHMSAE extends JFrame {
                 if (allgood){
                     if (kmaxCheckbox.isSelected()) {
                         listeVolCarte.sethavekmax(true);
+                        
                     } else {
-                        listeVolCarte.sethavekmax(true);
-                        listeVolCarte.setkmax((int) kmaxSpinner.getValue());
-                        System.out.println(listeVolCarte.getkmax());
+                        listeVolCarte.sethavekmax(false);
+                        ;
                     }
+                    
+                    coloration();
+                    
+                    
                 }
             }
         });
@@ -637,7 +662,12 @@ private void drawLinesAllVolsWithColoration() {
         System.out.println("Aucun waypoint disponible pour dessiner des lignes.");
         return;
     }
-    
+    /*
+    System.out.println(listeVolCarte.maxcouleur());
+    listeVolCarte.sethavekmax(true);
+    listeVolCarte.setkmax(3);
+    listeVolCarte = main.FullWelshPowell(listeVolCarte);
+    */
     compoundPainter = new CompoundPainter<>();
     
     for (int i = 0; i < listeVolCarte.taille(); i++) {
@@ -647,7 +677,7 @@ private void drawLinesAllVolsWithColoration() {
         String codearrivee = vol.getcodearrive();
         GeoPosition positionDepart = null;
         GeoPosition positionArrivee = null;
-
+        
         for (int y = 0; y < codeaero.size(); y++) {
             if (codeaero.get(y).equals(codedepart)) {
                 positionDepart = geoCondition.get(y);
@@ -751,7 +781,7 @@ private void drawLinesColorVolsWithColoration(int couleur) {
             String codearrivee = vol.getcodearrive();
             GeoPosition positionDepart = null;
             GeoPosition positionArrivee = null;
-
+            
             for (int y = 0; y < codeaero.size(); y++) {
                 if (codeaero.get(y).equals(codedepart)) {
                     positionDepart = geoCondition.get(y);
@@ -759,7 +789,7 @@ private void drawLinesColorVolsWithColoration(int couleur) {
                     positionArrivee = geoCondition.get(y);
                 }
             }
-
+            
             if (positionDepart != null && positionArrivee != null) {
                 positions.add(positionDepart);
                 positions.add(positionArrivee);
@@ -868,8 +898,10 @@ private void drawLinesHourVolsWithColoration(int heure, int minute) {
         if (allgood) { // Remplacer true par la condition allgood
                     
             if (algorithmComboBox.getSelectedItem().equals("Glouton")) {
+                System.out.println("glouton");
                 listeVolCarte = main.FullGreedyColor(listeVolCarte);
             } else {
+                System.out.println("welsh");
                 listeVolCarte = main.FullWelshPowell(listeVolCarte);
             }
         }
