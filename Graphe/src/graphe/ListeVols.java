@@ -3,496 +3,593 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package graphe;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+
 /**
  *
- * @author Robi6
- * Classe ListeVols : 
- * représente une liste d'objects de la classe Vol
- * 
+ * @author Robi6 Classe ListeVols : représente une liste d'objects de la classe
+ * Vol
+ *
  */
 public class ListeVols {
+
     private ArrayList<Vol> tab;
     private int nbarrete = 0;
     private int nbcomposante;
     private int diametre;
     private int kmax;
     private boolean havekmax;
-    
-    
-    
-    public ListeVols(){
+
+    /**
+     * Constructeur de la classe ListeVols. Initialise la liste de vols et les
+     * paramètres de gestion.
+     */
+    public ListeVols() {
         tab = new ArrayList<Vol>();
         nbcomposante = -1;
         diametre = -1;
-        havekmax= false;
-        
+        havekmax = false;
     }
-    
-    
-    public int getkmax(){
+
+    /**
+     * Retourne la valeur de kmax.
+     *
+     * @return La valeur de kmax.
+     */
+    public int getkmax() {
         return kmax;
     }
-    
-    public boolean havekmax(){
+
+    /**
+     * Vérifie si kmax a été défini.
+     *
+     * @return true si kmax a été défini, sinon false.
+     */
+    public boolean havekmax() {
         return havekmax;
     }
-    
-    public void setkmax(int kmax){
+
+    /**
+     * Définit la valeur de kmax et marque havekmax comme true.
+     *
+     * @param kmax La valeur de kmax à définir.
+     */
+    public void setkmax(int kmax) {
         this.kmax = kmax;
         havekmax = true;
     }
-    
-    public int getnbarrte(){
+
+    /**
+     * Retourne le nombre d'arêtes.
+     *
+     * @return Le nombre d'arêtes.
+     */
+    public int getnbarrte() {
         return nbarrete;
     }
-    public boolean ajMembre(Vol membreAj){
+
+    /**
+     * Ajoute un vol à la liste.
+     *
+     * @param membreAj Le vol à ajouter.
+     * @return true si l'ajout est réussi, sinon false.
+     */
+    public boolean ajMembre(Vol membreAj) {
         boolean res = false;
-        if (membreAj != null){
+        if (membreAj != null) {
             tab.add(membreAj);
+            res = true;
         }
         return res;
     }
-    
-    public void sethavekmax(boolean bool){
-        havekmax  = bool;
+
+    /**
+     * Définit la valeur de havekmax.
+     *
+     * @param bool La valeur de havekmax à définir.
+     */
+    public void sethavekmax(boolean bool) {
+        havekmax = bool;
     }
-    
+
+    /**
+     * Accède à un vol par son nom.
+     *
+     * @param nom Le nom du vol à accéder.
+     * @return Le vol correspondant au nom, ou null s'il n'existe pas.
+     */
     public Vol accesMembrenom(String nom) {
         Vol membre = null;
-        for (int i=0;i< tab.size();i++){
-            
-            if (tab.get(i).getnom().equals(nom)){
-                
-                membre =  tab.get(i);
+        for (int i = 0; i < tab.size(); i++) {
+            if (tab.get(i).getnom().equals(nom)) {
+                membre = tab.get(i);
             }
         }
         return membre;
     }
-    
+
+    /**
+     * Accède à un vol par son numéro.
+     *
+     * @param num Le numéro du vol à accéder.
+     * @return Le vol correspondant au numéro, ou null s'il n'existe pas.
+     */
     public Vol accesMembrenum(int num) {
         Vol membre = null;
-        for (int i=0;i< tab.size();i++){
-            
-            if (tab.get(i).getid() == num){
-                
-                membre =  tab.get(i);
+        for (int i = 0; i < tab.size(); i++) {
+            if (tab.get(i).getid() == num) {
+                membre = tab.get(i);
             }
         }
         return membre;
     }
-    
-    public void setnbarrete(int nbarrete){
+
+    /**
+     * Définit le nombre d'arêtes.
+     *
+     * @param nbarrete Le nombre d'arêtes à définir.
+     */
+    public void setnbarrete(int nbarrete) {
         this.nbarrete = nbarrete;
     }
-    
-    public int taille(){
+
+    /**
+     * Retourne la taille de la liste de vols.
+     *
+     * @return La taille de la liste de vols.
+     */
+    public int taille() {
         return tab.size();
     }
-    
-    public void tostring(){  /* peut etre changer tout cela en String */
-        System.out.println("les vols de la liste : ");
-        for ( int i=0; i < tab.size();i++){
+
+    /**
+     * Affiche les vols de la liste.
+     */
+    public void tostring() {
+        System.out.println("Les vols de la liste : ");
+        for (int i = 0; i < tab.size(); i++) {
             System.out.println(tab.get(i).toString());
         }
-        
     }
-    
-    public Vol getVolindice(int indice){
+
+    /**
+     * Retourne le vol à un indice donné.
+     *
+     * @param indice L'indice du vol à accéder.
+     * @return Le vol correspondant à l'indice.
+     */
+    public Vol getVolindice(int indice) {
         return tab.get(indice);
     }
-    
-    public Vol getVolnumero(int numero){
-        for (int i=0; i < tab.size(); i++){
-            if (tab.get(i).getid() == numero ){
+
+    /**
+     * Retourne le vol avec un numéro donné.
+     *
+     * @param numero Le numéro du vol à accéder.
+     * @return Le vol correspondant au numéro, ou null s'il n'existe pas.
+     */
+    public Vol getVolnumero(int numero) {
+        for (int i = 0; i < tab.size(); i++) {
+            if (tab.get(i).getid() == numero) {
                 return tab.get(i);
             }
         }
         return null;
     }
-    
-    public void addaerrete(){
+
+    /**
+     * Incrémente le nombre d'arêtes.
+     */
+    public void addaerrete() {
         nbarrete++;
     }
-    
-    
+
+    /**
+     * Comparator pour trier les vols en fonction du nombre d'adjacents.
+     */
     Comparator<Vol> comparateur = new Comparator<Vol>() {
-        
-        
         public int compare(Vol o1, Vol o2) {
             return Integer.compare(o2.getnbadjacents(), o1.getnbadjacents()); // Compare dans l'ordre décroissant
         }
     };
-    
-    
-    public int MAXWelshPowell(){
+
+    /**
+     * Applique l'algorithme Welsh-Powell pour colorier les vols avec un maximum
+     * de kmax couleurs.
+     *
+     * @return Le nombre de couleurs utilisées.
+     */
+    public int MAXWelshPowell() {
         Collections.sort(tab, comparateur);
-        
+
         int maxcoul;
-        if (havekmax){
+        if (havekmax) {
             maxcoul = kmax;
-        }else{
+        } else {
             maxcoul = Integer.MAX_VALUE;
         }
         int nbCouleurs = 1;
-        int voltraite = 0;
-        boolean var;
-        boolean var2= true;
-        while (var2 && (nbCouleurs <= maxcoul)){
-            int i=0;
-            var= true;
-            while( i < tab.size() && var){
-                if (tab.get(i).couleur == -1 ){
+        boolean var2 = true;
+        while (var2 && (nbCouleurs <= maxcoul)) {
+            int i = 0;
+            boolean var = true;
+            while (i < tab.size() && var) {
+                if (tab.get(i).couleur == -1) {
                     var = false;
-                }else{
+                } else {
                     i++;
                 }
             }
-            
-            if (i < tab.size()){
+
+            if (i < tab.size()) {
                 tab.get(i).setcouleur(nbCouleurs);
-                voltraite++;
                 i++;
-            }else{
-                var2= false;
+            } else {
+                var2 = false;
             }
-            
-            while (i < tab.size()){
-                if (tab.get(i).possepasdeadjcouleur(nbCouleurs) && (tab.get(i).getcouleur() == -1)  ){
+
+            while (i < tab.size()) {
+                if (tab.get(i).possepasdeadjcouleur(nbCouleurs) && (tab.get(i).getcouleur() == -1)) {
                     tab.get(i).setcouleur(nbCouleurs);
                 }
                 i++;
             }
-                
-                
-                
             nbCouleurs++;
         }
-        
-        if (var2){
-            int i=0;
-            while (i < tab.size()){
-                if (tab.get(i).getcouleur() == -1 ){
+
+        if (var2) {
+            int i = 0;
+            while (i < tab.size()) {
+                if (tab.get(i).getcouleur() == -1) {
                     int couleur = tab.get(i).zzz(kmax);
                     tab.get(i).setcouleur(couleur);
-                    
                 }
                 i++;
             }
-            
-            
         }
-        
-        
-        
-        
+
         return nbCouleurs;
     }
-    
-    public int WelshPowell(){
+
+    /**
+     * Applique l'algorithme Welsh-Powell pour colorier les vols.
+     *
+     * @return Le nombre de couleurs utilisées.
+     */
+    public int WelshPowell() {
         Collections.sort(tab, comparateur);
-        
+
         int nbCouleurs = 1;
-        int voltraite = 0;
-        boolean var;
-        boolean var2= true;
-        while (var2){
-            int i=0;
-            var= true;
-            while( i < tab.size() && var){
-                if (tab.get(i).couleur == -1 ){
+        boolean var2 = true;
+        while (var2) {
+            int i = 0;
+            boolean var = true;
+            while (i < tab.size() && var) {
+                if (tab.get(i).couleur == -1) {
                     var = false;
-                }else{
+                } else {
                     i++;
                 }
             }
-            
-            if (i < tab.size()){
+
+            if (i < tab.size()) {
                 tab.get(i).setcouleur(nbCouleurs);
-                voltraite++;
                 i++;
-            }else{
-                var2= false;
+            } else {
+                var2 = false;
             }
-            
-            while (i < tab.size()){
-                if (tab.get(i).possepasdeadjcouleur(nbCouleurs) && (tab.get(i).getcouleur() == -1)  ){
+
+            while (i < tab.size()) {
+                if (tab.get(i).possepasdeadjcouleur(nbCouleurs) && (tab.get(i).getcouleur() == -1)) {
                     tab.get(i).setcouleur(nbCouleurs);
                 }
                 i++;
             }
-                
-                
-                
             nbCouleurs++;
         }
-        
-        
-        
-        
+
         return nbCouleurs;
     }
-    
-    
-    public void RandomColoration(int max){
+
+    /**
+     * Applique une coloration aléatoire aux vols.
+     *
+     * @param max Le nombre maximum de couleurs.
+     */
+    public void RandomColoration(int max) {
         int random = 1;
-        for (int i = 0;i<tab.size();i++){
-            tab.get(i).setcouleur((random % max)+1);
+        for (int i = 0; i < tab.size(); i++) {
+            tab.get(i).setcouleur((random % max) + 1);
             random++;
-        } 
+        }
     }
-    
-    public void GreedyColor(){    
-        for (int i =0;i<tab.size();i++){
-            if (havekmax){
+
+    /**
+     * Applique une coloration gloutonne aux vols.
+     */
+    public void GreedyColor() {
+        for (int i = 0; i < tab.size(); i++) {
+            if (havekmax) {
                 tab.get(i).setcouleur(tab.get(i).first_available_color_kmax(kmax));
-            }else{
+            } else {
                 tab.get(i).setcouleur(tab.get(i).first_available_color());
-            }    
-        }       
+            }
+        }
     }
-    
-    public void Dsatur(){
-        for (int y=0; y < tab.size();y++){
+
+    /**
+     * Applique l'algorithme DSATUR pour colorier les vols.
+     */
+    public void Dsatur() {
+        for (int y = 0; y < tab.size(); y++) {
             int max = -1;
-            int indice= -1 ;
-            for (int i=0; i < tab.size();i++){
-                
-                if (tab.get(i).DSAT() > max){
+            int indice = -1;
+            for (int i = 0; i < tab.size(); i++) {
+                if (tab.get(i).DSAT() > max) {
                     indice = i;
                     max = tab.get(i).DSAT();
                 }
             }
-            
+
             tab.get(indice).setcouleur(tab.get(indice).first_available_color());
         }
-        
-        
-        
     }
-    
-    public ArrayList getList(){
+
+    /**
+     * Retourne la liste des vols.
+     *
+     * @return La liste des vols.
+     */
+    public ArrayList getList() {
         return tab;
     }
-    
-    
-    
-    
-    public int getnbconflit(){
+
+    /**
+     * Retourne le nombre de conflits de couleur entre les vols.
+     *
+     * @return Le nombre de conflits de couleur.
+     */
+    public int getnbconflit() {
         int nbconflit = 0;
-        int couleurv;
-        Vol v;
-        int cpt =0;
-        for (int i=0;i < tab.size(); i++){
-            v = tab.get(i);
-            couleurv = v.getcouleur();
-            for (int y=0; y < v.getnbadjacents();y++){
-                cpt++;
-                //System.out.println(couleurv+ "      "+ v.getAdjacentindice(y).getcouleur());
-                if (v.getAdjacentindice(y).getcouleur() == couleurv){
+        for (int i = 0; i < tab.size(); i++) {
+            Vol v = tab.get(i);
+            int couleurv = v.getcouleur();
+            for (int y = 0; y < v.getnbadjacents(); y++) {
+                if (v.getAdjacentindice(y).getcouleur() == couleurv) {
                     nbconflit++;
-                    //System.out.println("true");
                 }
             }
-            
-            
         }
-        
-        return nbconflit/2;
+        return nbconflit / 2;
     }
-     
-    public boolean goodcoloration(){
-        for (int i=0;i < tab.size(); i++){
-            if (!tab.get(i).goodcolor()){
+
+    /**
+     * Vérifie si la coloration des vols est correcte.
+     *
+     * @return true si la coloration est correcte, sinon false.
+     */
+    public boolean goodcoloration() {
+        for (int i = 0; i < tab.size(); i++) {
+            if (!tab.get(i).goodcolor()) {
                 return false;
             }
         }
         return true;
     }
-            
-            
-    public int maxcouleur(){
+
+    /**
+     * Retourne la couleur maximale utilisée.
+     *
+     * @return La couleur maximale utilisée.
+     */
+    public int maxcouleur() {
         int max = -1;
-        int i=0;
-        while ( i < tab.size()){
-            if (tab.get(i).getcouleur() > max){
+        for (int i = 0; i < tab.size(); i++) {
+            if (tab.get(i).getcouleur() > max) {
                 max = tab.get(i).getcouleur();
             }
-            i++;
         }
         return max;
     }
-    
-    
-    public void viewcolor(){
-        int i=0;
-        while ( i < tab.size()){
-            System.out.println(tab.get(i).getid()+ " " + tab.get(i).getcouleur());
-            i++;
+
+    /**
+     * Affiche les couleurs des vols.
+     */
+    public void viewcolor() {
+        for (int i = 0; i < tab.size(); i++) {
+            System.out.println(tab.get(i).getid() + " " + tab.get(i).getcouleur());
         }
     }
-    
-    
-    public void setcouleurdefault(){
-        int i=0;
-        while ( i < tab.size()){
+
+    /**
+     * Réinitialise la couleur de tous les vols à la valeur par défaut (-1).
+     */
+    public void setcouleurdefault() {
+        for (int i = 0; i < tab.size(); i++) {
             tab.get(i).setcouleur(-1);
-            i++;
         }
     }
-    
-    public double getdegremoyen(){
-        int i=0;
+
+    /**
+     * Retourne le degré moyen des vols.
+     *
+     * @return Le degré moyen des vols.
+     */
+    public double getdegremoyen() {
         double total = 0;
-        while ( i < tab.size()){
-            total = total + tab.get(i).getnbadjacents();
-            i++;
+        for (int i = 0; i < tab.size(); i++) {
+            total += tab.get(i).getnbadjacents();
         }
-        total = total / tab.size();
-        return total;
+        return total / tab.size();
     }
-    
-   
-    
-    public int getnbcomposante(){
-        int nb = 1;
-        if (nbcomposante != -1){
+
+    /**
+     * Retourne le nombre de composants connexes.
+     *
+     * @return Le nombre de composants connexes.
+     */
+    public int getnbcomposante() {
+        if (nbcomposante != -1) {
             return nbcomposante;
         }
-        int i=0;
-        int y=1;
-        while (i <  tab.size()){
-            if (tab.get(i).composante(y)){
+        int nb = 1;
+        int y = 1;
+        for (int i = 0; i < tab.size(); i++) {
+            if (tab.get(i).composante(y)) {
                 y++;
             }
-            i++;
         }
         nbcomposante = y - 1;
-        
         return nbcomposante;
     }
-    
-    public int getdiametre(){
-        if (diametre != -1){
+
+    /**
+     * Retourne le diamètre du graphe.
+     *
+     * @return Le diamètre du graphe.
+     */
+    public int getdiametre() {
+        if (diametre != -1) {
             return diametre;
         }
-        int diametre;
         int maxdiametre = 0;
-        if (nbcomposante == -1){
+        if (nbcomposante == -1) {
             getnbcomposante();
         }
-        ArrayList vols = new ArrayList<Vol>();
-        for (int i = 0; i< tab.size(); i++){
-            for (int y=i+1; y < tab.size(); y++){
-                diametre = Dijkstra(tab.get(i), tab.get(y));
-                if (diametre > maxdiametre){
+        for (int i = 0; i < tab.size(); i++) {
+            for (int y = i + 1; y < tab.size(); y++) {
+                int diametre = Dijkstra(tab.get(i), tab.get(y));
+                if (diametre > maxdiametre) {
                     maxdiametre = diametre;
                 }
             }
         }
-        
         return maxdiametre;
-        
     }
-    
-    public int Dijkstra(Vol vol1, Vol vol2){
-        //initialisation
-        if ( vol1.getcomposante() != vol2.getcomposante()){
+
+    /**
+     * Applique l'algorithme de Dijkstra pour trouver le plus court chemin entre
+     * deux vols.
+     *
+     * @param vol1 Le vol de départ.
+     * @param vol2 Le vol d'arrivée.
+     * @return La distance entre les deux vols.
+     */
+    public int Dijkstra(Vol vol1, Vol vol2) {
+        if (vol1.getcomposante() != vol2.getcomposante()) {
             return 0;
         }
-        
-        for (int i =0; i < tab.size(); i++){
+
+        for (int i = 0; i < tab.size(); i++) {
             tab.get(i).setdistance(9999);
             tab.get(i).settraite(false);
-            
         }
-        
+
         tab.get(tab.indexOf(vol1)).setdistance(0);
         tab.get(tab.indexOf(vol1)).settraite(true);
         vol1.Dijkstra();
-        boolean var= true;
-        while (!vol2.gettraite()){
-            var =false;
+        while (!vol2.gettraite()) {
             int maxdistance = Integer.MAX_VALUE;
             Vol sommetmin = vol1;
-            
-            for (int y = 0; y < tab.size(); y++){
-                if (!tab.get(y).gettraite() && (tab.get(y).getcomposante() == vol1.getcomposante() )){
-                    if (tab.get(y).getdistance() <= maxdistance){
+
+            for (int y = 0; y < tab.size(); y++) {
+                if (!tab.get(y).gettraite() && (tab.get(y).getcomposante() == vol1.getcomposante())) {
+                    if (tab.get(y).getdistance() <= maxdistance) {
                         maxdistance = tab.get(y).getdistance();
                         sommetmin = tab.get(y);
-                        var = true;
                     }
                 }
             }
             sommetmin.Dijkstra();
-        
-            
         }
-        
+
         return vol2.getdistance();
     }
-    
-    
-    
-    public int getnbcomposantede(int composante){
-        int cpt =0;
-        for ( int i=0; i< tab.size(); i++){
-            if (tab.get(i).getcomposante() == composante){
-                cpt ++;
+
+    /**
+     * Retourne le nombre de composants pour une composante donnée.
+     *
+     * @param composante La composante à vérifier.
+     * @return Le nombre de composants.
+     */
+    public int getnbcomposantede(int composante) {
+        int cpt = 0;
+        for (int i = 0; i < tab.size(); i++) {
+            if (tab.get(i).getcomposante() == composante) {
+                cpt++;
             }
         }
-            
-            
-            
         return cpt;
     }
-    
-    public void shownumcomposante(){
-        for ( int i=0; i < tab.size(); i++){
+
+    /**
+     * Affiche le numéro de la composante pour chaque vol.
+     */
+    public void shownumcomposante() {
+        for (int i = 0; i < tab.size(); i++) {
             Vol v = tab.get(i);
-            
+            // La méthode affiche chaque vol avec son numéro de composante
+            System.out.println(v.getid() + " " + v.getcomposante());
         }
     }
-    
-    public ArrayList<Vol> getArraylist(){
+
+    /**
+     * Retourne la liste des vols sous forme d'ArrayList.
+     *
+     * @return La liste des vols.
+     */
+    public ArrayList<Vol> getArraylist() {
         return tab;
     }
-    
-    public ListeVols getListVols(){
+
+    /**
+     * Retourne cette instance de ListeVols.
+     *
+     * @return Cette instance de ListeVols.
+     */
+    public ListeVols getListVols() {
         return this;
     }
-    
-    public  Vol getVolId(int id){
-        for (int i=0; i < tab.size(); i++){
-           if (tab.get(i).getid() == id){
-               return tab.get(i);
-           }
+
+    /**
+     * Retourne un vol par son ID.
+     *
+     * @param id L'ID du vol à accéder.
+     * @return Le vol correspondant à l'ID, ou null s'il n'existe pas.
+     */
+    public Vol getVolId(int id) {
+        for (int i = 0; i < tab.size(); i++) {
+            if (tab.get(i).getid() == id) {
+                return tab.get(i);
+            }
         }
         return null;
     }
-    
-    
-    public ArrayList<Integer> getcouleurs(){
-        ArrayList<Integer> list = new  ArrayList<>();
-        for (int i=1; i <= tab.size(); i++){
+
+    /**
+     * Retourne une liste des couleurs des vols.
+     *
+     * @return La liste des couleurs des vols.
+     */
+    public ArrayList<Integer> getcouleurs() {
+        ArrayList<Integer> list = new ArrayList<>();
+        for (int i = 1; i <= tab.size(); i++) {
             list.add(this.getVolId(i).getcouleur());
         }
         return list;
     }
-    
-    
-    //prend un eliste comprenant des 
-    public void adresscouleurs(ArrayList<Integer> list){
-        
-        for (int i=0; i < tab.size(); i++){
-           this.getVolId(i+1).setcouleur(list.get(i));
+
+    /**
+     * Assigne des couleurs aux vols depuis une liste donnée.
+     *
+     * @param list La liste des couleurs à assigner.
+     */
+    public void adresscouleurs(ArrayList<Integer> list) {
+        for (int i = 0; i < tab.size(); i++) {
+            this.getVolId(i + 1).setcouleur(list.get(i));
         }
-        
     }
-    
-    
-    
 }

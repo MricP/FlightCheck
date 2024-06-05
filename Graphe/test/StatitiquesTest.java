@@ -22,7 +22,7 @@ public class StatitiquesTest {
 
     @Before
     public void setUp() {
-        stat = new Statistiques(2.0,2,5,4,2);
+        stat = new Statistiques(2.0,2,5,4,2,0);
     }
     
     @Test
@@ -48,5 +48,10 @@ public class StatitiquesTest {
     @Test
     public void getDiametreTest() {
         assertTrue(stat.getDiametre() == 2.0);
+    }
+    
+    @Test
+    public void getConflitTest() {
+        assertTrue(stat.getConflit()== 0);
     }
 }

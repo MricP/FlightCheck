@@ -24,6 +24,20 @@ public class Aeroport {
     private double X;
     private double Y;
 
+    /**
+     * Constructeur de la classe Aeroport.
+     *
+     * @param code        Le code de l'aéroport.
+     * @param Nlieu       Le lieu de l'aéroport.
+     * @param Ndegre1     Le degré de latitude.
+     * @param Nminute1    La minute de latitude.
+     * @param Nseconde1   La seconde de latitude.
+     * @param Norientation1 L'orientation de latitude (N ou S).
+     * @param Ndegre2     Le degré de longitude.
+     * @param Nminute2    La minute de longitude.
+     * @param Nseconde2   La seconde de longitude.
+     * @param Norientation2 L'orientation de longitude (E ou W).
+     */
     public Aeroport(String code, String Nlieu, int Ndegre1, int Nminute1, int Nseconde1, String Norientation1, int Ndegre2, int Nminute2, int Nseconde2, String Norientation2){
         codeaeroport = code;
         lieu  = Nlieu;
@@ -55,35 +69,67 @@ public class Aeroport {
         Y = (R *  Math.cos(var1) * Math.cos(var2));
     }
 
-    public double getlatitude(){
+    /**
+     * Retourne la latitude de l'aéroport.
+     *
+     * @return La latitude de l'aéroport.
+     */
+    public double getlatitude() {
         return Latitude;
     }
 
-    public double getlongitude(){
+    /**
+     * Retourne la longitude de l'aéroport.
+     *
+     * @return La longitude de l'aéroport.
+     */
+    public double getlongitude() {
         return Longitude;
     }
 
-    public String getcode(){
+    /**
+     * Retourne le code de l'aéroport.
+     *
+     * @return Le code de l'aéroport.
+     */
+    public String getcode() {
         return codeaeroport;
     }
 
-    public String getlieu(){
+    /**
+     * Retourne le lieu de l'aéroport.
+     *
+     * @return Le lieu de l'aéroport.
+     */
+    public String getlieu() {
         return lieu;
     }
 
-    public double getX(){
+    /**
+     * Retourne la coordonnée X de l'aéroport.
+     *
+     * @return La coordonnée X de l'aéroport.
+     */
+    public double getX() {
         return X;
     }
 
-    public double getY(){
+    /**
+     * Retourne la coordonnée Y de l'aéroport.
+     *
+     * @return La coordonnée Y de l'aéroport.
+     */
+    public double getY() {
         return Y;
     }
 
-    public String getNom() {
-        return lieu; // Si le nom de l'aéroport est stocké dans `lieu`
-    }
-
-    public String toString(){
-        return ("code : "+ codeaeroport + " lieu : "+ lieu + " X : "+ X + " Y : "+ Y);
+    /**
+     * Retourne une chaîne de caractères représentant l'aéroport.
+     *
+     * @return Une chaîne de caractères représentant l'aéroport.
+     */
+    @Override
+    public String toString() {
+        return "code : " + codeaeroport + " lieu : " + lieu + " X : " + X + " Y : " + Y;
     }
 }

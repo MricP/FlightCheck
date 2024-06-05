@@ -49,6 +49,9 @@ import org.jxmapviewer.painter.*;
  * @author Robi6
  */
 
+/**
+ * La classe principale qui gère les aéroports, les vols et la création de graphes.
+ */
 public class Main {
     
     
@@ -62,21 +65,43 @@ public class Main {
         
     }
     
+    /**
+     * Récupère la liste des aéroports.
+     * @return la liste des aéroports
+     */
     public ListeAeroport getlisteaero(){
         return L;
     }
+    
+    /**
+     * Définit la liste des aéroports.
+     * @param liste la nouvelle liste des aéroports
+     */
     public void setlisteaero(ListeAeroport liste){
         L = liste;
     }
     
+    /**
+     * Récupère la liste des vols.
+     * @return la liste des vols
+     */
     public ListeVols getlisteVols(){
         return LV;
     }
     
+    /**
+     * Définit la liste des vols.
+     * @param liste la nouvelle liste des vols
+     */
     public void setlistevols(ListeVols liste){
         LV = liste;
     }
     
+    /**
+     * Crée un graphe à partir d'une liste de vols.
+     * @param liste la liste de vols
+     * @return la liste de vols mise à jour avec les arêtes
+     */
     public ListeVols creationgraphe(ListeVols liste){
         /*
         System.out.println(LV.getVolindice(3).toString());
@@ -107,15 +132,13 @@ public class Main {
         return liste;
         
     }
+
     
-    
-    
-    
-    
-    
-    
-    
-    
+    /**
+     * Crée un graphe statiquement à partir d'une liste de vols.
+     * @param liste la liste de vols
+     * @return la liste de vols mise à jour avec les arêtes
+     */
     public static ListeVols creationgraphe_static(ListeVols liste){
         /*
         System.out.println(LV.getVolindice(3).toString());
@@ -147,7 +170,12 @@ public class Main {
         
     }
     
-    //la methode etre deplacéé
+    /**
+     * Vérifie si deux vols se croisent ou sont proches en temps et en espace.
+     * @param V1 le premier vol
+     * @param V2 le deuxième vol
+     * @return true si les vols se croisent ou sont proches, false sinon
+     */
     public static boolean intersection(Vol V1, Vol V2){
         
         if (V1 == V2){
@@ -259,6 +287,10 @@ public class Main {
            
     }
     
+    /**
+     * Crée un graphe à partir d'un fichier texte.
+     * @return la liste des vols générée à partir du fichier texte
+     */
     public static ListeVols CreateGraphText_static(){
         System.out.println("rentrez le chemin d'acces de votre graphe sous forme .txt:");
         
@@ -321,6 +353,11 @@ public class Main {
         return null;
     }
         
+    /**
+     * Crée un graphe à partir du fichier texte fourni.
+     * @param file le fichier contenant les données du graphe
+     * @return un objet ListeVols représentant le graphe
+     */
     public ListeVols CreateGraphText(File file){
         /*
         System.out.println("rentrez le chemin d'acces de votre graphe sous forme .txt:");
@@ -385,7 +422,11 @@ public class Main {
     }
     
     
-        
+    /**
+     * Génère un graphe GraphStream à partir d'un objet ListeVols.
+     * @param liste l'objet ListeVols contenant les données des vols
+     * @return un objet Graph pour la visualisation
+     */ 
     public static Graph getGraphStream_static(ListeVols liste) {
         Graph graph = new MultiGraph("multi graphe");
         ArrayList<String> couleurs = new ArrayList<String>();
@@ -422,18 +463,32 @@ public class Main {
         return graph;
     }
     
+    /**
+     * Calcule le diamètre du graphe.
+     * @param liste l'objet ListeVols représentant le graphe
+     * @return le diamètre du graphe
+     */
     public double getDiametre(ListeVols liste){
         Graph G = getGraphStream_static(liste);
         return org.graphstream.algorithm.Toolkit.diameter(G);
     }
     
+    /**
+     * Méthode statique pour calculer le diamètre du graphe.
+     * @param liste l'objet ListeVols représentant le graphe
+     * @return le diamètre du graphe
+     */
     public static double getDiametre_static(ListeVols liste){
         Graph G = getGraphStream_static(liste);
         return org.graphstream.algorithm.Toolkit.diameter(G);
     }
     
     
-    
+    /**
+     * Génère un graphe GraphStream à partir d'un objet ListeVols.
+     * @param liste l'objet ListeVols contenant les données des vols
+     * @return un objet Graph pour la visualisation
+     */
     public Graph getGraphStream(ListeVols liste) {
         Graph graph = new MultiGraph("multi graphe");
         ArrayList<String> couleurs = new ArrayList<String>();
@@ -468,6 +523,10 @@ public class Main {
         return graph;
     }
     
+    /**
+     * Lit les données des vols à partir d'un fichier et les stocke dans un objet ListeVols.
+     * @param file le fichier contenant les données des vols
+     */
     public void setvolaeroports(File file){
         /*
         String FilePath;
@@ -507,6 +566,9 @@ public class Main {
         }
     }    
     
+    /**
+     * Méthode statique pour lire les données des vols à partir d'un chemin de fichier prédéfini et les stocker dans un objet ListeVols.
+     */
     public static void setvolaeroports_static(){
         String FilePath;
         File file;
@@ -548,7 +610,10 @@ public class Main {
     
     
     
-    
+    /**
+     * Lit les données des aéroports à partir d'un fichier et les stocke dans la liste appropriée.
+     * @param file le fichier contenant les données des aéroports
+     */
     public void setAeroportlist(File file){
         /*
         System.out.println("rentrez le chemin d'acces de votre fichier deaéroports sous forme .txt:");
@@ -585,7 +650,9 @@ public class Main {
         }
     }
     
-    
+    /**
+     * Méthode statique pour lire les données des aéroports à partir d'un chemin de fichier prédéfini et les stocker dans la liste appropriée.
+     */
     public static void setAeroportlist_static(){
         System.out.println("rentrez le chemin d'acces de votre fichier deaéroports sous forme .txt:");
         String filtePath;
@@ -620,11 +687,10 @@ public class Main {
         }
     }
     
-    
-    
-    
-    
-    
+    /**
+     * Méthode principale pour exécuter le programme.
+     * @param args les arguments de la ligne de commande
+     */
     public static void main(String[] args) {
         Scanner ent = new Scanner(System.in);
         
@@ -751,6 +817,12 @@ public class Main {
         
     }
     
+    /**
+     * Applique l'algorithme de Welsh-Powell de manière exhaustive pour trouver la coloration optimale.
+     *
+     * @param list La liste de vols à colorier.
+     * @return La liste de vols avec la coloration optimale trouvée.
+     */
     public ListeVols FullWelshPowell(ListeVols list){
         
         int minconflits = Integer.MAX_VALUE;
@@ -783,6 +855,12 @@ public class Main {
         
     }
     
+    /**
+     * Applique l'algorithme de coloration glouton de manière exhaustive pour trouver la coloration optimale.
+     *
+     * @param list La liste de vols à colorier.
+     * @return La liste de vols avec la coloration optimale trouvée.
+     */
     public ListeVols FullGreedyColor(ListeVols list){
         
         int minconflits = Integer.MAX_VALUE;
@@ -812,6 +890,11 @@ public class Main {
         
     }
     
+    /**
+     * Calcule les statistiques du graphe des vols.
+     *
+     * @return Un objet Statistiques contenant les différentes métriques calculées.
+     */
     public Statistiques calculerStatistiques() {
         double degreMoyen = LV.getdegremoyen();
         int nbComposantes = LV.getnbcomposante();
@@ -823,7 +906,12 @@ public class Main {
         return new Statistiques(degreMoyen, nbComposantes, nbNoeuds, nbAretes, diametre, nbConflits);
     }
      
-    
+    /**
+     * Applique l'algorithme de coloration gourmande de manière exhaustive pour trouver la coloration optimale (statique).
+     *
+     * @param list La liste de vols à colorier.
+     * @return La liste de vols avec la coloration optimale trouvée.
+     */
     public static ListeVols FullGreedyColor_static(ListeVols list){
         
         int minconflits = Integer.MAX_VALUE;

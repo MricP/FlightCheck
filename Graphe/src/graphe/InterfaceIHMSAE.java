@@ -133,7 +133,7 @@ public class InterfaceIHMSAE extends JFrame {
                     String airportCode = codeaero.get(geoCondition.indexOf(position));
                     Aeroport airport = listeAeroport.accesAeroport(airportCode);
                     if (airport != null) {
-                        infoBox.setText("Aéroport: " + airport.getNom() + "\nCode: " + airport.getcode() + "\nLongitude: " + position.getLongitude() + "\nLatitude: " + position.getLatitude());
+                        infoBox.setText("Aéroport: " + airport.getcode() + "\nCode: " + airport.getcode() + "\nLongitude: " + position.getLongitude() + "\nLatitude: " + position.getLatitude());
                     }
                 }
             }

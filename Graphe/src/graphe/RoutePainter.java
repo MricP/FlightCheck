@@ -14,40 +14,48 @@ import org.jxmapviewer.JXMapViewer;
 import org.jxmapviewer.painter.Painter;
 import org.jxmapviewer.viewer.GeoPosition;
 
+/**
+ * La classe RoutePainter dessine un itinéraire sur un composant JXMapViewer.
+ * Elle utilise une liste de positions géographiques (GeoPosition) pour tracer le chemin.
+ */
 public class RoutePainter implements Painter<JXMapViewer> {
     private List<GeoPosition> track;
     private Color color;
-    
-    
-    
-    /*
-    public RoutePainter(List<GeoPosition> track) {
+
+    /**
+     * Constructeur de la classe RoutePainter.
+     * 
+     * @param track la liste des positions géographiques représentant le chemin à tracer
+     * @param color la couleur de la ligne à tracer
+     */
+    public RoutePainter(List<GeoPosition> track, Color color) {
         this.track = track;
-        
-        
+        this.color = color;
     }
-    */
-    
-    public RoutePainter(List<GeoPosition> track, Color couleur) {
-        this.track = track;
-        this.color = couleur;
-        
-    }
-    
+
+    /**
+     * Méthode de peinture sur le composant JXMapViewer.
+     * Cette méthode est appelée pour dessiner l'itinéraire sur le composant map.
+     * 
+     * @param g l'objet Graphics2D utilisé pour dessiner
+     * @param map le composant JXMapViewer sur lequel dessiner
+     * @param w la largeur du composant
+     * @param h la hauteur du composant
+     */
     @Override
     public void paint(Graphics2D g, JXMapViewer map, int w, int h) {
         g = (Graphics2D) g.create();
         Rectangle rect = map.getViewportBounds();
         g.translate(-rect.x, -rect.y);
-        
-        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON); // Rendu des lignes quality ++
-        g.setColor(color); 
-        
+
+        // Améliore la qualité de rendu des lignes
+        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g.setColor(color);
         g.setStroke(new BasicStroke(1));
-        
+
         int lastX = -1;
         int lastY = -1;
-        
+
         for (GeoPosition gp : track) {
             Point2D pt = map.getTileFactory().geoToPixel(gp, map.getZoom());
             if (lastX != -1 && lastY != -1) {
@@ -58,7 +66,4 @@ public class RoutePainter implements Painter<JXMapViewer> {
         }
         g.dispose();
     }
-    
-    
 }
-
