@@ -388,6 +388,7 @@ public class Main {
                 if (cpt ==0){
                     int kmax = Integer.valueOf(line);
                     LVol.setkmax(kmax);
+                    LVol.sethavekmax(true);
                     
                     
                 }else if (cpt == 1){

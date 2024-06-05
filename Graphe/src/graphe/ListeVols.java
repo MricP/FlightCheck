@@ -51,17 +51,17 @@ public class ListeVols {
     public boolean havekmax() {
         return havekmax;
     }
-
+    
     /**
-     * Définit la valeur de kmax et marque havekmax comme true.
+     * Définit la valeur de kmax.
      *
      * @param kmax La valeur de kmax à définir.
      */
     public void setkmax(int kmax) {
         this.kmax = kmax;
-        havekmax = true;
+        
     }
-
+    
     /**
      * Retourne le nombre d'arêtes.
      *
@@ -248,7 +248,7 @@ public class ListeVols {
                     if (havekmax){
                         couleur = tab.get(i).zzz(kmax);
                     }else{
-                        couleur = tab.get(i).zzz(tab.size());
+                        couleur = tab.get(i).zzz(0);
                     }
                     tab.get(i).setcouleur(couleur);
                 }

@@ -63,7 +63,7 @@ public class InterfaceIHMSAE extends JFrame {
         allgood = false;
         main = new Main();
         colorList = new ArrayList<>();
-        airportIcon = new ImageIcon("C:/Users/Robi6/Downloads/aero.png");
+        airportIcon = new ImageIcon(getClass().getResource("/graphe/aero.png"));
         setTitle("FlightSAE 1.0.0");
         setSize(1000, 800);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -104,7 +104,7 @@ public class InterfaceIHMSAE extends JFrame {
         infoBox.setForeground(Color.WHITE);
         infoPanel.add(new JScrollPane(infoBox), BorderLayout.CENTER);
         gbc.gridx = 3;
-        gbc.gridy = 1;
+        gbc.gridy = 2;
         gbc.gridheight = 1;
         gbc.gridwidth = 1;
         gbc.weightx = 0.0;
@@ -746,11 +746,11 @@ public class InterfaceIHMSAE extends JFrame {
                 }
             }
         }
-
+        
         dessinerpoints();
         System.out.println("Les lignes entre les waypoints ont été dessinées avec coloration");
     }
-
+    
     private void drawLinesHourVolsWithColoration(int heure, int minute) {
         if (waypoints.isEmpty()) {
             System.out.println("Aucun waypoint disponible pour dessiner des lignes.");
@@ -767,7 +767,7 @@ public class InterfaceIHMSAE extends JFrame {
                 String codearrivee = vol.getcodearrive();
                 GeoPosition positionDepart = null;
                 GeoPosition positionArrivee = null;
-
+                
                 for (int y = 0; y < codeaero.size(); y++) {
                     if (codeaero.get(y).equals(codedepart)) {
                         positionDepart = geoCondition.get(y);
