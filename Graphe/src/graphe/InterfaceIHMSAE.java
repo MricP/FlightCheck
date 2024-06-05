@@ -12,12 +12,16 @@ import org.jxmapviewer.viewer.GeoPosition;
 import org.jxmapviewer.viewer.TileFactoryInfo;
 import org.jxmapviewer.viewer.Waypoint;
 import org.jxmapviewer.viewer.WaypointPainter;
+import org.jxmapviewer.painter.CompoundPainter;
 
 import javax.swing.*;
 import javax.swing.event.MouseInputListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.geom.Point2D;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -27,7 +31,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import org.graphstream.graph.Graph;
-import org.jxmapviewer.painter.CompoundPainter;
+
+
+
 
 public class InterfaceIHMSAE extends JFrame {
 
@@ -42,10 +48,12 @@ public class InterfaceIHMSAE extends JFrame {
     private ArrayList<String> codeaero;
     private ArrayList<GeoPosition> geoCondition;
     private JCheckBox colorationCheckbox;
+    private JCheckBox kmaxCheckbox;
     private boolean allgood;
     private JTextField heureField;
     private JTextField minuteField;
     private JSpinner kmaxSpinner;
+    private JTextArea infoBox;
     
     
     public InterfaceIHMSAE() {
@@ -80,6 +88,56 @@ public class InterfaceIHMSAE extends JFrame {
         mapViewer.addMouseWheelListener(new ZoomMouseWheelListenerCenter(mapViewer));
         mapViewer.addKeyListener(new PanKeyListener(mapViewer));
         mapViewer.addMouseListener(new CenterMapListener(mapViewer));
+
+        // Ajouter une boîte d'information
+        JPanel infoPanel = new JPanel();
+        infoPanel.setLayout(new BorderLayout());
+        infoPanel.setBackground(bgColor);
+        infoPanel.setPreferredSize(new Dimension(200, 100));
+        infoBox = new JTextArea();
+        infoBox.setEditable(false);
+        infoBox.setBackground(bgColor);
+        infoBox.setForeground(Color.WHITE);
+        infoPanel.add(new JScrollPane(infoBox), BorderLayout.CENTER);
+        gbc.gridx = 3;
+        gbc.gridy = 1;
+        gbc.gridheight = 1;
+        gbc.gridwidth = 1;
+        gbc.weightx = 0.0;
+        gbc.weighty = 0.0;
+        gbc.anchor = GridBagConstraints.NORTH;
+        gbc.fill = GridBagConstraints.BOTH;
+        add(infoPanel, gbc);
+
+        // Ajouter un écouteur pour les clics sur les waypoints
+        mapViewer.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                Point mousePoint = e.getPoint();
+                GeoPosition geoPosition = mapViewer.convertPointToGeoPosition(mousePoint);
+                Waypoint clickedWaypoint = null;
+                for (Waypoint waypoint : waypoints) {
+                    if (waypoint instanceof DefaultWaypoint) {
+                        DefaultWaypoint dw = (DefaultWaypoint) waypoint;
+                        Point2D waypointPoint = mapViewer.getTileFactory().geoToPixel(dw.getPosition(), mapViewer.getZoom());
+                        Rectangle rect = new Rectangle((int) waypointPoint.getX() - 5, (int) waypointPoint.getY() - 5, 10, 10);
+                        if (rect.contains(mousePoint)) {
+                            clickedWaypoint = dw;
+                            break;
+                        }
+                    }
+                }
+                if (clickedWaypoint != null) {
+                    DefaultWaypoint dw = (DefaultWaypoint) clickedWaypoint;
+                    GeoPosition position = dw.getPosition();
+                    String airportCode = codeaero.get(geoCondition.indexOf(position));
+                    Aeroport airport = listeAeroport.accesAeroport(airportCode);
+                    if (airport != null) {
+                        infoBox.setText("Aéroport: " + airport.getNom() + "\nCode: " + airport.getcode() + "\nLongitude: " + position.getLongitude() + "\nLatitude: " + position.getLatitude());
+                    }
+                }
+            }
+        });
 
         gbc.gridx = 1;
         gbc.gridy = 0;
@@ -157,13 +215,19 @@ public class InterfaceIHMSAE extends JFrame {
         rc.gridx = 1;
         rc.gridy = 2;
         rightControlPanel.add(kmaxSpinner, rc);
+
+        kmaxCheckbox = new JCheckBox("k-max");
+        styleCheckBox(kmaxCheckbox, bgColor);
+        rc.gridx = 0;
+        rc.gridy = 0;
+        rightControlPanel.add(kmaxCheckbox, rc);
         
         colorationCheckbox = new JCheckBox("coloration");
         styleCheckBox(colorationCheckbox, bgColor);
         rc.gridx = 0;
         rc.gridy = 1;
         rightControlPanel.add(colorationCheckbox, rc);
-        
+
         gbc.gridx = 3;
         gbc.gridy = 0;
         gbc.gridheight = 4;
@@ -489,13 +553,13 @@ public class InterfaceIHMSAE extends JFrame {
             
         }
     }
-    
+
     private void addAirportMarkers() {
         if (listeAeroport == null || listeAeroport.taillelisteaero() == 0) {
             System.out.println("Aucun aéroport à afficher.");
             return;
         }
-        
+
         waypoints.clear();
         codeaero.clear();
         geoCondition.clear();
@@ -507,7 +571,7 @@ public class InterfaceIHMSAE extends JFrame {
             codeaero.add(aeroport.getcode());
             geoCondition.add(position);
         }
-        
+
         WaypointPainter<Waypoint> waypointPainter = new WaypointPainter<>();
         waypointPainter.setWaypoints(waypoints);
         compoundPainter.addPainter(waypointPainter);
@@ -515,7 +579,7 @@ public class InterfaceIHMSAE extends JFrame {
         mapViewer.repaint();
         System.out.println("Les aéroports sont maintenant affichés");
     }
-    
+
 private void drawLinesAllVolsInBlue() {
     if (waypoints.isEmpty()) {
         System.out.println("Aucun waypoint disponible pour dessiner des lignes.");
