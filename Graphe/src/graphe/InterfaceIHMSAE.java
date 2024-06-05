@@ -54,12 +54,13 @@ public class InterfaceIHMSAE extends JFrame {
     private JTextField minuteField;
     private JSpinner kmaxSpinner;
     private JTextArea infoBox;
-    
+    private Icon airportIcon; 
     
     public InterfaceIHMSAE() {
         allgood = false;
         main = new Main();
         colorList = new ArrayList<>();
+        airportIcon = new ImageIcon("C:/Users/Robi6/Downloads/aero.png");
         setTitle("FlightSAE 1.0.0");
         setSize(1000, 800);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -574,6 +575,7 @@ public class InterfaceIHMSAE extends JFrame {
 
         WaypointPainter<Waypoint> waypointPainter = new WaypointPainter<>();
         waypointPainter.setWaypoints(waypoints);
+        waypointPainter.setRenderer(new CustomWaypointRenderer(airportIcon));
         compoundPainter.addPainter(waypointPainter);
         mapViewer.setOverlayPainter(compoundPainter);
         mapViewer.repaint();
@@ -617,6 +619,7 @@ private void drawLinesAllVolsInBlue() {
 
     WaypointPainter<Waypoint> waypointPainter = new WaypointPainter<>();
     waypointPainter.setWaypoints(waypoints);
+    waypointPainter.setRenderer(new CustomWaypointRenderer(airportIcon));
     compoundPainter.addPainter(waypointPainter);
 
     mapViewer.setOverlayPainter(compoundPainter);
@@ -661,6 +664,7 @@ private void drawLinesAllVolsWithColoration() {
     
     WaypointPainter<Waypoint> waypointPainter = new WaypointPainter<>();
     waypointPainter.setWaypoints(waypoints);
+    waypointPainter.setRenderer(new CustomWaypointRenderer(airportIcon));
     compoundPainter.addPainter(waypointPainter);
     
     mapViewer.setOverlayPainter(compoundPainter);
@@ -771,6 +775,7 @@ private void drawLinesColorVolsWithColoration(int couleur) {
     
     WaypointPainter<Waypoint> waypointPainter = new WaypointPainter<>();
     waypointPainter.setWaypoints(waypoints);
+    waypointPainter.setRenderer(new CustomWaypointRenderer(airportIcon));
     compoundPainter.addPainter(waypointPainter);
     
     mapViewer.setOverlayPainter(compoundPainter);
@@ -817,6 +822,7 @@ private void drawLinesHourVolsWithColoration(int heure, int minute) {
     
     WaypointPainter<Waypoint> waypointPainter = new WaypointPainter<>();
     waypointPainter.setWaypoints(waypoints);
+    waypointPainter.setRenderer(new CustomWaypointRenderer(airportIcon));
     compoundPainter.addPainter(waypointPainter);
     
     mapViewer.setOverlayPainter(compoundPainter);
