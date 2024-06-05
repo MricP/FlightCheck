@@ -248,7 +248,7 @@ public class ListeVols {
                     if (havekmax){
                         couleur = tab.get(i).zzz(kmax);
                     }else{
-                        couleur = tab.get(i).zzz(Integer.MAX_VALUE);
+                        couleur = tab.get(i).zzz(tab.size());
                     }
                     tab.get(i).setcouleur(couleur);
                 }

@@ -495,61 +495,6 @@ public class InterfaceIHMSAE extends JFrame {
         
         waypoints = new HashSet<>();
         
-        
-        /*
-        // Initialisation avec des fichiers par défaut
-        String FilePath = "C:/Users/Emric/OneDrive/Bureau/S2/SaeFinal/sae_mathieu_petit_pirrera/DataTest/aeroports.txt";
-        File file = new File(FilePath);
-        
-        main.setAeroportlist(file);
-        listeAeroport = main.getlisteaero();
-        addAirportMarkers();
-        
-        FilePath = "C:/Users/Emric/OneDrive/Bureau/S2/SaeFinal/sae_mathieu_petit_pirrera/DataTest/vol-test8.csv";
-        file = new File(FilePath);
-        
-        main.setvolaeroports(file);
-        listeVolCarte = main.getlisteVols();
-        
-        //permet de mettre des couleurs dans notre liste de couleurs
-        setcolorlist();
-        
-        //crée le grpahe avec l'ajout des arretes
-        listeVolCarte = main.creationgraphe(listeVolCarte);
-        
-        //colorie le graphe
-        //listeVol  = main.FullGreedyColor(listeVolCarte);
-        listeVolCarte.MAXWelshPowell();
-        mapViewer.setOverlayPainter(compoundPainter);
-        
-        
-        //changer le kmax
-        listeVolCarte.setkmax(listeVolCarte.getkmax());
-        
-        //enlever/ mettre le kmax
-        listeVolCarte.sethavekmax(true);
-        
-        //l'autre qui comporte le graphe qui ne se modelise pas avec la carte, uniquement avec Graphstream
-        FilePath = "C:/Users/Emric/OneDrive/Bureau/S2/SaeFinal/sae_mathieu_petit_pirrera/DataTest/graph-test1.txt";
-        //C:/Users/Emric/OneDrive/Bureau/S2/SaeFinal/sae_mathieu_petit_pirrera/DataTest/vol-test8.csv
-        file = new File(FilePath);
-        listeVolGraphe = main.CreateGraphText(file);
-        //listeVolGraphe = main.FullGreedyColor(listeVolGraphe);
-        //listeVolGraphe.setcouleurdefault();
-            
-        //listeVolGraphe = main.FullWelshPowell(listeVolGraphe);
-        listeVolGraphe = main.FullWelshPowell(listeVolGraphe);
-        https://forge.univ-lyon1.fr/p2306053/sae_mathieu_petit_pirrera.git
-        //les Graph provenant de Graphstream des 2 graphes
-        
-        Graph G1 = main.getGraphStream(listeVolCarte);
-        Graph G2 = main.getGraphStream(listeVolGraphe);
-        
-        System.out.println("nb conflitts : "+listeVolGraphe.getnbconflit());
-        System.out.println(listeVolGraphe.goodcoloration());
-        G1.display();
-        G2.display();
-        */
         //pour tester les graphetest
         /*
         String FilePath = "C:/Users/Robi6/OneDrive/Bureau/DataTest/graph-test2.txt";
@@ -618,170 +563,22 @@ public class InterfaceIHMSAE extends JFrame {
         System.out.println("Les aéroports sont maintenant affichés");
     }
 
-private void drawLinesAllVolsInBlue() {
-    if (waypoints.isEmpty()) {
-        System.out.println("Aucun waypoint disponible pour dessiner des lignes.");
-        return;
-    }
-
-    compoundPainter = new CompoundPainter<>(); // Crée une nouvelle instance de CompoundPainter
-
-    for (int i = 0; i < listeVolCarte.taille(); i++) {
-        List<GeoPosition> positions = new ArrayList<>();
-        Vol vol = listeVolCarte.getVolindice(i);
-        String codedepart = vol.getcodedepart();
-        String codearrivee = vol.getcodearrive();
-        GeoPosition positionDepart = null;
-        GeoPosition positionArrivee = null;
-
-        for (int y = 0; y < codeaero.size(); y++) {
-            if (codeaero.get(y).equals(codedepart)) {
-                positionDepart = geoCondition.get(y);
-            } else if (codeaero.get(y).equals(codearrivee)) {
-                positionArrivee = geoCondition.get(y);
-            }
+    private void drawLinesAllVolsInBlue() {
+        if (waypoints.isEmpty()) {
+            System.out.println("Aucun waypoint disponible pour dessiner des lignes.");
+            return;
         }
 
-        if (positionDepart != null && positionArrivee != null) {
-            positions.add(positionDepart);
-            positions.add(positionArrivee);
+        compoundPainter = new CompoundPainter<>(); // Crée une nouvelle instance de CompoundPainter
 
-            RoutePainter routePainter = new RoutePainter(positions, Color.BLUE);
-            compoundPainter.addPainter(routePainter);
-        } else {
-            System.out.println("Erreur : Impossible de trouver les positions pour le vol " + vol.toString());
-        }
-    }
-
-    dessinerpoints();
-    System.out.println("Les lignes entre les waypoints ont été dessinées en bleu");
-}
-
-private void drawLinesAllVolsWithColoration() {
-    if (waypoints.isEmpty()) {
-        System.out.println("Aucun waypoint disponible pour dessiner des lignes.");
-        return;
-    }
-    /*
-    System.out.println(listeVolCarte.maxcouleur());
-    listeVolCarte.sethavekmax(true);
-    listeVolCarte.setkmax(3);
-    listeVolCarte = main.FullWelshPowell(listeVolCarte);
-    */
-    compoundPainter = new CompoundPainter<>();
-    
-    for (int i = 0; i < listeVolCarte.taille(); i++) {
-        List<GeoPosition> positions = new ArrayList<>();
-        Vol vol = listeVolCarte.getVolindice(i);
-        String codedepart = vol.getcodedepart();
-        String codearrivee = vol.getcodearrive();
-        GeoPosition positionDepart = null;
-        GeoPosition positionArrivee = null;
-        
-        for (int y = 0; y < codeaero.size(); y++) {
-            if (codeaero.get(y).equals(codedepart)) {
-                positionDepart = geoCondition.get(y);
-            } else if (codeaero.get(y).equals(codearrivee)) {
-                positionArrivee = geoCondition.get(y);
-            }
-        }
-        
-        if (positionDepart != null && positionArrivee != null) {
-            positions.add(positionDepart);
-            positions.add(positionArrivee);
-
-            RoutePainter routePainter = new RoutePainter(positions, colorList.get(vol.getcouleur() + 1));
-            compoundPainter.addPainter(routePainter);
-        } else {
-            System.out.println("Erreur : Impossible de trouver les positions pour le vol " + vol.toString());
-        }
-    }
-    
-    dessinerpoints();
-    System.out.println("Les lignes entre les waypoints ont été dessinées avec coloration");
-}
-
-private void openNumberDialog() {
-    int kmax = listeVolCarte.maxcouleur();
-    JTextField numberField = new JTextField(5);
-
-    JPanel myPanel = new JPanel();
-    myPanel.add(new JLabel("Entrer un nombre entre 1 et " + kmax + ":"));
-    myPanel.add(numberField);
-
-    int result = JOptionPane.showConfirmDialog(null, myPanel, 
-             "Veuillez entrer un nombre", JOptionPane.OK_CANCEL_OPTION);
-    if (result == JOptionPane.OK_OPTION) {
-        try {
-            int number = Integer.parseInt(numberField.getText());
-            if (number >= 1 && number <= kmax) {
-                drawLinesColorVolsWithColoration(number);
-            } else {
-                JOptionPane.showMessageDialog(null, "Le nombre doit être entre 1 et " + kmax, "Erreur", JOptionPane.ERROR_MESSAGE);
-            }
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Veuillez entrer un nombre valide", "Erreur", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-}
-
-private void openHourMinuteDialog() {
-    JPanel myPanel = new JPanel(new GridBagLayout());
-    GridBagConstraints gbc = new GridBagConstraints();
-    gbc.insets = new Insets(5, 5, 5, 5);
-    gbc.fill = GridBagConstraints.HORIZONTAL;
-
-    JLabel heureLabel = new JLabel("Heure : ");
-    gbc.gridx = 0;
-    gbc.gridy = 0;
-    myPanel.add(heureLabel, gbc);
-
-    JTextField heureField = new JTextField(5);
-    gbc.gridx = 1;
-    gbc.gridy = 0;
-    myPanel.add(heureField, gbc);
-
-    JLabel minuteLabel = new JLabel("Minute : ");
-    gbc.gridx = 0;
-    gbc.gridy = 1;
-    myPanel.add(minuteLabel, gbc);
-
-    JTextField minuteField = new JTextField(5);
-    gbc.gridx = 1;
-    gbc.gridy = 1;
-    myPanel.add(minuteField, gbc);
-
-    int result = JOptionPane.showConfirmDialog(null, myPanel, 
-             "Veuillez entrer l'heure et les minutes", JOptionPane.OK_CANCEL_OPTION);
-    if (result == JOptionPane.OK_OPTION) {
-        try {
-            int heure = Integer.parseInt(heureField.getText());
-            int minute = Integer.parseInt(minuteField.getText());
-            drawLinesHourVolsWithColoration(heure, minute);
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Veuillez entrer des valeurs valides pour l'heure et les minutes.", "Erreur", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-}
-
-
-private void drawLinesColorVolsWithColoration(int couleur) {
-    if (waypoints.isEmpty()) {
-        System.out.println("Aucun waypoint disponible pour dessiner des lignes.");
-        return;
-    }
-    
-    compoundPainter = new CompoundPainter<>();
-    
-    for (int i = 0; i < listeVolCarte.taille(); i++) {
-        List<GeoPosition> positions = new ArrayList<>();
-        Vol vol = listeVolCarte.getVolindice(i);
-        if(vol.getcouleur() == couleur){
+        for (int i = 0; i < listeVolCarte.taille(); i++) {
+            List<GeoPosition> positions = new ArrayList<>();
+            Vol vol = listeVolCarte.getVolindice(i);
             String codedepart = vol.getcodedepart();
             String codearrivee = vol.getcodearrive();
             GeoPosition positionDepart = null;
             GeoPosition positionArrivee = null;
-            
+
             for (int y = 0; y < codeaero.size(); y++) {
                 if (codeaero.get(y).equals(codedepart)) {
                     positionDepart = geoCondition.get(y);
@@ -789,40 +586,43 @@ private void drawLinesColorVolsWithColoration(int couleur) {
                     positionArrivee = geoCondition.get(y);
                 }
             }
-            
+
             if (positionDepart != null && positionArrivee != null) {
                 positions.add(positionDepart);
                 positions.add(positionArrivee);
 
-                RoutePainter routePainter = new RoutePainter(positions, colorList.get(vol.getcouleur() + 1));
+                RoutePainter routePainter = new RoutePainter(positions, Color.BLUE);
                 compoundPainter.addPainter(routePainter);
             } else {
                 System.out.println("Erreur : Impossible de trouver les positions pour le vol " + vol.toString());
             }
         }
-    }
-    
-    dessinerpoints();
-    System.out.println("Les lignes entre les waypoints ont été dessinées avec coloration");
-}
 
-private void drawLinesHourVolsWithColoration(int heure, int minute) {
-    if (waypoints.isEmpty()) {
-        System.out.println("Aucun waypoint disponible pour dessiner des lignes.");
-        return;
+        dessinerpoints();
+        System.out.println("Les lignes entre les waypoints ont été dessinées en bleu");
     }
-    
-    compoundPainter = new CompoundPainter<>();
-    int minutes = heure * 60 + minute;
-    for (int i = 0; i < listeVolCarte.taille(); i++) {
-        List<GeoPosition> positions = new ArrayList<>();
-        Vol vol = listeVolCarte.getVolindice(i);
-        if (vol.getminutesdepart() <= minutes && vol.getminutes_arrive() >= minutes){
+
+    private void drawLinesAllVolsWithColoration() {
+        if (waypoints.isEmpty()) {
+            System.out.println("Aucun waypoint disponible pour dessiner des lignes.");
+            return;
+        }
+        /*
+        System.out.println(listeVolCarte.maxcouleur());
+        listeVolCarte.sethavekmax(true);
+        listeVolCarte.setkmax(3);
+        listeVolCarte = main.FullWelshPowell(listeVolCarte);
+        */
+        compoundPainter = new CompoundPainter<>();
+
+        for (int i = 0; i < listeVolCarte.taille(); i++) {
+            List<GeoPosition> positions = new ArrayList<>();
+            Vol vol = listeVolCarte.getVolindice(i);
             String codedepart = vol.getcodedepart();
             String codearrivee = vol.getcodearrive();
             GeoPosition positionDepart = null;
             GeoPosition positionArrivee = null;
-            
+
             for (int y = 0; y < codeaero.size(); y++) {
                 if (codeaero.get(y).equals(codedepart)) {
                     positionDepart = geoCondition.get(y);
@@ -841,11 +641,156 @@ private void drawLinesHourVolsWithColoration(int heure, int minute) {
                 System.out.println("Erreur : Impossible de trouver les positions pour le vol " + vol.toString());
             }
         }
+
+        dessinerpoints();
+        System.out.println("Les lignes entre les waypoints ont été dessinées avec coloration");
     }
-    
-    dessinerpoints();
-    System.out.println("Les lignes entre les waypoints ont été dessinées avec coloration");
-}
+
+    private void openNumberDialog() {
+        int kmax = listeVolCarte.maxcouleur();
+        JTextField numberField = new JTextField(5);
+
+        JPanel myPanel = new JPanel();
+        myPanel.add(new JLabel("Entrer un nombre entre 1 et " + kmax + ":"));
+        myPanel.add(numberField);
+
+        int result = JOptionPane.showConfirmDialog(null, myPanel, 
+                 "Veuillez entrer un nombre", JOptionPane.OK_CANCEL_OPTION);
+        if (result == JOptionPane.OK_OPTION) {
+            try {
+                int number = Integer.parseInt(numberField.getText());
+                if (number >= 1 && number <= kmax) {
+                    drawLinesColorVolsWithColoration(number);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Le nombre doit être entre 1 et " + kmax, "Erreur", JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Veuillez entrer un nombre valide", "Erreur", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+
+    private void openHourMinuteDialog() {
+        JPanel myPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(5, 5, 5, 5);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+
+        JLabel heureLabel = new JLabel("Heure : ");
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        myPanel.add(heureLabel, gbc);
+
+        JTextField heureField = new JTextField(5);
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        myPanel.add(heureField, gbc);
+
+        JLabel minuteLabel = new JLabel("Minute : ");
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        myPanel.add(minuteLabel, gbc);
+
+        JTextField minuteField = new JTextField(5);
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        myPanel.add(minuteField, gbc);
+
+        int result = JOptionPane.showConfirmDialog(null, myPanel, 
+                 "Veuillez entrer l'heure et les minutes", JOptionPane.OK_CANCEL_OPTION);
+        if (result == JOptionPane.OK_OPTION) {
+            try {
+                int heure = Integer.parseInt(heureField.getText());
+                int minute = Integer.parseInt(minuteField.getText());
+                drawLinesHourVolsWithColoration(heure, minute);
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Veuillez entrer des valeurs valides pour l'heure et les minutes.", "Erreur", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+
+
+    private void drawLinesColorVolsWithColoration(int couleur) {
+        if (waypoints.isEmpty()) {
+            System.out.println("Aucun waypoint disponible pour dessiner des lignes.");
+            return;
+        }
+
+        compoundPainter = new CompoundPainter<>();
+
+        for (int i = 0; i < listeVolCarte.taille(); i++) {
+            List<GeoPosition> positions = new ArrayList<>();
+            Vol vol = listeVolCarte.getVolindice(i);
+            if(vol.getcouleur() == couleur){
+                String codedepart = vol.getcodedepart();
+                String codearrivee = vol.getcodearrive();
+                GeoPosition positionDepart = null;
+                GeoPosition positionArrivee = null;
+
+                for (int y = 0; y < codeaero.size(); y++) {
+                    if (codeaero.get(y).equals(codedepart)) {
+                        positionDepart = geoCondition.get(y);
+                    } else if (codeaero.get(y).equals(codearrivee)) {
+                        positionArrivee = geoCondition.get(y);
+                    }
+                }
+
+                if (positionDepart != null && positionArrivee != null) {
+                    positions.add(positionDepart);
+                    positions.add(positionArrivee);
+
+                    RoutePainter routePainter = new RoutePainter(positions, colorList.get(vol.getcouleur() + 1));
+                    compoundPainter.addPainter(routePainter);
+                } else {
+                    System.out.println("Erreur : Impossible de trouver les positions pour le vol " + vol.toString());
+                }
+            }
+        }
+
+        dessinerpoints();
+        System.out.println("Les lignes entre les waypoints ont été dessinées avec coloration");
+    }
+
+    private void drawLinesHourVolsWithColoration(int heure, int minute) {
+        if (waypoints.isEmpty()) {
+            System.out.println("Aucun waypoint disponible pour dessiner des lignes.");
+            return;
+        }
+        System.out.println("coloration avec horaire, couleurs max : "+ listeVolCarte.maxcouleur());
+        compoundPainter = new CompoundPainter<>();
+        int minutes = heure * 60 + minute;
+        for (int i = 0; i < listeVolCarte.taille(); i++) {
+            List<GeoPosition> positions = new ArrayList<>();
+            Vol vol = listeVolCarte.getVolindice(i);
+            if (vol.getminutesdepart() <= minutes && vol.getminutes_arrive() >= minutes){
+                String codedepart = vol.getcodedepart();
+                String codearrivee = vol.getcodearrive();
+                GeoPosition positionDepart = null;
+                GeoPosition positionArrivee = null;
+
+                for (int y = 0; y < codeaero.size(); y++) {
+                    if (codeaero.get(y).equals(codedepart)) {
+                        positionDepart = geoCondition.get(y);
+                    } else if (codeaero.get(y).equals(codearrivee)) {
+                        positionArrivee = geoCondition.get(y);
+                    }
+                }
+
+                if (positionDepart != null && positionArrivee != null) {
+                    positions.add(positionDepart);
+                    positions.add(positionArrivee);
+
+                    RoutePainter routePainter = new RoutePainter(positions, colorList.get(vol.getcouleur() + 1));
+                    compoundPainter.addPainter(routePainter);
+                } else {
+                    System.out.println("Erreur : Impossible de trouver les positions pour le vol " + vol.toString());
+                }
+            }
+        }
+
+        dessinerpoints();
+        System.out.println("Les lignes entre les waypoints ont été dessinées avec coloration");
+    }
     
     private void styleButton(JButton button, Color bgColor) {
         button.setBackground(bgColor);

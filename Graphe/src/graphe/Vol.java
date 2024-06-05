@@ -466,6 +466,7 @@ public class Vol {
      */
     public int zzz(int kmax) {
         //System.out.println("1");
+        
         ArrayList<Integer> liste = new ArrayList<>(kmax + 1);
         int taille = adjacents.size();
         for (int i = 0; i <= kmax; i++) {
@@ -479,6 +480,11 @@ public class Vol {
             }
         }
         //System.out.println("3");
+        if(liste.size() <= 2){
+            System.out.println("erreur");
+        }else{
+            System.out.println("no erreur");
+        }
         int indiceMin = 1;
         int valeurMin = liste.get(1);
         for (int i = 2; i < liste.size(); i++) {
