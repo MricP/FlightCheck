@@ -38,7 +38,10 @@ import org.graphstream.graph.Graph;
 
 
 public class InterfaceIHMSAE extends JFrame {
-    
+    private static int lastaction = 0;
+    private static int lastcouleur = 0;
+    private static int lastminute = 0;
+    private static int lastheure = 0;
     private static JXMapViewer mapViewer;
     private static Set<Waypoint> waypoints;
     private static ListeAeroport listeAeroport;
@@ -112,7 +115,7 @@ public class InterfaceIHMSAE extends JFrame {
         gbc.anchor = GridBagConstraints.NORTH;
         gbc.fill = GridBagConstraints.BOTH;
         add(infoPanel, gbc);
-
+        
         // Ajouter un écouteur pour les clics sur les waypoints
         mapViewer.addMouseListener(new MouseAdapter() {
             @Override
@@ -413,11 +416,10 @@ public class InterfaceIHMSAE extends JFrame {
         drawLinesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (colorationCheckbox.isSelected()) {
+                if(allgood){
                     drawLinesAllVolsWithColoration();
-                } else {
-                    drawLinesAllVolsInBlue();
                 }
+                
             }
         });
         
@@ -439,11 +441,7 @@ public class InterfaceIHMSAE extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(allgood){
-                    if (colorationCheckbox.isSelected()) {
-                        drawLinesAllVolsWithColoration();
-                    } else {
-                        drawLinesAllVolsInBlue();
-                    }
+                    coloration();
                 }
             }
         });
@@ -562,15 +560,18 @@ public class InterfaceIHMSAE extends JFrame {
         dessinerpoints();
         System.out.println("Les aéroports sont maintenant affichés");
     }
-
-    private void drawLinesAllVolsInBlue() {
+    
+    /*
+    private static void drawLinesAllVolsInBlue() {
         if (waypoints.isEmpty()) {
             System.out.println("Aucun waypoint disponible pour dessiner des lignes.");
             return;
         }
-
+        lastaction = 4;
+        
         compoundPainter = new CompoundPainter<>(); // Crée une nouvelle instance de CompoundPainter
-
+        
+        
         for (int i = 0; i < listeVolCarte.taille(); i++) {
             List<GeoPosition> positions = new ArrayList<>();
             Vol vol = listeVolCarte.getVolindice(i);
@@ -578,7 +579,7 @@ public class InterfaceIHMSAE extends JFrame {
             String codearrivee = vol.getcodearrive();
             GeoPosition positionDepart = null;
             GeoPosition positionArrivee = null;
-
+            
             for (int y = 0; y < codeaero.size(); y++) {
                 if (codeaero.get(y).equals(codedepart)) {
                     positionDepart = geoCondition.get(y);
@@ -586,7 +587,7 @@ public class InterfaceIHMSAE extends JFrame {
                     positionArrivee = geoCondition.get(y);
                 }
             }
-
+            
             if (positionDepart != null && positionArrivee != null) {
                 positions.add(positionDepart);
                 positions.add(positionArrivee);
@@ -597,12 +598,14 @@ public class InterfaceIHMSAE extends JFrame {
                 System.out.println("Erreur : Impossible de trouver les positions pour le vol " + vol.toString());
             }
         }
-
+        
         dessinerpoints();
         System.out.println("Les lignes entre les waypoints ont été dessinées en bleu");
     }
-
-    private void drawLinesAllVolsWithColoration() {
+    */
+    
+    
+    private static void drawLinesAllVolsWithColoration() {
         if (waypoints.isEmpty()) {
             System.out.println("Aucun waypoint disponible pour dessiner des lignes.");
             return;
@@ -614,7 +617,8 @@ public class InterfaceIHMSAE extends JFrame {
         listeVolCarte = main.FullWelshPowell(listeVolCarte);
         */
         compoundPainter = new CompoundPainter<>();
-
+        lastaction = 1;
+        RoutePainter routePainter;
         for (int i = 0; i < listeVolCarte.taille(); i++) {
             List<GeoPosition> positions = new ArrayList<>();
             Vol vol = listeVolCarte.getVolindice(i);
@@ -630,22 +634,26 @@ public class InterfaceIHMSAE extends JFrame {
                     positionArrivee = geoCondition.get(y);
                 }
             }
-
+            
             if (positionDepart != null && positionArrivee != null) {
                 positions.add(positionDepart);
                 positions.add(positionArrivee);
-
-                RoutePainter routePainter = new RoutePainter(positions, colorList.get(vol.getcouleur() + 1));
+                if (colorationCheckbox.isSelected()){
+                    routePainter = new RoutePainter(positions, colorList.get(vol.getcouleur() + 1));
+                }else{
+                    routePainter = new RoutePainter(positions, Color.BLUE);
+                }
+                
                 compoundPainter.addPainter(routePainter);
             } else {
                 System.out.println("Erreur : Impossible de trouver les positions pour le vol " + vol.toString());
             }
         }
-
+        
         dessinerpoints();
         System.out.println("Les lignes entre les waypoints ont été dessinées avec coloration");
     }
-
+    
     private void openNumberDialog() {
         int kmax = listeVolCarte.maxcouleur();
         JTextField numberField = new JTextField(5);
@@ -669,7 +677,7 @@ public class InterfaceIHMSAE extends JFrame {
             }
         }
     }
-
+    
     private void openHourMinuteDialog() {
         JPanel myPanel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
@@ -708,16 +716,18 @@ public class InterfaceIHMSAE extends JFrame {
             }
         }
     }
-
-
-    private void drawLinesColorVolsWithColoration(int couleur) {
+    
+        
+    private static void drawLinesColorVolsWithColoration(int couleur) {
+        
         if (waypoints.isEmpty()) {
             System.out.println("Aucun waypoint disponible pour dessiner des lignes.");
             return;
         }
-
+        lastaction = 2;
+        lastcouleur = couleur;
         compoundPainter = new CompoundPainter<>();
-
+        RoutePainter routePainter;
         for (int i = 0; i < listeVolCarte.taille(); i++) {
             List<GeoPosition> positions = new ArrayList<>();
             Vol vol = listeVolCarte.getVolindice(i);
@@ -739,7 +749,11 @@ public class InterfaceIHMSAE extends JFrame {
                     positions.add(positionDepart);
                     positions.add(positionArrivee);
 
-                    RoutePainter routePainter = new RoutePainter(positions, colorList.get(vol.getcouleur() + 1));
+                    if (colorationCheckbox.isSelected()){
+                        routePainter = new RoutePainter(positions, colorList.get(vol.getcouleur() + 1));
+                    }else{
+                        routePainter = new RoutePainter(positions, Color.BLUE);
+                    }
                     compoundPainter.addPainter(routePainter);
                 } else {
                     System.out.println("Erreur : Impossible de trouver les positions pour le vol " + vol.toString());
@@ -751,11 +765,15 @@ public class InterfaceIHMSAE extends JFrame {
         System.out.println("Les lignes entre les waypoints ont été dessinées avec coloration");
     }
     
-    private void drawLinesHourVolsWithColoration(int heure, int minute) {
+    private static void drawLinesHourVolsWithColoration(int heure, int minute) {
         if (waypoints.isEmpty()) {
             System.out.println("Aucun waypoint disponible pour dessiner des lignes.");
             return;
         }
+        lastaction = 3;
+        lastminute = minute;
+        lastheure = heure;
+        RoutePainter routePainter;       
         System.out.println("coloration avec horaire, couleurs max : "+ listeVolCarte.maxcouleur());
         compoundPainter = new CompoundPainter<>();
         int minutes = heure * 60 + minute;
@@ -780,14 +798,18 @@ public class InterfaceIHMSAE extends JFrame {
                     positions.add(positionDepart);
                     positions.add(positionArrivee);
 
-                    RoutePainter routePainter = new RoutePainter(positions, colorList.get(vol.getcouleur() + 1));
+                    if (colorationCheckbox.isSelected()){
+                        routePainter = new RoutePainter(positions, colorList.get(vol.getcouleur() + 1));
+                    }else{
+                        routePainter = new RoutePainter(positions, Color.BLUE);
+                    }
                     compoundPainter.addPainter(routePainter);
                 } else {
                     System.out.println("Erreur : Impossible de trouver les positions pour le vol " + vol.toString());
                 }
             }
         }
-
+        
         dessinerpoints();
         System.out.println("Les lignes entre les waypoints ont été dessinées avec coloration");
     }
@@ -848,6 +870,14 @@ public class InterfaceIHMSAE extends JFrame {
             } else {
                 System.out.println("welsh");
                 listeVolCarte = main.FullWelshPowell(listeVolCarte);
+            }
+            
+            if(lastaction ==  1){
+                drawLinesAllVolsWithColoration();
+            }else if(lastaction == 2){
+                drawLinesColorVolsWithColoration(lastcouleur);
+            }else if (lastaction == 3){
+                drawLinesHourVolsWithColoration(lastheure, lastminute);
             }
         }
     }    
