@@ -36,25 +36,26 @@ import org.graphstream.graph.Graph;
 
 
 public class InterfaceIHMSAE extends JFrame {
-
-    private JXMapViewer mapViewer;
-    private Set<Waypoint> waypoints;
-    private ListeAeroport listeAeroport;
-    private ListeVols listeVolCarte;
-    private ListeVols listeVolGraphe;
-    private Main main;
-    private CompoundPainter<JXMapViewer> compoundPainter;
+    
+    private static JXMapViewer mapViewer;
+    private static Set<Waypoint> waypoints;
+    private static ListeAeroport listeAeroport;
+    private static ListeVols listeVolCarte;
+    private static ListeVols listeVolGraphe;
+    private static Main main;
+    private static CompoundPainter<JXMapViewer> compoundPainter;
     private static List<Color> colorList;
-    private ArrayList<String> codeaero;
-    private ArrayList<GeoPosition> geoCondition;
-    private JCheckBox colorationCheckbox;
-    private JCheckBox kmaxCheckbox;
-    private boolean allgood;
-    private JTextField heureField;
-    private JTextField minuteField;
-    private JSpinner kmaxSpinner;
-    private JTextArea infoBox;
-    private Icon airportIcon; 
+    private static ArrayList<String> codeaero;
+    private static ArrayList<GeoPosition> geoCondition;
+    private static JCheckBox colorationCheckbox;
+    private static JCheckBox kmaxCheckbox;
+    private static boolean allgood;
+    private static JTextField heureField;
+    private static JTextField minuteField;
+    private static JSpinner kmaxSpinner;
+    private static JTextArea infoBox;
+    private static Icon airportIcon; 
+    private static JComboBox<String> algorithmComboBox;
     
     public InterfaceIHMSAE() {
         allgood = false;
@@ -285,7 +286,7 @@ public class InterfaceIHMSAE extends JFrame {
         b.anchor = GridBagConstraints.EAST;
         bottomPanel.add(algorithmLabel, b);
         
-        JComboBox<String> algorithmComboBox = new JComboBox<>(new String[]{"Welsh et Powell", "Glouton"});
+        algorithmComboBox = new JComboBox<>(new String[]{"Welsh et Powell", "Glouton"});
         b.gridx = 1;
         b.gridy = 1;
         bottomPanel.add(algorithmComboBox, b);
@@ -424,14 +425,14 @@ public class InterfaceIHMSAE extends JFrame {
                 openFileChooser();
             }
         });
-        
+            
         volsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 openFileChooserVols();
             }
         });
-
+        
         colorationCheckbox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -442,7 +443,22 @@ public class InterfaceIHMSAE extends JFrame {
                 }
             }
         });
-
+        
+        kmaxCheckbox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (allgood){
+                    if (kmaxCheckbox.isSelected()) {
+                        listeVolCarte.sethavekmax(true);
+                    } else {
+                        listeVolCarte.sethavekmax(true);
+                        listeVolCarte.setkmax((int) kmaxSpinner.getValue());
+                        System.out.println(listeVolCarte.getkmax());
+                    }
+                }
+            }
+        });
+        
         JButton exitButton = new JButton("Exit");
         styleButton(exitButton, Color.decode("#007BFF"));
         exitButton.addActionListener(e -> System.exit(0));
@@ -451,7 +467,7 @@ public class InterfaceIHMSAE extends JFrame {
         gbc.insets = new Insets(20, 20, 0, 20);
         gbc.anchor = GridBagConstraints.NORTHEAST;
         add(exitButton, gbc);
-
+        
         waypoints = new HashSet<>();
         
         
@@ -517,14 +533,14 @@ public class InterfaceIHMSAE extends JFrame {
         listeVolGraphe = main.CreateGraphText(file);
         //listeVolGraphe = main.FullGreedyColor(listeVolGraphe);
         //listeVolGraphe.setcouleurdefault();
-            
+                
         //listeVolGraphe = main.FullWelshPowell(listeVolGraphe);
         listeVolGraphe = main.FullWelshPowell(listeVolGraphe);
 
         Graph G2 = main.getGraphStream(listeVolGraphe);
         G2.display();
         */
- 
+        
     }
     
     private void openFileChooser() {
@@ -573,12 +589,7 @@ public class InterfaceIHMSAE extends JFrame {
             geoCondition.add(position);
         }
 
-        WaypointPainter<Waypoint> waypointPainter = new WaypointPainter<>();
-        waypointPainter.setWaypoints(waypoints);
-        waypointPainter.setRenderer(new CustomWaypointRenderer(airportIcon));
-        compoundPainter.addPainter(waypointPainter);
-        mapViewer.setOverlayPainter(compoundPainter);
-        mapViewer.repaint();
+        dessinerpoints();
         System.out.println("Les aéroports sont maintenant affichés");
     }
 
@@ -617,13 +628,7 @@ private void drawLinesAllVolsInBlue() {
         }
     }
 
-    WaypointPainter<Waypoint> waypointPainter = new WaypointPainter<>();
-    waypointPainter.setWaypoints(waypoints);
-    waypointPainter.setRenderer(new CustomWaypointRenderer(airportIcon));
-    compoundPainter.addPainter(waypointPainter);
-
-    mapViewer.setOverlayPainter(compoundPainter);
-    mapViewer.repaint();
+    dessinerpoints();
     System.out.println("Les lignes entre les waypoints ont été dessinées en bleu");
 }
 
@@ -662,13 +667,7 @@ private void drawLinesAllVolsWithColoration() {
         }
     }
     
-    WaypointPainter<Waypoint> waypointPainter = new WaypointPainter<>();
-    waypointPainter.setWaypoints(waypoints);
-    waypointPainter.setRenderer(new CustomWaypointRenderer(airportIcon));
-    compoundPainter.addPainter(waypointPainter);
-    
-    mapViewer.setOverlayPainter(compoundPainter);
-    mapViewer.repaint();
+    dessinerpoints();
     System.out.println("Les lignes entre les waypoints ont été dessinées avec coloration");
 }
 
@@ -773,13 +772,7 @@ private void drawLinesColorVolsWithColoration(int couleur) {
         }
     }
     
-    WaypointPainter<Waypoint> waypointPainter = new WaypointPainter<>();
-    waypointPainter.setWaypoints(waypoints);
-    waypointPainter.setRenderer(new CustomWaypointRenderer(airportIcon));
-    compoundPainter.addPainter(waypointPainter);
-    
-    mapViewer.setOverlayPainter(compoundPainter);
-    mapViewer.repaint();
+    dessinerpoints();
     System.out.println("Les lignes entre les waypoints ont été dessinées avec coloration");
 }
 
@@ -820,13 +813,7 @@ private void drawLinesHourVolsWithColoration(int heure, int minute) {
         }
     }
     
-    WaypointPainter<Waypoint> waypointPainter = new WaypointPainter<>();
-    waypointPainter.setWaypoints(waypoints);
-    waypointPainter.setRenderer(new CustomWaypointRenderer(airportIcon));
-    compoundPainter.addPainter(waypointPainter);
-    
-    mapViewer.setOverlayPainter(compoundPainter);
-    mapViewer.repaint();
+    dessinerpoints();
     System.out.println("Les lignes entre les waypoints ont été dessinées avec coloration");
 }
     
@@ -866,4 +853,25 @@ private void drawLinesHourVolsWithColoration(int heure, int minute) {
             colorList.add(randomColor);
         }
     }
+    
+    public static void dessinerpoints(){
+        WaypointPainter<Waypoint> waypointPainter = new WaypointPainter<>();
+        waypointPainter.setWaypoints(waypoints);
+        waypointPainter.setRenderer(new CustomWaypointRenderer(airportIcon));
+        compoundPainter.addPainter(waypointPainter);
+        
+        mapViewer.setOverlayPainter(compoundPainter);
+        mapViewer.repaint();
+    }
+    
+    public static void coloration(){
+        if (allgood) { // Remplacer true par la condition allgood
+                    
+            if (algorithmComboBox.getSelectedItem().equals("Glouton")) {
+                listeVolCarte = main.FullGreedyColor(listeVolCarte);
+            } else {
+                listeVolCarte = main.FullWelshPowell(listeVolCarte);
+            }
+        }
+    }    
 }

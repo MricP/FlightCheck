@@ -829,7 +829,7 @@ public class Main {
         ArrayList<Integer> best = list.getcouleurs();
         int mincouleur = Integer.MAX_VALUE;
         int cpt = 0;
-        for (int y =0;y<list.getArraylist().size() * 99;y++){
+        for (int y =0;y<list.getArraylist().size();y++){
             cpt++;
             list.setcouleurdefault();
             Collections.shuffle(list.getArraylist());
