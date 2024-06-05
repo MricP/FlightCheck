@@ -10,6 +10,7 @@ public class StatisticsFrame extends JFrame {
     private JLabel nbNoeudsLabel;
     private JLabel nbAretesLabel;
     private JLabel diametreLabel;
+    private JLabel nbConflitLabel;
     
     public StatisticsFrame(Statistiques stats) {
         setTitle("Statistiques");
@@ -43,14 +44,15 @@ public class StatisticsFrame extends JFrame {
         gbc.anchor = GridBagConstraints.CENTER;
         add(titleLabel, gbc);
 
-        String[] labels = {"Degré Moyen", "Composantes", "Nœuds", "Arrêtes", "Diamètre"};
-        JLabel[] statLabels = {degreMoyenLabel, nbComposantesLabel, nbNoeudsLabel, nbAretesLabel, diametreLabel};
+        String[] labels = {"Degré Moyen", "Composantes", "Nœuds", "Arrêtes", "Diamètre", "Conflits"};
+        JLabel[] statLabels = {degreMoyenLabel, nbComposantesLabel, nbNoeudsLabel, nbAretesLabel, diametreLabel,nbConflitLabel};
         String[] values = {
             String.valueOf(stats.getDegreMoyen()),
             String.valueOf(stats.getNbComposantes()),
             String.valueOf(stats.getNbNoeuds()),
             String.valueOf(stats.getNbAretes()),
-            String.valueOf(stats.getDiametre())
+            String.valueOf(stats.getDiametre()),
+            String.valueOf(stats.getConflit())
         };
         
         gbc.gridwidth = 1;
@@ -79,7 +81,7 @@ public class StatisticsFrame extends JFrame {
     }
 
     public static void main(String[] args) {
-        Statistiques stats = new Statistiques(3.5, 2, 100, 150, 12.3); // Exemple de statistiques
+        Statistiques stats = new Statistiques(3.5, 2, 100, 150, 12.3, 4); // Exemple de statistiques
         SwingUtilities.invokeLater(() -> {
             StatisticsFrame frame = new StatisticsFrame(stats);
             frame.setVisible(true);
