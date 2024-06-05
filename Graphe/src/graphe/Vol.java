@@ -299,6 +299,9 @@ public class Vol {
      * @return la première couleur disponible dans la limite.
      */
     public int first_available_color_kmax(int kmax) {
+        if(adjacents.size() == 0){
+            return 1;
+        }
         int color = 0;
         boolean res = true;
         while (res && color <= kmax) {
@@ -312,7 +315,7 @@ public class Vol {
                 i++;
             }
         }
-
+        
         if (color > kmax) {
             ArrayList<Integer> liste = new ArrayList<>(kmax + 1);
             int taille = adjacents.size();

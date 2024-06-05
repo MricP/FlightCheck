@@ -363,37 +363,6 @@ public class InterfaceIHMSAE extends JFrame {
             }
         });
         
- /*     
-        
-        
-        startButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(null, "Start button clicked!");
-            }
-        });
- 
-        appliquer.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (allgood) {
-                    if (kmaxCheckbox.isSelected()) {
-                        int kmax = (int) kmaxSpinner.getValue();
-                        listeVolCarte.setkmax(kmax);
-                    }
-                    if (algorithmComboBox.getSelectedItem().equals("Glouton")) {
-                        listeVolCarte = main.FullGreedyColor(listeVolCarte);
-                    } else {
-                        listeVolCarte = main.FullWelshPowell(listeVolCarte);
-                    }
-                } else {
-                    System.out.println("please enter your files");
-                }
-            }
-        });
-        
-        */ 
-        
         appliquer.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -533,6 +502,7 @@ public class InterfaceIHMSAE extends JFrame {
             listeVolCarte = main.getlisteVols();
             listeVolCarte = main.creationgraphe(listeVolCarte);
             listeVolCarte = main.FullGreedyColor(listeVolCarte);
+            listeVolCarte.setkmax((int) kmaxSpinner.getValue());
             setcolorlist();
             allgood = true;
             
@@ -561,61 +531,11 @@ public class InterfaceIHMSAE extends JFrame {
         System.out.println("Les aéroports sont maintenant affichés");
     }
     
-    /*
-    private static void drawLinesAllVolsInBlue() {
-        if (waypoints.isEmpty()) {
-            System.out.println("Aucun waypoint disponible pour dessiner des lignes.");
-            return;
-        }
-        lastaction = 4;
-        
-        compoundPainter = new CompoundPainter<>(); // Crée une nouvelle instance de CompoundPainter
-        
-        
-        for (int i = 0; i < listeVolCarte.taille(); i++) {
-            List<GeoPosition> positions = new ArrayList<>();
-            Vol vol = listeVolCarte.getVolindice(i);
-            String codedepart = vol.getcodedepart();
-            String codearrivee = vol.getcodearrive();
-            GeoPosition positionDepart = null;
-            GeoPosition positionArrivee = null;
-            
-            for (int y = 0; y < codeaero.size(); y++) {
-                if (codeaero.get(y).equals(codedepart)) {
-                    positionDepart = geoCondition.get(y);
-                } else if (codeaero.get(y).equals(codearrivee)) {
-                    positionArrivee = geoCondition.get(y);
-                }
-            }
-            
-            if (positionDepart != null && positionArrivee != null) {
-                positions.add(positionDepart);
-                positions.add(positionArrivee);
-
-                RoutePainter routePainter = new RoutePainter(positions, Color.BLUE);
-                compoundPainter.addPainter(routePainter);
-            } else {
-                System.out.println("Erreur : Impossible de trouver les positions pour le vol " + vol.toString());
-            }
-        }
-        
-        dessinerpoints();
-        System.out.println("Les lignes entre les waypoints ont été dessinées en bleu");
-    }
-    */
-    
-    
     private static void drawLinesAllVolsWithColoration() {
         if (waypoints.isEmpty()) {
             System.out.println("Aucun waypoint disponible pour dessiner des lignes.");
             return;
         }
-        /*
-        System.out.println(listeVolCarte.maxcouleur());
-        listeVolCarte.sethavekmax(true);
-        listeVolCarte.setkmax(3);
-        listeVolCarte = main.FullWelshPowell(listeVolCarte);
-        */
         compoundPainter = new CompoundPainter<>();
         lastaction = 1;
         RoutePainter routePainter;
