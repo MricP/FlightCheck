@@ -9,32 +9,32 @@ Cette SAE a pour but de créer une interface graphique pour permettre la visuali
 La structure du projet est organisée comme suit :
 
 /projet-java
-|--Graphe
-|--|-- src
-|--|--|--graphe
-|--|--|--|-- Aeroport.java
-|--|--|--|-- ListeAeroport.java
-|--|--|--|-- ListeVols.java
-|--|--|--|-- Vol.java
-|--|--|--|-- Main.java
-|--|--|--|-- RoutePainter.java
-|--|--|--|-- Aeroport.java
-|--|--|--|-- StatistiqueFrame.java
-|--|--|--|-- CustomWaypointRenderer.java
-|--|--|--|-- InterfaceIHMSAE.java
-|--|--|--|-- Aero.png
-|--|-- test
-|--|--|-- AeroportTest.java
-|--|--|-- ListeAeroportTest.java
-|--|--|-- ListeVolsTest.java
-|--|--|-- MainTest.java
-|--|--|-- StatistiquesTest.java
-|--|--|-- Vol.java
-|--DataTest
-|--|--Fichiers de tests (.csv,.png,.txt) permettant d'utiliser les données
-|-- README.md
-|-- .gitignore
-|--JMapViewer.jar
+- Graphe
+    - src
+        - graphe
+            - Aeroport.java
+            - ListeAeroport.java
+            - ListeVols.java
+            - Vol.java
+            - Main.java
+            - RoutePainter.java
+            - Aeroport.java
+            - StatistiqueFrame.java
+            - CustomWaypointRenderer.java
+            - InterfaceIHMSAE.java
+            - Aero.png
+        - test
+            - AeroportTest.java
+            - ListeAeroportTest.java
+            - ListeVolsTest.java
+            - MainTest.java
+            - StatistiquesTest.java
+            - Vol.java
+    - DataTest
+        - Fichiers de tests (.csv,.png,.txt) permettant d'utiliser les données
+    -  README.md
+    - .gitignore
+    - JMapViewer.jar
 
 ## Prérequis
 
@@ -69,7 +69,7 @@ La structure du projet est organisée comme suit :
 ## Charte Graphique
 - `#283C4F` Pour la page d'accueil
 - `#FFFFFF` Pour la couleur de la font
-- `#007BFF` Pour la couleur du boutton
+- `#007BFF` Pour la couleur du bouton
 
 ## Auteurs
     MATHIEU Robin - Développeur
