@@ -618,7 +618,7 @@ public class Main {
      * Lit les données des aéroports à partir d'un fichier et les stocke dans la liste appropriée.
      * @param file le fichier contenant les données des aéroports
      */
-    public void setAeroportlist(File file){
+    public void setAeroportlist(File file) throws DonneeVolException{
         /*
         System.out.println("rentrez le chemin d'acces de votre fichier deaéroports sous forme .txt:");
         
@@ -646,6 +646,9 @@ public class Main {
                 
                 /*System.out.println(line);*/
                 String[] tab = line.split(";");
+                if (tab.length != 10) {
+                throw new DonneeVolException(file);
+                }
                 Aeroport Aero = new Aeroport(tab[0],tab[1],Integer.valueOf(tab[2]),Integer.valueOf(tab[3]),Integer.valueOf(tab[4]),tab[5],Integer.valueOf(tab[6]),Integer.valueOf(tab[7]),Integer.valueOf(tab[8]),tab[9]);
                 L.ajAeroport(Aero);
             }

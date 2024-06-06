@@ -486,7 +486,13 @@ public class InterfaceIHMSAE extends JFrame {
         if (result == JFileChooser.APPROVE_OPTION) {
             File selectedFile = fileChooser.getSelectedFile();
             //loadAeroportFile(selectedFile);
-            main.setAeroportlist(selectedFile);
+            try{
+                main.setAeroportlist(selectedFile);
+            }
+            catch(DonneeVolException e){
+                System.err.println(e.getMessage());
+                JOptionPane.showMessageDialog(null, "Veuillez rentrer un fichier valable", "Données des aéroports éroné", JOptionPane.ERROR_MESSAGE);
+            }
             listeAeroport = main.getlisteaero();
             addAirportMarkers();
             
@@ -503,7 +509,6 @@ public class InterfaceIHMSAE extends JFrame {
             }
             catch(DonneeVolException e){
                 System.err.println(e.getMessage());
-                JDialog volDonneeDialog = new JDialog(this);
                 JOptionPane.showMessageDialog(null, "Veuillez rentrer un fichier valable", "Données des vols éronné", JOptionPane.ERROR_MESSAGE);
 
             }

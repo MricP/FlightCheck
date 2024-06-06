@@ -26,6 +26,6 @@ public class DonneeVolException extends Exception {
      * @param file the detail file.
      */
     public DonneeVolException(File file) {
-        super("Le fichier" + file.getName() + "n'a pas de données valable");
+        super("Le fichier " + file.getName() + " n'a pas de données valable");
     }
 }
