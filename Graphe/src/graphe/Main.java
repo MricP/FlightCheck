@@ -528,7 +528,7 @@ public class Main {
      * Lit les données des vols à partir d'un fichier et les stocke dans un objet ListeVols.
      * @param file le fichier contenant les données des vols
      */
-    public void setvolaeroports(File file){
+    public void setvolaeroports(File file) throws DonneeVolException {
         /*
         String FilePath;
         File file;
@@ -558,6 +558,9 @@ public class Main {
                 
                 /*System.out.println(line);*/
                 String[] tab = line.split(";");
+                if (tab.length != 6) {
+                throw new DonneeVolException(file);
+                }
                 Vol Vol = new Vol(tab[0],tab[1],tab[2],Integer.valueOf(tab[3]),Integer.valueOf(tab[4]),Integer.valueOf(tab[5]));
                 LV.ajMembre(Vol);
             }
@@ -565,7 +568,7 @@ public class Main {
         } catch (IOException e) {
             System.out.println("Erreur de lecture du fichier : " + e.getMessage());
         }
-    }    
+    }   
     
     /**
      * Méthode statique pour lire les données des vols à partir d'un chemin de fichier prédéfini et les stocker dans un objet ListeVols.

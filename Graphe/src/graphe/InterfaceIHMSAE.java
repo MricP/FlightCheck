@@ -498,7 +498,15 @@ public class InterfaceIHMSAE extends JFrame {
         int result = fileChooser.showOpenDialog(this);
         if (result == JFileChooser.APPROVE_OPTION) {
             File selectedFile = fileChooser.getSelectedFile();
-            main.setvolaeroports(selectedFile);
+            try{
+               main.setvolaeroports(selectedFile); 
+            }
+            catch(DonneeVolException e){
+                System.err.println(e.getMessage());
+                JDialog volDonneeDialog = new JDialog(this);
+                JOptionPane.showMessageDialog(null, "Veuillez rentrer un fichier valable", "Données des vols éronné", JOptionPane.ERROR_MESSAGE);
+
+            }
             listeVolCarte = main.getlisteVols();
             listeVolCarte = main.creationgraphe(listeVolCarte);
             listeVolCarte = main.FullGreedyColor(listeVolCarte);
