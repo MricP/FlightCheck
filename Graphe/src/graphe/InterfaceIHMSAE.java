@@ -58,15 +58,16 @@ public class InterfaceIHMSAE extends JFrame {
     private static JTextField heureField;
     private static JTextField minuteField;
     private static JSpinner kmaxSpinner;
-    private static JTextArea infoBox;
     private static Icon airportIcon; 
     private static JComboBox<String> algorithmComboBox;
+    private static ImageIcon logoIcon;
     
     public InterfaceIHMSAE() {
         allgood = false;
         main = new Main();
         colorList = new ArrayList<>();
         airportIcon = new ImageIcon(getClass().getResource("/graphe/aero.png"));
+        logoIcon = new ImageIcon(getClass().getResource("/graphe/logo.png"));
         setTitle("FlightSAE 1.0.0");
         setSize(1000, 800);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -95,57 +96,7 @@ public class InterfaceIHMSAE extends JFrame {
         mapViewer.addMouseWheelListener(new ZoomMouseWheelListenerCenter(mapViewer));
         mapViewer.addKeyListener(new PanKeyListener(mapViewer));
         mapViewer.addMouseListener(new CenterMapListener(mapViewer));
-
-        // Ajouter une boîte d'information
-        JPanel infoPanel = new JPanel();
-        infoPanel.setLayout(new BorderLayout());
-        infoPanel.setBackground(bgColor);
-        infoPanel.setPreferredSize(new Dimension(200, 100));
-        infoBox = new JTextArea();
-        infoBox.setEditable(false);
-        infoBox.setBackground(bgColor);
-        infoBox.setForeground(Color.WHITE);
-        infoPanel.add(new JScrollPane(infoBox), BorderLayout.CENTER);
-        gbc.gridx = 3;
-        gbc.gridy = 2;
-        gbc.gridheight = 1;
-        gbc.gridwidth = 1;
-        gbc.weightx = 0.0;
-        gbc.weighty = 0.0;
-        gbc.anchor = GridBagConstraints.NORTH;
-        gbc.fill = GridBagConstraints.BOTH;
-        add(infoPanel, gbc);
         
-        // Ajouter un écouteur pour les clics sur les waypoints
-        mapViewer.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                Point mousePoint = e.getPoint();
-                GeoPosition geoPosition = mapViewer.convertPointToGeoPosition(mousePoint);
-                Waypoint clickedWaypoint = null;
-                for (Waypoint waypoint : waypoints) {
-                    if (waypoint instanceof DefaultWaypoint) {
-                        DefaultWaypoint dw = (DefaultWaypoint) waypoint;
-                        Point2D waypointPoint = mapViewer.getTileFactory().geoToPixel(dw.getPosition(), mapViewer.getZoom());
-                        Rectangle rect = new Rectangle((int) waypointPoint.getX() - 5, (int) waypointPoint.getY() - 5, 10, 10);
-                        if (rect.contains(mousePoint)) {
-                            clickedWaypoint = dw;
-                            break;
-                        }
-                    }
-                }
-                if (clickedWaypoint != null) {
-                    DefaultWaypoint dw = (DefaultWaypoint) clickedWaypoint;
-                    GeoPosition position = dw.getPosition();
-                    String airportCode = codeaero.get(geoCondition.indexOf(position));
-                    Aeroport airport = listeAeroport.accesAeroport(airportCode);
-                    if (airport != null) {
-                        infoBox.setText("Aéroport: " + airport.getcode() + "\nCode: " + airport.getcode() + "\nLongitude: " + position.getLongitude() + "\nLatitude: " + position.getLatitude());
-                    }
-                }
-            }
-        });
-
         gbc.gridx = 1;
         gbc.gridy = 0;
         gbc.gridheight = 4;
@@ -162,28 +113,30 @@ public class InterfaceIHMSAE extends JFrame {
         lc.insets = new Insets(5, 5, 5, 5);
         lc.fill = GridBagConstraints.HORIZONTAL;
         
-        JButton aeroportsButton = new JButton("Aéroports");
-        styleButton(aeroportsButton, bgColor);
+        JLabel logoLabel = new JLabel(logoIcon);
         lc.gridx = 0;
         lc.gridy = 0;
+        leftControlPanel.add(logoLabel, lc);
+
+        lc.gridy = 1; // Commencer les autres composants en y=1
+        JButton aeroportsButton = new JButton("Aéroports");
+        styleButton(aeroportsButton, bgColor);
         leftControlPanel.add(aeroportsButton, lc);
-        
+
+        // Continuez avec les autres composants...
+        lc.gridy++;
         JButton volsButton = new JButton("Vols");
         styleButton(volsButton, bgColor);
-        lc.gridx = 0;
-        lc.gridy = 1;
         leftControlPanel.add(volsButton, lc);
-        
+
+        lc.gridy++;
         JButton graphesButton = new JButton("Graphes");
         styleButton(graphesButton, bgColor);
-        lc.gridx = 0;
-        lc.gridy = 2;
         leftControlPanel.add(graphesButton, lc);
-        
+
+        lc.gridy++;
         JButton statsButton = new JButton("Statistiques");
         styleButton(statsButton, bgColor);
-        lc.gridx = 0;
-        lc.gridy = 3;
         leftControlPanel.add(statsButton, lc);
         
         gbc.gridx = 0;
@@ -302,12 +255,7 @@ public class InterfaceIHMSAE extends JFrame {
         bottomPanel.add(kmaxSpinner, b);
         
         */
-       
-        JButton appliquer  = new JButton("Appliquer");
-        styleButton(appliquer, bgColor);
-        b.gridx = 2;
-        b.gridy = 1;
-        bottomPanel.add(appliquer, b);
+
                 
         gbc.gridx = 1;
         gbc.gridy = 4;
@@ -356,26 +304,7 @@ public class InterfaceIHMSAE extends JFrame {
                 }
             }
         });
-        
-        appliquer.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (allgood) { // Remplacer true par la condition allgood
-                    int kmax = (int) kmaxSpinner.getValue();
-                    listeVolCarte.setkmax(kmax);
-
-                    if (algorithmComboBox.getSelectedItem().equals("Glouton")) {
-                        listeVolCarte = main.FullGreedyColor(listeVolCarte);
-                    } else {
-                        listeVolCarte = main.FullWelshPowell(listeVolCarte);
-                    }
-                } else {
-                    System.out.println("please enter your files");
-                }
-            }
-        });
-        
-        
+           
         drawLinesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
