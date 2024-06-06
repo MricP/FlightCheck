@@ -19,6 +19,8 @@ import org.graphstream.graph.implementations.MultiGraph;
 import org.graphstream.graph.implementations.*;
 
 import java.awt.*;
+import java.io.FileWriter;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -946,6 +948,28 @@ public class Main {
         
         return list;
         
+    }
+    
+    public static void createcsv(ListeVols liste){
+        String csvFile = "colo-eval.csv";
+        String delimiter = ";";
+        
+        try (FileWriter fileWriter = new FileWriter(csvFile);
+             PrintWriter printWriter = new PrintWriter(fileWriter)) {
+
+            
+            for (int i=1; i <= liste.taille();i++){
+                Vol vol = liste.accesMembrenum(i);
+                printWriter.println(vol.getid() + delimiter + vol.getcouleur());
+                
+            }
+            // Écrire les données des vols
+            System.out.println("Fichier CSV créé avec succès.");
+            System.out.println("Chemin absolu : " + new java.io.File(csvFile).getAbsolutePath());
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     
     
