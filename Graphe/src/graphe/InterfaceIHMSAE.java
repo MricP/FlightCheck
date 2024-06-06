@@ -261,29 +261,22 @@ public class InterfaceIHMSAE extends JFrame {
         
         JButton drawLinesButton = new JButton("Draw all Lines");
         styleButton(drawLinesButton, bgColor);
-        b.gridx = 1;
+        b.gridx = 0;
         b.gridy = 0;
         bottomPanel.add(drawLinesButton, b);
         
         JButton drawLinesHourButton = new JButton("Draw Lines with hour");
         styleButton(drawLinesHourButton, bgColor);
-        b.gridx = 2;
+        b.gridx = 1;
         b.gridy = 0;
         bottomPanel.add(drawLinesHourButton, b);
         
         JButton drawLinescouleurButton = new JButton("Draw Lines with couleur");
         styleButton(drawLinescouleurButton, bgColor);
-        b.gridx = 3;
+        b.gridx = 2;
         b.gridy = 0;
         bottomPanel.add(drawLinescouleurButton, b);
-        
-        JButton showGraphstream = new JButton("show Graphstream");
-        styleButton(showGraphstream, bgColor);
-        b.gridx = 0;
-        b.gridy = 0;
-        bottomPanel.add(showGraphstream, b);
-        
-        
+                
         JLabel algorithmLabel = new JLabel("Algorithme Sélectionné : ");
         algorithmLabel.setForeground(Color.WHITE);
         b.gridx = 0;
@@ -311,6 +304,7 @@ public class InterfaceIHMSAE extends JFrame {
         */
        
         JButton appliquer  = new JButton("Appliquer");
+        styleButton(appliquer, bgColor);
         b.gridx = 2;
         b.gridy = 1;
         bottomPanel.add(appliquer, b);
@@ -334,7 +328,7 @@ public class InterfaceIHMSAE extends JFrame {
             }
         });
         
-        showGraphstream.addActionListener(new ActionListener() {
+        graphesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (allgood){
@@ -343,7 +337,7 @@ public class InterfaceIHMSAE extends JFrame {
                 }
             }
         });
-        
+          
         drawLinescouleurButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
