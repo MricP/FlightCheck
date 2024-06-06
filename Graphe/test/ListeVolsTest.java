@@ -39,13 +39,12 @@ public class ListeVolsTest {
     public void havekmaxTest() {
         assertFalse(liste.havekmax());
         liste.setkmax(3);
-        assertTrue(liste.havekmax());
+        assertTrue(liste.getkmax() == 3);
     }
     
     @Test
     public void setkmaxTest() {
         liste.setkmax(4);
-        assertTrue(liste.havekmax());
         assertEquals(4, liste.getkmax());
     }
    

@@ -33,7 +33,7 @@ public class AeroportTest {
     }
     @Test
     public void testOpenfile() throws IOException {
-        String filePath = "C:/Users/Emric/OneDrive/Bureau/S2/SaeFinal/DataTest/aeroports.txt";
+        String filePath = "C:/Users/Emric/OneDrive/Bureau/S2/SaeFF/sae_mathieu_petit_pirrera/DataTest/aeroports.txt";
         File file = new File(filePath);
         BufferedReader reader = new BufferedReader(new FileReader(file));
         String line = reader.readLine();

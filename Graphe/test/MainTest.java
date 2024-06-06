@@ -4,6 +4,7 @@
  */
 
 import graphe.Aeroport;
+import graphe.DonneeVolException;
 import graphe.ListeAeroport;
 import graphe.ListeVols;
 import graphe.Main;
@@ -81,7 +82,12 @@ public class MainTest {
     @Test
     public void testSetVolAeroports() {
         File testFile = new File("C:/Users/Emric/OneDrive/Bureau/S2/SaeFinal/sae_mathieu_petit_pirrera/DataTest/vol-test8.csv");
-        main.setvolaeroports(testFile);
+        try{
+           main.setvolaeroports(testFile);
+        }
+        catch(DonneeVolException e){
+            System.err.println(e.getMessage());
+        }
         assertEquals(605, main.getlisteVols().taille());
     }
 //good
