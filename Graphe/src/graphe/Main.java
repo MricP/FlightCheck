@@ -360,7 +360,7 @@ public class Main {
      * @param file le fichier contenant les données du graphe
      * @return un objet ListeVols représentant le graphe
      */
-    public ListeVols CreateGraphText(File file){
+    public ListeVols CreateGraphText(File file) throws DonneeVolException {
         /*
         System.out.println("rentrez le chemin d'acces de votre graphe sous forme .txt:");
         
@@ -377,6 +377,7 @@ public class Main {
             return null;
         }else{
             System.out.println("Le fichier existe .");
+            
         }
         
         // Déclarer un BufferedReader pour lire le fichier
@@ -420,6 +421,9 @@ public class Main {
             return LVol;
         } catch (IOException e) {
             System.out.println("Erreur de lecture du fichier : " + e.getMessage());
+        }
+        if(false){
+            throw new DonneeVolException(file);
         }
         return null;
     }

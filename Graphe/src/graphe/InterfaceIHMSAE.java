@@ -47,6 +47,7 @@ public class InterfaceIHMSAE extends JFrame {
     private static ListeAeroport listeAeroport;
     private static ListeVols listeVolCarte;
     private static ListeVols listeVolGraphe;
+    private static boolean graphgood = false;
     private static Main main;
     private static CompoundPainter<JXMapViewer> compoundPainter;
     private static List<Color> colorList;
@@ -133,7 +134,7 @@ public class InterfaceIHMSAE extends JFrame {
         JButton graphesButton = new JButton("Graphes");
         styleButton(graphesButton, bgColor);
         leftControlPanel.add(graphesButton, lc);
-
+        
         lc.gridy++;
         JButton statsButton = new JButton("Statistiques");
         styleButton(statsButton, bgColor);
@@ -229,7 +230,13 @@ public class InterfaceIHMSAE extends JFrame {
         b.gridx = 2;
         b.gridy = 0;
         bottomPanel.add(drawLinescouleurButton, b);
-                
+        
+        JButton graphstreambutton = new JButton("get graphstream");
+        styleButton(drawLinescouleurButton, bgColor);
+        b.gridx = 3;
+        b.gridy = 0;
+        bottomPanel.add(graphstreambutton, b);   
+        
         JLabel algorithmLabel = new JLabel("Algorithme Sélectionné : ");
         algorithmLabel.setForeground(Color.WHITE);
         b.gridx = 0;
@@ -276,12 +283,16 @@ public class InterfaceIHMSAE extends JFrame {
             }
         });
         
-        graphesButton.addActionListener(new ActionListener() {
+        graphstreambutton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (allgood){
                     Graph G2 = main.getGraphStream(listeVolCarte);
                     G2.display();
+                }
+                if(graphgood){
+                    Graph G1 = main.getGraphStream(listeVolGraphe);
+                    G1.display();
                 }
             }
         });
@@ -329,6 +340,13 @@ public class InterfaceIHMSAE extends JFrame {
             }
         });
         
+        graphesButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                openFileChooserGraph();
+            }
+        });
+        
         colorationCheckbox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -351,6 +369,14 @@ public class InterfaceIHMSAE extends JFrame {
                     }
                 }
                 System.out.println("Valeur actuelle : " + value);
+                if (graphgood){
+                    
+                    listeVolGraphe.setkmax(value);
+                    
+                    if (listeVolGraphe.havekmax()){
+                        coloration();
+                    }
+                }
                 
             }
         });
@@ -370,6 +396,16 @@ public class InterfaceIHMSAE extends JFrame {
                     coloration();
                     
                     
+                }
+                if(graphgood){
+                    if (kmaxCheckbox.isSelected()) {
+                        listeVolGraphe.sethavekmax(true);
+                        
+                    } else {
+                        listeVolGraphe.sethavekmax(false);
+                        ;
+                    }
+                    coloration();
                 }
             }
         });
@@ -439,11 +475,40 @@ public class InterfaceIHMSAE extends JFrame {
             listeVolCarte = main.creationgraphe(listeVolCarte);
             listeVolCarte = main.FullGreedyColor(listeVolCarte);
             listeVolCarte.setkmax((int) kmaxSpinner.getValue());
-            setcolorlist();
-            allgood = true;
+            if(!graphgood){
+                setcolorlist();
+            }
+            allgood = true; 
             
         }
     }
+    
+    private void openFileChooserGraph() {
+        JFileChooser fileChooser = new JFileChooser();
+        int result = fileChooser.showOpenDialog(this);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fileChooser.getSelectedFile();
+            //loadAeroportFile(selectedFile);
+            try{
+                listeVolGraphe = main.CreateGraphText(selectedFile);
+            }
+            catch(DonneeVolException e){
+                System.err.println(e.getMessage());
+                JOptionPane.showMessageDialog(null, "Veuillez rentrer un fichier valable", "Données des aéroports éroné", JOptionPane.ERROR_MESSAGE);
+            }
+            listeVolGraphe = main.FullGreedyColor(listeVolGraphe);
+            listeVolGraphe.setkmax((int) kmaxSpinner.getValue());
+            if(!allgood){
+                setcolorlist();
+            }
+            graphgood = true; 
+            
+            
+            
+        }
+    }
+    
+    
 
     private void addAirportMarkers() {
         if (listeAeroport == null || listeAeroport.taillelisteaero() == 0) {
@@ -736,5 +801,17 @@ public class InterfaceIHMSAE extends JFrame {
                 drawLinesHourVolsWithColoration(lastheure, lastminute);
             }
         }
+        if (graphgood) { // Remplacer true par la condition allgood
+                    
+            if (algorithmComboBox.getSelectedItem().equals("Glouton")) {
+                System.out.println("glouton");
+                listeVolGraphe = main.FullGreedyColor(listeVolGraphe);
+            } else {
+                System.out.println("welsh");
+                listeVolGraphe = main.FullWelshPowell(listeVolGraphe);
+            }
+        }
+        
+        
     }    
 }
