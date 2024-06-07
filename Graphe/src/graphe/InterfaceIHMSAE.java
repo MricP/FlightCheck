@@ -38,6 +38,7 @@ import org.graphstream.graph.Graph;
 
 
 public class InterfaceIHMSAE extends JFrame {
+    private static ListeVolsFrame LVF = null;
     private static int lastaction = 0;
     private static int lastcouleur = 0;
     private static int lastminute = 0;
@@ -69,7 +70,7 @@ public class InterfaceIHMSAE extends JFrame {
         colorList = new ArrayList<>();
         airportIcon = new ImageIcon(getClass().getResource("/graphe/aero.png"));
         logoIcon = new ImageIcon(getClass().getResource("/graphe/logo.png"));
-        setTitle("FlightSAE 1.0.0");
+        setTitle("FlightSAE 1.0.0");    
         setSize(1000, 800);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(new GridBagLayout());
@@ -778,21 +779,33 @@ public class InterfaceIHMSAE extends JFrame {
         compoundPainter.addPainter(wp);
         wp.setWaypoints(waypoints);
         mapViewer.setOverlayPainter(compoundPainter);
-        for (MyWaypoint d : waypoints) {
-            mapViewer.add(d.getButton());
+        if(!allgood){
+            for (MyWaypoint d : waypoints) {
+                JButton button = d.getButton();
+                button.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent ae) {
+                    Object[][] data;
+                    if(!allgood){
+                        data = new Object[0][0];
+                    }else{
+                        data = listeVolCarte.getlistvolsfromaero(d.getName());
+                    }
+
+                    LVF = null;
+                    LVF = new ListeVolsFrame(data);
+
+                    LVF.setVisible(true);
+
+                }
+                });
+                mapViewer.add(d.getButton());
+            }
         }
         
         mapViewer.repaint();
     }
     
-    /*
-        WaypointPainter<Waypoint> waypointPainter = new WaypointPainter<>();
-        waypointPainter.setWaypoints(waypoints);
-        waypointPainter.setRenderer(new CustomWaypointRenderer(airportIcon));
-        compoundPainter.addPainter(waypointPainter);
-        
-        mapViewer.setOverlayPainter(compoundPainter);
-        */
     
     public static void coloration(){
         if (allgood) { // Remplacer true par la condition allgood

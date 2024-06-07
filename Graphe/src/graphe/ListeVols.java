@@ -22,7 +22,7 @@ public class ListeVols {
     private int diametre;
     private int kmax;
     private boolean havekmax;
-
+    
     /**
      * Constructeur de la classe ListeVols. Initialise la liste de vols et les
      * paramètres de gestion.
@@ -596,5 +596,24 @@ public class ListeVols {
         for (int i = 0; i < tab.size(); i++) {
             this.getVolId(i + 1).setcouleur(list.get(i));
         }
+    }
+    
+    public Object[][] getlistvolsfromaero(String code){
+        Object[][] tableau = new Object[tab.size()][7];
+        int cpt =0;
+        for(int i=0; i< tab.size(); i++){
+            Vol vol = tab.get(i); // 
+            if(vol.getcodedepart().equals(code) || vol.getcodearrive().equals(code) ){
+                tableau[cpt][0] = vol.getnom();
+                tableau[cpt][1] = vol.getcodedepart();
+                tableau[cpt][2] = vol.getcodearrive();
+                tableau[cpt][3] = (int)(vol.getminutesdepart() / 60) + ":" + (int)(vol.getminutesdepart() % 60);
+                tableau[cpt][4] = (int)(vol.getminutes_arrive() / 60) + ":" + (int)(vol.getminutes_arrive() % 60);
+                tableau[cpt][5] = vol.getduree();
+                tableau[cpt][6] = vol.getcouleur();
+                cpt++;
+            }
+        }
+        return tableau;
     }
 }

@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class StatisticsFrame extends JFrame {
-
+    
     private JLabel degreMoyenLabel;
     private JLabel nbComposantesLabel;
     private JLabel nbNoeudsLabel;

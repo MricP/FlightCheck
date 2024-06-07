@@ -23,7 +23,7 @@ public class MyWaypoint extends DefaultWaypoint {
     public void setButton(JButton button) {
         this.button = button;
     }
-
+    
     public MyWaypoint(String name, GeoPosition coord) {
         super(coord);
         this.name = name;
@@ -35,14 +35,9 @@ public class MyWaypoint extends DefaultWaypoint {
     
     private String name;
     private JButton button;
-
+    
     private void initButton() {
         button = new ButtonWaypoint();
-        button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                System.out.println(name);
-            }
-        });
+        
     }
 }

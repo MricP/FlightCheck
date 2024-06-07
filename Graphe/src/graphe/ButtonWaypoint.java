@@ -20,5 +20,7 @@ public class ButtonWaypoint extends JButton {
         setIcon(new ImageIcon(getClass().getResource("/graphe/aero.png")));
         setCursor(new Cursor(Cursor.HAND_CURSOR));
         setSize(new Dimension(24, 24));
+        setBorderPainted(false);
+        
     }
 }

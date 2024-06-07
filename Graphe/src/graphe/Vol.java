@@ -123,7 +123,7 @@ public class Vol {
     public int getdistance() {
         return distance;
     }
-
+    
     /**
      * Définit la distance associée au vol (utilisée dans l'algorithme de Dijkstra).
      *
