@@ -560,7 +560,7 @@ public class Main {
                 
                 /*System.out.println(line);*/
                 String[] tab = line.split(";");
-                if (tab.length != 6) {
+                if (tab.length != 6 || tab[1].length()!= 3 ||tab[2].length() != 3 || tab[3].length() > 2 || Integer.valueOf(tab[3]) > 23 || tab[4].length() > 2 || Integer.valueOf(tab[4]) > 59) {
                 throw new DonneeVolException(file);
                 }
                 Vol Vol = new Vol(tab[0],tab[1],tab[2],Integer.valueOf(tab[3]),Integer.valueOf(tab[4]),Integer.valueOf(tab[5]));
@@ -646,9 +646,10 @@ public class Main {
             while ((line = reader.readLine()) != null) {
                 // Afficher chaque ligne lue
                 
-                /*System.out.println(line);*/
+                /*System.out.println(tab[2].getClass().getTypeName());*/
                 String[] tab = line.split(";");
-                if (tab.length != 10) {
+                // ex : EBU;Saint-Etienne;45;32;26;N;4;17;47;E
+                if (tab.length != 10 || tab[0].length() != 3 || tab[5].length() != 1 || tab[9].length() != 1) {
                 throw new DonneeVolException(file);
                 }
                 Aeroport Aero = new Aeroport(tab[0],tab[1],Integer.valueOf(tab[2]),Integer.valueOf(tab[3]),Integer.valueOf(tab[4]),tab[5],Integer.valueOf(tab[6]),Integer.valueOf(tab[7]),Integer.valueOf(tab[8]),tab[9]);
