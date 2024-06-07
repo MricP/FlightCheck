@@ -18,11 +18,11 @@ import java.awt.geom.Point2D;
 
 public class CustomWaypointRenderer implements WaypointRenderer<Waypoint> {
     private final Icon icon;
-
+    
     public CustomWaypointRenderer(Icon icon) {
         this.icon = icon;
     }
-
+    
     @Override
     public void paintWaypoint(Graphics2D g, JXMapViewer map, Waypoint wp) {
         Point2D point = map.getTileFactory().geoToPixel(wp.getPosition(), map.getZoom());

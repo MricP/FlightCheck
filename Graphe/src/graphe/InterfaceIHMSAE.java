@@ -43,7 +43,7 @@ public class InterfaceIHMSAE extends JFrame {
     private static int lastminute = 0;
     private static int lastheure = 0;
     private static JXMapViewer mapViewer;
-    private static Set<Waypoint> waypoints;
+    private static Set<MyWaypoint> waypoints;
     private static ListeAeroport listeAeroport;
     private static ListeVols listeVolCarte;
     private static ListeVols listeVolGraphe;
@@ -123,13 +123,13 @@ public class InterfaceIHMSAE extends JFrame {
         JButton aeroportsButton = new JButton("Aéroports");
         styleButton(aeroportsButton, bgColor);
         leftControlPanel.add(aeroportsButton, lc);
-
+        
         // Continuez avec les autres composants...
         lc.gridy++;
         JButton volsButton = new JButton("Vols");
         styleButton(volsButton, bgColor);
         leftControlPanel.add(volsButton, lc);
-
+        
         lc.gridy++;
         JButton graphesButton = new JButton("Graphes");
         styleButton(graphesButton, bgColor);
@@ -509,7 +509,7 @@ public class InterfaceIHMSAE extends JFrame {
     }
     
     
-
+    
     private void addAirportMarkers() {
         if (listeAeroport == null || listeAeroport.taillelisteaero() == 0) {
             System.out.println("Aucun aéroport à afficher.");
@@ -523,11 +523,11 @@ public class InterfaceIHMSAE extends JFrame {
         for (int i = 0; i < listeAeroport.taillelisteaero(); i++) {
             Aeroport aeroport = listeAeroport.getaeroport(i);
             GeoPosition position = new GeoPosition(aeroport.getlongitude(), aeroport.getlatitude());
-            waypoints.add(new DefaultWaypoint(position));
+            waypoints.add(new MyWaypoint(aeroport.getcode(),position));
             codeaero.add(aeroport.getcode());
             geoCondition.add(position);
         }
-
+        
         dessinerpoints();
         System.out.println("Les aéroports sont maintenant affichés");
     }
@@ -582,7 +582,7 @@ public class InterfaceIHMSAE extends JFrame {
         JPanel myPanel = new JPanel();
         myPanel.add(new JLabel("Entrer un nombre entre 1 et " + kmax + ":"));
         myPanel.add(numberField);
-
+        
         int result = JOptionPane.showConfirmDialog(null, myPanel, 
                  "Veuillez entrer un nombre", JOptionPane.OK_CANCEL_OPTION);
         if (result == JOptionPane.OK_OPTION) {
@@ -773,14 +773,26 @@ public class InterfaceIHMSAE extends JFrame {
     }
     
     public static void dessinerpoints(){
+        
+        WaypointPainter<MyWaypoint> wp = new WaypointRenderer();
+        compoundPainter.addPainter(wp);
+        wp.setWaypoints(waypoints);
+        mapViewer.setOverlayPainter(compoundPainter);
+        for (MyWaypoint d : waypoints) {
+            mapViewer.add(d.getButton());
+        }
+        
+        mapViewer.repaint();
+    }
+    
+    /*
         WaypointPainter<Waypoint> waypointPainter = new WaypointPainter<>();
         waypointPainter.setWaypoints(waypoints);
         waypointPainter.setRenderer(new CustomWaypointRenderer(airportIcon));
         compoundPainter.addPainter(waypointPainter);
         
         mapViewer.setOverlayPainter(compoundPainter);
-        mapViewer.repaint();
-    }
+        */
     
     public static void coloration(){
         if (allgood) { // Remplacer true par la condition allgood
