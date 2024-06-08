@@ -2,6 +2,26 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/Users/Robi6/OneDrive/Documents/GitSAE/sae_mathieu_petit_pirrera/Graphe/src/graphe/StatisticsFrame.java</file>
+            <file>file:/C:/Users/Robi6/OneDrive/Documents/GitSAE/sae_mathieu_petit_pirrera/Graphe/src/graphe/CustomWaypointRenderer.java</file>
+            <file>file:/C:/Users/Robi6/OneDrive/Documents/GitSAE/sae_mathieu_petit_pirrera/Graphe/src/graphe/Aeroport.java</file>
+            <file>file:/C:/Users/Robi6/OneDrive/Documents/GitSAE/sae_mathieu_petit_pirrera/Graphe/src/graphe/ButtonWaypoint.java</file>
+            <file>file:/C:/Users/Robi6/OneDrive/Documents/GitSAE/sae_mathieu_petit_pirrera/Graphe/src/graphe/WaypointRenderer.java</file>
+            <file>file:/C:/Users/Robi6/OneDrive/Documents/GitSAE/sae_mathieu_petit_pirrera/Graphe/src/graphe/ListeVolsFrame.java</file>
+            <file>file:/C:/Users/Robi6/OneDrive/Documents/GitSAE/sae_mathieu_petit_pirrera/Graphe/src/graphe/ListeAeroport.java</file>
+            <file>file:/C:/Users/Robi6/OneDrive/Documents/GitSAE/sae_mathieu_petit_pirrera/Graphe/src/graphe/MyWaypoint.java</file>
+            <file>file:/C:/Users/Robi6/OneDrive/Documents/GitSAE/sae_mathieu_petit_pirrera/Graphe/src/graphe/InterfaceIHMSAE.java</file>
+            <file>file:/C:/Users/Robi6/OneDrive/Documents/GitSAE/sae_mathieu_petit_pirrera/Graphe/src/graphe/RoutePainter.java</file>
+            <file>file:/C:/Users/Robi6/OneDrive/Documents/GitSAE/sae_mathieu_petit_pirrera/Graphe/test/StatitiquesTest.java</file>
+            <file>file:/C:/Users/Robi6/OneDrive/Documents/GitSAE/sae_mathieu_petit_pirrera/Graphe/test/VolTest.java</file>
+            <file>file:/C:/Users/Robi6/OneDrive/Documents/GitSAE/sae_mathieu_petit_pirrera/Graphe/src/graphe/Vol.java</file>
+            <file>file:/C:/Users/Robi6/OneDrive/Documents/GitSAE/sae_mathieu_petit_pirrera/Graphe/src/graphe/Main.java</file>
+            <file>file:/C:/Users/Robi6/OneDrive/Documents/GitSAE/sae_mathieu_petit_pirrera/Graphe/src/graphe/ListeVols.java</file>
+            <file>file:/C:/Users/Robi6/OneDrive/Documents/GitSAE/sae_mathieu_petit_pirrera/Graphe/src/graphe/aero.png</file>
+            <file>file:/C:/Users/Robi6/OneDrive/Documents/GitSAE/sae_mathieu_petit_pirrera/Graphe/src/graphe/logo.png</file>
+            <file>file:/C:/Users/Robi6/OneDrive/Documents/GitSAE/sae_mathieu_petit_pirrera/Graphe/src/graphe/Statistiques.java</file>
+            <file>file:/C:/Users/Robi6/OneDrive/Documents/GitSAE/sae_mathieu_petit_pirrera/Graphe/test/AeroportTest.java</file>
+        </group>
     </open-files>
 </project-private>

@@ -289,11 +289,13 @@ public class InterfaceIHMSAE extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 if (allgood){
                     Graph G2 = main.getGraphStream(listeVolCarte);
-                    G2.display();
+                    GraphStreamFrame framegraphstream = new GraphStreamFrame(G2,"Graph avec les vols et les aéroports");
+                    framegraphstream.setVisible(true);
                 }
                 if(graphgood){
                     Graph G1 = main.getGraphStream(listeVolGraphe);
-                    G1.display();
+                    GraphStreamFrame framegraphstream = new GraphStreamFrame(G1, "Graph simple");
+                    framegraphstream.setVisible(true);
                 }
             }
         });
