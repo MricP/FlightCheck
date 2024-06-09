@@ -404,6 +404,9 @@ public class Main {
                     
                 }else{
                     String[] tab = line.split(" ");
+                    if(tab.length > 2){
+                        throw new DonneeVolException(file);
+                    }
                     int x = Integer.valueOf(tab[0]);
                     int y = Integer.valueOf(tab[1]);
                     Vol Vol1 = LVol.getVolnumero(x);
@@ -421,9 +424,6 @@ public class Main {
             return LVol;
         } catch (IOException e) {
             System.out.println("Erreur de lecture du fichier : " + e.getMessage());
-        }
-        if(false){
-            throw new DonneeVolException(file);
         }
         return null;
     }
