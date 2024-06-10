@@ -3,6 +3,9 @@ package graphe;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Classe représentant une fenêtre pour afficher des statistiques.
+ */
 public class StatisticsFrame extends JFrame {
     
     private JLabel degreMoyenLabel;
@@ -12,6 +15,11 @@ public class StatisticsFrame extends JFrame {
     private JLabel diametreLabel;
     private JLabel nbConflitLabel;
     
+    /**
+     * Constructeur pour initialiser la fenêtre des statistiques avec les données fournies.
+     *
+     * @param stats Les statistiques à afficher.
+     */
     public StatisticsFrame(Statistiques stats) {
         setTitle("Statistiques");
         setSize(600, 550);
@@ -80,6 +88,11 @@ public class StatisticsFrame extends JFrame {
         }
     }
 
+    /**
+     * Méthode principale pour lancer l'interface des statistiques.
+     *
+     * @param args Les arguments de la ligne de commande.
+     */
     public static void main(String[] args) {
         Statistiques stats = new Statistiques(3.5, 2, 100, 150, 12.3, 4); // Exemple de statistiques
         SwingUtilities.invokeLater(() -> {

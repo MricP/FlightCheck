@@ -442,6 +442,9 @@ public class InterfaceIHMSAE extends JFrame {
         
     }
     
+    /**
+    * Ouvre un sélecteur de fichiers pour choisir un fichier d'aéroports.
+    */
     private void openFileChooser() {
         JFileChooser fileChooser = new JFileChooser();
         int result = fileChooser.showOpenDialog(this);
@@ -461,6 +464,9 @@ public class InterfaceIHMSAE extends JFrame {
         }
     }
     
+    /**
+    * Ouvre un sélecteur de fichiers pour choisir un fichier de vols.
+    */
     private void openFileChooserVols() {
         JFileChooser fileChooser = new JFileChooser();
         int result = fileChooser.showOpenDialog(this);
@@ -485,7 +491,10 @@ public class InterfaceIHMSAE extends JFrame {
             
         }
     }
-    
+        
+    /**
+    * Ouvre un sélecteur de fichiers pour choisir un fichier de graphes.
+    */
     private void openFileChooserGraph() {
         JFileChooser fileChooser = new JFileChooser();
         int result = fileChooser.showOpenDialog(this);
@@ -512,7 +521,9 @@ public class InterfaceIHMSAE extends JFrame {
     }
     
     
-    
+    /**
+    * Ajoute des marqueurs pour chaque aéroport de la liste des aéroports.
+    */
     private void addAirportMarkers() {
         if (listeAeroport == null || listeAeroport.taillelisteaero() == 0) {
             System.out.println("Aucun aéroport à afficher.");
@@ -535,6 +546,9 @@ public class InterfaceIHMSAE extends JFrame {
         System.out.println("Les aéroports sont maintenant affichés");
     }
     
+    /**
+     * Dessine toutes les lignes des vols avec coloration.
+     */
     private static void drawLinesAllVolsWithColoration() {
         if (waypoints.isEmpty()) {
             System.out.println("Aucun waypoint disponible pour dessiner des lignes.");
@@ -578,6 +592,9 @@ public class InterfaceIHMSAE extends JFrame {
         System.out.println("Les lignes entre les waypoints ont été dessinées avec coloration");
     }
     
+     /**
+     * Ouvre une boîte de dialogue pour saisir un numéro.
+     */
     private void openNumberDialog() {
         int kmax = listeVolCarte.maxcouleur();
         JTextField numberField = new JTextField(5);
@@ -602,6 +619,9 @@ public class InterfaceIHMSAE extends JFrame {
         }
     }
     
+    /**
+    * Ouvre une boîte de dialogue pour saisir une heure et une minute.
+    */
     private void openHourMinuteDialog() {
         JPanel myPanel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
@@ -641,7 +661,11 @@ public class InterfaceIHMSAE extends JFrame {
         }
     }
     
-        
+    /**
+    * Dessine les lignes des vols ayant la couleur spécifiée.
+    *
+    * @param couleur La couleur des vols à dessiner.
+    */
     private static void drawLinesColorVolsWithColoration(int couleur) {
         
         if (waypoints.isEmpty()) {
@@ -689,6 +713,12 @@ public class InterfaceIHMSAE extends JFrame {
         System.out.println("Les lignes entre les waypoints ont été dessinées avec coloration");
     }
     
+    /**
+    * Dessine les lignes des vols ayant lieu à l'heure spécifiée.
+    *
+    * @param heure  L'heure des vols à dessiner.
+    * @param minute Les minutes des vols à dessiner.
+    */
     private static void drawLinesHourVolsWithColoration(int heure, int minute) {
         if (waypoints.isEmpty()) {
             System.out.println("Aucun waypoint disponible pour dessiner des lignes.");
@@ -738,6 +768,12 @@ public class InterfaceIHMSAE extends JFrame {
         System.out.println("Les lignes entre les waypoints ont été dessinées avec coloration");
     }
     
+    /**
+    * Applique un style aux boutons.
+    *
+    * @param button  Le bouton à styliser.
+    * @param bgColor La couleur de fond du bouton.
+    */
     private void styleButton(JButton button, Color bgColor) {
         button.setBackground(bgColor);
         button.setForeground(Color.WHITE);
@@ -745,12 +781,24 @@ public class InterfaceIHMSAE extends JFrame {
         button.setBorderPainted(false);
     }
     
+    /**
+    * Applique un style aux cases à cocher.
+    *
+    * @param checkBox La case à cocher à styliser.
+    * @param bgColor  La couleur de fond de la case à cocher.
+    */
     private void styleCheckBox(JCheckBox checkBox, Color bgColor) {
         checkBox.setBackground(bgColor);
         checkBox.setForeground(Color.WHITE);
         checkBox.setOpaque(true);
     }
     
+    
+    /**
+    * Point d'entrée principal de l'application.
+    *
+    * @param args Les arguments de la ligne de commande.
+    */
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
@@ -760,6 +808,11 @@ public class InterfaceIHMSAE extends JFrame {
         });
     }
     
+    /**
+    * Génère une couleur aléatoire.
+    *
+    * @return Une couleur aléatoire.
+    */
     private static Color getRandomColor() {
         int red = (int) (Math.random() * 256);
         int green = (int) (Math.random() * 256);
@@ -768,6 +821,9 @@ public class InterfaceIHMSAE extends JFrame {
         return new Color(red, green, blue);
     }
     
+    /**
+    * Initialise la liste des couleurs avec des couleurs aléatoires.
+    */
     private static void setcolorlist(){
         for (int i = 0; i < 100; i++) {
             Color randomColor = getRandomColor();
@@ -775,6 +831,9 @@ public class InterfaceIHMSAE extends JFrame {
         }
     }
     
+    /**
+    * Dessine les points sur la carte.
+    */
     public static void dessinerpoints(){
         
         WaypointPainter<MyWaypoint> wp = new WaypointRenderer();
@@ -808,7 +867,9 @@ public class InterfaceIHMSAE extends JFrame {
         mapViewer.repaint();
     }
     
-    
+    /**
+     * Applique la coloration aux données.
+     */
     public static void coloration(){
         if (allgood) { // Remplacer true par la condition allgood
                     

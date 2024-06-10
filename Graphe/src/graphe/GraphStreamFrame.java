@@ -16,8 +16,27 @@ import org.graphstream.ui.view.Viewer;
 import java.awt.*;
 import org.graphstream.ui.view.View;
 
+/**
+ * La classe GraphStreamFrame représente une fenêtre pour la visualisation d'un graphe
+ * en utilisant la bibliothèque GraphStream.
+ * <p>
+ * Cette classe hérite de {@link JFrame} et configure une interface graphique pour afficher
+ * un graphe avec un titre donné.
+ * </p>
+ */
 public class GraphStreamFrame extends JFrame {
 
+    /**
+     * Constructeur de la classe GraphStreamFrame.
+     * <p>
+     * Ce constructeur initialise la fenêtre avec un titre, une taille et un comportement de fermeture par défaut.
+     * Il configure également les composants Swing nécessaires pour afficher le graphe et organise
+     * ces composants en utilisant un {@link GridBagLayout}.
+     * </p>
+     * 
+     * @param graph le graphe à visualiser
+     * @param nom le titre de la fenêtre et du graphe
+     */
     public GraphStreamFrame(Graph graph, String nom) {
         // Configuration de la fenêtre principale
         setTitle("Visualisation de Graphe via GraphStream");
@@ -60,6 +79,15 @@ public class GraphStreamFrame extends JFrame {
         add(graphPanel, gbc);
     }
 
+    /**
+     * Méthode principale pour démarrer l'application de visualisation de graphe.
+     * <p>
+     * Cette méthode crée un exemple de graphe avec trois nœuds et trois arêtes,
+     * puis affiche une fenêtre {@link GraphStreamFrame} pour visualiser ce graphe.
+     * </p>
+     * 
+     * @param args les arguments de la ligne de commande (non utilisés)
+     */
     public static void main(String[] args) {
         // Initialisation du graphe
         Graph graph = new SingleGraph("Graphe Exemple");

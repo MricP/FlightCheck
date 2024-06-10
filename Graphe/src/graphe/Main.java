@@ -955,6 +955,12 @@ public class Main {
         
     }
     
+    /**
+    * Crée un fichier CSV nommé "colo-eval.csv" contenant les informations de coloration des vols.
+    * Chaque ligne du fichier CSV correspond à un vol et contient son identifiant et sa couleur, séparés par un point-virgule.
+    *
+    * @param liste La liste des vols à écrire dans le fichier CSV.
+    */
     public static void createcsv(ListeVols liste){
         String csvFile = "colo-eval.csv";
         String delimiter = ";";

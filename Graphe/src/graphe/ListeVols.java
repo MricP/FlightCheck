@@ -598,6 +598,22 @@ public class ListeVols {
         }
     }
     
+    /**
+    * Retourne une liste de vols associés à un code aéroport donné.
+    *
+    * @param code Le code de l'aéroport pour lequel les vols sont recherchés.
+    * @return Un tableau d'objets représentant les informations des vols correspondants.
+    *         Chaque ligne du tableau contient les informations suivantes :
+    *         <ul>
+    *             <li>Nom du vol</li>
+    *             <li>Code de départ</li>
+    *             <li>Code d'arrivée</li>
+    *             <li>Heure de départ (HH:MM)</li>
+    *             <li>Heure d'arrivée (HH:MM)</li>
+    *             <li>Durée du vol</li>
+    *             <li>Couleur associée au vol</li>
+    *         </ul>
+    */
     public Object[][] getlistvolsfromaero(String code){
         Object[][] tableau = new Object[tab.size()][7];
         int cpt =0;
