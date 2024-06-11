@@ -121,26 +121,21 @@ public class InterfaceIHMSAE extends JFrame {
         leftControlPanel.add(logoLabel, lc);
 
         lc.gridy = 1; // Commencer les autres composants en y=1
-        JButton aeroportsButton = new JButton("Aéroports");
+        JButton aeroportsButton = new JButton("Load Aéroports");
         styleButton(aeroportsButton, bgColor);
         leftControlPanel.add(aeroportsButton, lc);
         
         // Continuez avec les autres composants...
         lc.gridy++;
-        JButton volsButton = new JButton("Vols");
+        JButton volsButton = new JButton("Load Vols");
         styleButton(volsButton, bgColor);
         leftControlPanel.add(volsButton, lc);
         
         lc.gridy++;
-        JButton graphesButton = new JButton("Graphes");
+        JButton graphesButton = new JButton("Load Graphes");
         styleButton(graphesButton, bgColor);
         leftControlPanel.add(graphesButton, lc);
-        
-        lc.gridy++;
-        JButton statsButton = new JButton("Statistiques");
-        styleButton(statsButton, bgColor);
-        leftControlPanel.add(statsButton, lc);
-        
+
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.gridheight = 4;
@@ -236,7 +231,13 @@ public class InterfaceIHMSAE extends JFrame {
         styleButton(graphstreambutton, bgColor);
         b.gridx = 2;
         b.gridy = 1;
-        bottomPanel.add(graphstreambutton, b);   
+        bottomPanel.add(graphstreambutton, b);
+
+        JButton statsButton = new JButton("Statistiques");
+        b.gridx = 3;
+        b.gridy = 0;
+        styleButton(statsButton, bgColor);
+        bottomPanel.add(statsButton, b);
         
         JLabel algorithmLabel = new JLabel("Algorithme Sélectionné : ");
         algorithmLabel.setForeground(Color.WHITE);
