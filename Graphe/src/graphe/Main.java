@@ -920,7 +920,7 @@ public class Main {
 
         return new Statistiques(degreMoyen, nbComposantes, nbNoeuds, nbAretes, diametre, nbConflits);
     }
-     
+    
     /**
      * Applique l'algorithme de coloration gourmande de manière exhaustive pour trouver la coloration optimale (statique).
      *

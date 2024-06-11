@@ -292,7 +292,7 @@ public class InterfaceIHMSAE extends JFrame {
             }
         });
 
-
+        
         
         graphstreambutton.addActionListener(new ActionListener() {
             @Override
@@ -862,10 +862,9 @@ public class InterfaceIHMSAE extends JFrame {
                     }else{
                         data = listeVolCarte.getlistvolsfromaero(d.getName());
                     }
-
+                    
                     LVF = null;
-                    LVF = new ListeVolsFrame(data);
-
+                    LVF = new ListeVolsFrame(data, d.getName());
                     LVF.setVisible(true);
 
                 }
