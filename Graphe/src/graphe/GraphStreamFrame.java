@@ -39,6 +39,8 @@ public class GraphStreamFrame extends JFrame {
      */
     public GraphStreamFrame(Graph graph, String nom) {
         // Configuration de la fenêtre principale
+        ImageIcon logoIcon = new ImageIcon(getClass().getResource("/graphe/logo.png"));
+        setIconImage(logoIcon.getImage());
         setTitle("Visualisation de Graphe via GraphStream");
         setSize(800, 600);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

@@ -70,6 +70,7 @@ public class InterfaceIHMSAE extends JFrame {
         colorList = new ArrayList<>();
         airportIcon = new ImageIcon(getClass().getResource("/graphe/aero.png"));
         logoIcon = new ImageIcon(getClass().getResource("/graphe/logo.png"));
+        setIconImage(logoIcon.getImage());
         setTitle("FlightSAE 1.0.0");    
         setSize(1000, 800);
         setDefaultCloseOperation(EXIT_ON_CLOSE);

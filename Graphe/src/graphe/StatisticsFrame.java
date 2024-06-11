@@ -21,6 +21,8 @@ public class StatisticsFrame extends JFrame {
      * @param stats Les statistiques à afficher.
      */
     public StatisticsFrame(Statistiques stats, String Nom) {
+        ImageIcon logoIcon = new ImageIcon(getClass().getResource("/graphe/logo.png"));
+        setIconImage(logoIcon.getImage());
         setTitle("Statistiques "+Nom);
         setSize(600, 550);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
