@@ -46,7 +46,7 @@ public class MainTest {
         main.setlisteaero(testListeAeroport);
         main.setlistevols(testListeVols);
     }
-//GOOD
+
     @Test
     public void testCreationGraphe() {
         Vol v1 = new Vol("AF605837","CDG","EBU",10,59,74);
@@ -56,14 +56,14 @@ public class MainTest {
         ListeVols graphe = main.creationgraphe(testListeVols);
         assertEquals(2, graphe.taille());
     }
-//Good
+
     @Test
     public void testIntersection() {
         Vol v1 = new Vol("AF605837","CDG","EBU",10,59,74);
         Vol v2 = new Vol("AF978045","EBU","CDG",13,41,52);
         assertFalse(Main.intersection(v1, v2));
     }
-//Good
+
     @Test
     public void testGetGraphStream() {
         Vol v2 = new Vol("AF978045","EBU","CDG",13,41,52);
@@ -78,7 +78,7 @@ public class MainTest {
         assertEquals(2, graph.getNodeCount()); 
         assertEquals(0, graph.getEdgeCount());
     }
-//Good
+
     @Test
     public void testSetVolAeroports() {
         File testFile = new File("C:/Users/Emric/OneDrive/Bureau/S2/SaeFinal/sae_mathieu_petit_pirrera/DataTest/vol-test8.csv");
@@ -90,12 +90,12 @@ public class MainTest {
         }
         assertEquals(605, main.getlisteVols().taille());
     }
-//good
+
     @Test
     public void testSetAeroportlist() {      
         assertEquals(2, main.getlisteaero().taillelisteaero());
     }
-//Good
+
     @Test
     public void testGetDiametre() {
         testGetGraphStream();
@@ -125,11 +125,11 @@ public class MainTest {
     @Test
     public void calculerStatistiquesTest() {
         testGetGraphStream();
-        assertEquals(0.0, main.calculerStatistiques().getDegreMoyen(),0);
-        assertEquals(4.9E-324, main.calculerStatistiques().getDiametre(),0);
-        assertEquals(0, main.calculerStatistiques().getNbAretes());
-        assertEquals(2, main.calculerStatistiques().getNbComposantes(),0);
-        assertEquals(2, main.calculerStatistiques().getNbNoeuds());
+        assertEquals(0.0, main.calculerStatistiques(testListeVols).getDegreMoyen(),0);
+        assertEquals(4.9E-324, main.calculerStatistiques(testListeVols).getDiametre(),0);
+        assertEquals(0, main.calculerStatistiques(testListeVols).getNbAretes());
+        assertEquals(2, main.calculerStatistiques(testListeVols).getNbComposantes(),0);
+        assertEquals(2, main.calculerStatistiques(testListeVols).getNbNoeuds());
 
         
     }
