@@ -909,14 +909,15 @@ public class Main {
      *
      * @return Un objet Statistiques contenant les différentes métriques calculées.
      */
-    public Statistiques calculerStatistiques() {
-        double degreMoyen = LV.getdegremoyen();
-        int nbComposantes = LV.getnbcomposante();
-        int nbNoeuds = LV.taille();
-        int nbAretes = LV.getnbarrte();
-        double diametre = getDiametre_static(LV); // Assurez-vous que cette méthode existe et fonctionne
-        int nbConflits = LV.getnbconflit();
-        
+    
+    public Statistiques calculerStatistiques(ListeVols list) {
+        double degreMoyen = list.getdegremoyen();
+        int nbComposantes = list.getnbcomposante();
+        int nbNoeuds = list.taille();
+        int nbAretes = list.getnbarrte();
+        double diametre = getDiametre_static(list); // Assurez-vous que cette méthode existe et fonctionne
+        int nbConflits = list.getnbconflit();
+
         return new Statistiques(degreMoyen, nbComposantes, nbNoeuds, nbAretes, diametre, nbConflits);
     }
      

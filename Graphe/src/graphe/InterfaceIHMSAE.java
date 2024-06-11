@@ -279,11 +279,20 @@ public class InterfaceIHMSAE extends JFrame {
         statsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Statistiques stats = main.calculerStatistiques();
-                StatisticsFrame statsFrame = new StatisticsFrame(stats);
-                statsFrame.setVisible(true);
+                if(allgood){
+                    Statistiques stats = main.calculerStatistiques(listeVolCarte);
+                    StatisticsFrame statsFrame = new StatisticsFrame(stats);
+                    statsFrame.setVisible(true);
+                }
+                if(graphgood){
+                    Statistiques stats = main.calculerStatistiques(listeVolGraphe);
+                    StatisticsFrame statsFrame = new StatisticsFrame(stats);
+                    statsFrame.setVisible(true);
+                }
             }
         });
+
+
         
         graphstreambutton.addActionListener(new ActionListener() {
             @Override
