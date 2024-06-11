@@ -232,10 +232,10 @@ public class InterfaceIHMSAE extends JFrame {
         b.gridy = 0;
         bottomPanel.add(drawLinescouleurButton, b);
         
-        JButton graphstreambutton = new JButton("get graphstream");
-        styleButton(drawLinescouleurButton, bgColor);
-        b.gridx = 3;
-        b.gridy = 0;
+        JButton graphstreambutton = new JButton("Show GrapheStream");
+        styleButton(graphstreambutton, bgColor);
+        b.gridx = 2;
+        b.gridy = 1;
         bottomPanel.add(graphstreambutton, b);   
         
         JLabel algorithmLabel = new JLabel("Algorithme Sélectionné : ");
