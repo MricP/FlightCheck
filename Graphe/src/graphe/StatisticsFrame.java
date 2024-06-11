@@ -20,8 +20,8 @@ public class StatisticsFrame extends JFrame {
      *
      * @param stats Les statistiques à afficher.
      */
-    public StatisticsFrame(Statistiques stats) {
-        setTitle("Statistiques");
+    public StatisticsFrame(Statistiques stats, String Nom) {
+        setTitle("Statistiques "+Nom);
         setSize(600, 550);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLayout(new GridBagLayout());
@@ -41,8 +41,8 @@ public class StatisticsFrame extends JFrame {
         gbc.insets = new Insets(20, 20, 0, 20);
         gbc.anchor = GridBagConstraints.NORTHEAST;
         add(exitButton, gbc);
-
-        JLabel titleLabel = new JLabel("Statistiques");
+        
+        JLabel titleLabel = new JLabel("Statistiques "+Nom);
         titleLabel.setForeground(Color.LIGHT_GRAY);
         titleLabel.setFont(new Font("Arial", Font.BOLD, 20));
         gbc.gridx = 0;
@@ -96,7 +96,7 @@ public class StatisticsFrame extends JFrame {
     public static void main(String[] args) {
         Statistiques stats = new Statistiques(3.5, 2, 100, 150, 12.3, 4); // Exemple de statistiques
         SwingUtilities.invokeLater(() -> {
-            StatisticsFrame frame = new StatisticsFrame(stats);
+            StatisticsFrame frame = new StatisticsFrame(stats,"test");
             frame.setVisible(true);
         });
     }

@@ -281,12 +281,12 @@ public class InterfaceIHMSAE extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 if(allgood){
                     Statistiques stats = main.calculerStatistiques(listeVolCarte);
-                    StatisticsFrame statsFrame = new StatisticsFrame(stats);
+                    StatisticsFrame statsFrame = new StatisticsFrame(stats, "graphe les vols et aéroports");
                     statsFrame.setVisible(true);
                 }
                 if(graphgood){
                     Statistiques stats = main.calculerStatistiques(listeVolGraphe);
-                    StatisticsFrame statsFrame = new StatisticsFrame(stats);
+                    StatisticsFrame statsFrame = new StatisticsFrame(stats, "graphe simple");
                     statsFrame.setVisible(true);
                 }
             }
