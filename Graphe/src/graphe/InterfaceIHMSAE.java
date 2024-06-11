@@ -122,18 +122,18 @@ public class InterfaceIHMSAE extends JFrame {
         leftControlPanel.add(logoLabel, lc);
 
         lc.gridy = 1; // Commencer les autres composants en y=1
-        JButton aeroportsButton = new JButton("Load Aéroports");
+        JButton aeroportsButton = new JButton("Load airports");
         styleButton(aeroportsButton, bgColor);
         leftControlPanel.add(aeroportsButton, lc);
         
         // Continuez avec les autres composants...
         lc.gridy++;
-        JButton volsButton = new JButton("Load Vols");
+        JButton volsButton = new JButton("Load flights");
         styleButton(volsButton, bgColor);
         leftControlPanel.add(volsButton, lc);
         
         lc.gridy++;
-        JButton graphesButton = new JButton("Load Graphes");
+        JButton graphesButton = new JButton("Load graphs");
         styleButton(graphesButton, bgColor);
         leftControlPanel.add(graphesButton, lc);
 
@@ -180,7 +180,7 @@ public class InterfaceIHMSAE extends JFrame {
         rc.gridy = 0;
         rightControlPanel.add(kmaxCheckbox, rc);
         
-        colorationCheckbox = new JCheckBox("coloration");
+        colorationCheckbox = new JCheckBox("coloring");
         styleCheckBox(colorationCheckbox, bgColor);
         rc.gridx = 0;
         rc.gridy = 1;
@@ -222,25 +222,25 @@ public class InterfaceIHMSAE extends JFrame {
         b.gridy = 0;
         bottomPanel.add(drawLinesHourButton, b);
         
-        JButton drawLinescouleurButton = new JButton("Draw Lines with couleur");
+        JButton drawLinescouleurButton = new JButton("Draw Lines with color");
         styleButton(drawLinescouleurButton, bgColor);
         b.gridx = 2;
         b.gridy = 0;
         bottomPanel.add(drawLinescouleurButton, b);
         
-        JButton graphstreambutton = new JButton("Show GrapheStream");
+        JButton graphstreambutton = new JButton("Show GraphStream");
         styleButton(graphstreambutton, bgColor);
         b.gridx = 2;
         b.gridy = 1;
         bottomPanel.add(graphstreambutton, b);
 
-        JButton statsButton = new JButton("Statistiques");
+        JButton statsButton = new JButton("Statistics");
         b.gridx = 3;
         b.gridy = 0;
         styleButton(statsButton, bgColor);
         bottomPanel.add(statsButton, b);
         
-        JLabel algorithmLabel = new JLabel("Algorithme Sélectionné : ");
+        JLabel algorithmLabel = new JLabel("Selected Algorithm : ");
         algorithmLabel.setForeground(Color.WHITE);
         b.gridx = 0;
         b.gridy = 1;
@@ -282,12 +282,12 @@ public class InterfaceIHMSAE extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 if(allgood){
                     Statistiques stats = main.calculerStatistiques(listeVolCarte);
-                    StatisticsFrame statsFrame = new StatisticsFrame(stats, "graphe les vols et aéroports");
+                    StatisticsFrame statsFrame = new StatisticsFrame(stats, "flights and airports flight");
                     statsFrame.setVisible(true);
                 }
                 if(graphgood){
                     Statistiques stats = main.calculerStatistiques(listeVolGraphe);
-                    StatisticsFrame statsFrame = new StatisticsFrame(stats, "graphe simple");
+                    StatisticsFrame statsFrame = new StatisticsFrame(stats, "simple graph");
                     statsFrame.setVisible(true);
                 }
             }
@@ -300,12 +300,12 @@ public class InterfaceIHMSAE extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 if (allgood){
                     Graph G2 = main.getGraphStream(listeVolCarte);
-                    GraphStreamFrame framegraphstream = new GraphStreamFrame(G2,"Graph avec les vols et les aéroports");
+                    GraphStreamFrame framegraphstream = new GraphStreamFrame(G2,"Graph with flights and airports");
                     framegraphstream.setVisible(true);
                 }
                 if(graphgood){
                     Graph G1 = main.getGraphStream(listeVolGraphe);
-                    GraphStreamFrame framegraphstream = new GraphStreamFrame(G1, "Graph simple");
+                    GraphStreamFrame framegraphstream = new GraphStreamFrame(G1, "simple graph");
                     framegraphstream.setVisible(true);
                 }
             }
@@ -467,7 +467,7 @@ public class InterfaceIHMSAE extends JFrame {
             }
             catch(DonneeVolException e){
                 System.err.println(e.getMessage());
-                JOptionPane.showMessageDialog(null, "Veuillez rentrer un fichier valable", "Données des aéroports éroné", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Please enter a valid file", "Wrong airport data", JOptionPane.ERROR_MESSAGE);
             }
             listeAeroport = main.getlisteaero();
             addAirportMarkers();
@@ -488,7 +488,7 @@ public class InterfaceIHMSAE extends JFrame {
             }
             catch(DonneeVolException e){
                 System.err.println(e.getMessage());
-                JOptionPane.showMessageDialog(null, "Veuillez rentrer un fichier valable", "Données des vols éronné", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Please enter a valid file", "Wrong flights data", JOptionPane.ERROR_MESSAGE);
 
             }
             listeVolCarte = main.getlisteVols();
@@ -517,7 +517,7 @@ public class InterfaceIHMSAE extends JFrame {
             }
             catch(DonneeVolException e){
                 System.err.println(e.getMessage());
-                JOptionPane.showMessageDialog(null, "Veuillez rentrer un fichier valable", "Données des aéroports éroné", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Please enter a valid file", "Wrong airports data", JOptionPane.ERROR_MESSAGE);
             }
             listeVolGraphe = main.FullGreedyColor(listeVolGraphe);
             listeVolGraphe.setkmax((int) kmaxSpinner.getValue());
@@ -537,7 +537,7 @@ public class InterfaceIHMSAE extends JFrame {
     */
     private void addAirportMarkers() {
         if (listeAeroport == null || listeAeroport.taillelisteaero() == 0) {
-            System.out.println("Aucun aéroport à afficher.");
+            System.out.println("No airports to display.");
             return;
         }
 
@@ -611,21 +611,21 @@ public class InterfaceIHMSAE extends JFrame {
         JTextField numberField = new JTextField(5);
 
         JPanel myPanel = new JPanel();
-        myPanel.add(new JLabel("Entrer un nombre entre 1 et " + kmax + ":"));
+        myPanel.add(new JLabel("Enter a number between 1 and " + kmax + ":"));
         myPanel.add(numberField);
         
         int result = JOptionPane.showConfirmDialog(null, myPanel, 
-                 "Veuillez entrer un nombre", JOptionPane.OK_CANCEL_OPTION);
+                 "Please enter a number", JOptionPane.OK_CANCEL_OPTION);
         if (result == JOptionPane.OK_OPTION) {
             try {
                 int number = Integer.parseInt(numberField.getText());
                 if (number >= 1 && number <= kmax) {
                     drawLinesColorVolsWithColoration(number);
                 } else {
-                    JOptionPane.showMessageDialog(null, "Le nombre doit être entre 1 et " + kmax, "Erreur", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "The number must be between 1 and " + kmax, "Error", JOptionPane.ERROR_MESSAGE);
                 }
             } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(null, "Veuillez entrer un nombre valide", "Erreur", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Please enter a valid number ", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
     }
@@ -639,7 +639,7 @@ public class InterfaceIHMSAE extends JFrame {
         gbc.insets = new Insets(5, 5, 5, 5);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        JLabel heureLabel = new JLabel("Heure : ");
+        JLabel heureLabel = new JLabel("Hour : ");
         gbc.gridx = 0;
         gbc.gridy = 0;
         myPanel.add(heureLabel, gbc);
@@ -660,14 +660,14 @@ public class InterfaceIHMSAE extends JFrame {
         myPanel.add(minuteField, gbc);
 
         int result = JOptionPane.showConfirmDialog(null, myPanel, 
-                 "Veuillez entrer l'heure et les minutes", JOptionPane.OK_CANCEL_OPTION);
+                 "Please enter the hour and minutes", JOptionPane.OK_CANCEL_OPTION);
         if (result == JOptionPane.OK_OPTION) {
             try {
                 int heure = Integer.parseInt(heureField.getText());
                 int minute = Integer.parseInt(minuteField.getText());
                 drawLinesHourVolsWithColoration(heure, minute);
             } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(null, "Veuillez entrer des valeurs valides pour l'heure et les minutes.", "Erreur", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Please enter valid values ​​for hours and minutes.", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
     }
@@ -680,7 +680,7 @@ public class InterfaceIHMSAE extends JFrame {
     private static void drawLinesColorVolsWithColoration(int couleur) {
         
         if (waypoints.isEmpty()) {
-            System.out.println("Aucun waypoint disponible pour dessiner des lignes.");
+            System.out.println("No waypoint available to draw the lines.");
             return;
         }
         lastaction = 2;
@@ -715,13 +715,13 @@ public class InterfaceIHMSAE extends JFrame {
                     }
                     compoundPainter.addPainter(routePainter);
                 } else {
-                    System.out.println("Erreur : Impossible de trouver les positions pour le vol " + vol.toString());
+                    System.out.println("Error : Unable to find flight positions " + vol.toString());
                 }
             }
         }
         
         dessinerpoints();
-        System.out.println("Les lignes entre les waypoints ont été dessinées avec coloration");
+        System.out.println("The lines between the waypoints have been drawn with coloring");
     }
     
     /**
@@ -732,7 +732,7 @@ public class InterfaceIHMSAE extends JFrame {
     */
     private static void drawLinesHourVolsWithColoration(int heure, int minute) {
         if (waypoints.isEmpty()) {
-            System.out.println("Aucun waypoint disponible pour dessiner des lignes.");
+            System.out.println("No waypoint available to draw the lines.");
             return;
         }
         lastaction = 3;
