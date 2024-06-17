@@ -19,6 +19,7 @@ import javax.swing.event.MouseInputListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.JMenuBar;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D;
@@ -33,6 +34,7 @@ import java.util.Set;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import org.graphstream.graph.Graph;
+
 
 
 
@@ -60,6 +62,7 @@ public class InterfaceIHMSAE extends JFrame {
     private static JTextField heureField;
     private static JTextField minuteField;
     private static JSpinner kmaxSpinner;
+    private static JMenuBar menuBar;
     private static Icon airportIcon; 
     private static JComboBox<String> algorithmComboBox;
     private static ImageIcon logoIcon;
@@ -76,7 +79,41 @@ public class InterfaceIHMSAE extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
-        
+
+
+        JMenuBar menuBar = new JMenuBar();
+
+        // JMenu
+
+        JMenu menu1 = new JMenu("About");
+        menuBar.add(menu1);
+        JMenu menu2 = new JMenu("Files");
+        menuBar.add(menu2);
+        JMenu menu3 = new JMenu("Actions");
+        menuBar.add(menu3);
+        setJMenuBar(menuBar);
+
+        // JMenuItems Files
+
+        JMenuItem loadAirport = new JMenuItem("Load Airports");
+        menu2.add(loadAirport);
+        JPopupMenu.Separator separator = new JPopupMenu.Separator();
+        menu2.add(separator);
+        JMenuItem loadFlight = new JMenuItem("Load Flight");
+        menu2.add(loadFlight);
+        JPopupMenu.Separator separator1 = new JPopupMenu.Separator();
+        menu2.add(separator1);
+        JMenuItem loadGraphes = new JMenuItem("Load Graphes");
+        menu2.add(loadGraphes);
+
+        // JMenuItems Action
+
+        JCheckBoxMenuItem enableKmax = new JCheckBoxMenuItem("K-max");
+        menu3.add(enableKmax);
+        JCheckBoxMenuItem enableColoring = new JCheckBoxMenuItem("Coloration");
+        menu3.add(enableColoring);
+
+
         Color bgColor = Color.decode("#283C4F");
         getContentPane().setBackground(bgColor);
         compoundPainter = new CompoundPainter<>();
@@ -293,8 +330,19 @@ public class InterfaceIHMSAE extends JFrame {
             }
         });
 
-        
-        
+        loadAirport.addActionListener(e -> {
+            openFileChooser();
+        });
+
+        loadFlight.addActionListener(e -> {
+            openFileChooserVols();
+        });
+
+        loadGraphes.addActionListener(e -> {
+            openFileChooserGraph();
+        });
+
+
         graphstreambutton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -394,7 +442,8 @@ public class InterfaceIHMSAE extends JFrame {
                 
             }
         });
-        
+
+
         kmaxCheckbox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
