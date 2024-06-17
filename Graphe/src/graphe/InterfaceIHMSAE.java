@@ -34,6 +34,7 @@ import java.util.Set;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import org.graphstream.graph.Graph;
+import org.jxmapviewer.VirtualEarthTileFactoryInfo;
 
 
 
@@ -91,6 +92,8 @@ public class InterfaceIHMSAE extends JFrame {
         menuBar.add(menu2);
         JMenu menu3 = new JMenu("Actions");
         menuBar.add(menu3);
+        JCheckBoxMenuItem darkMode = new JCheckBoxMenuItem("Dark Mode");
+        menuBar.add(darkMode);
         setJMenuBar(menuBar);
 
         // JMenuItems Files
@@ -113,18 +116,34 @@ public class InterfaceIHMSAE extends JFrame {
         JCheckBoxMenuItem enableColoring = new JCheckBoxMenuItem("Coloration");
         menu3.add(enableColoring);
 
+        // JMenuItems Light Mode
+
 
         Color bgColor = Color.decode("#283C4F");
         getContentPane().setBackground(bgColor);
         compoundPainter = new CompoundPainter<>();
         codeaero = new ArrayList<>();
         geoCondition = new ArrayList<>();
-        
+
         mapViewer = new JXMapViewer();
         TileFactoryInfo info = new OSMTileFactoryInfo();
-        
         DefaultTileFactory tileFactory = new DefaultTileFactory(info);
         mapViewer.setTileFactory(tileFactory);
+
+
+        darkMode.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (darkMode.isSelected()) {
+                    TileFactoryInfo satelliteInfo = new VirtualEarthTileFactoryInfo(VirtualEarthTileFactoryInfo.SATELLITE);
+                    DefaultTileFactory satelliteTileFactory = new DefaultTileFactory(satelliteInfo);
+                    mapViewer.setTileFactory(satelliteTileFactory);
+                } else {
+                    // Set back to default (light) mode tile source
+                    mapViewer.setTileFactory(new DefaultTileFactory(new OSMTileFactoryInfo()));
+                }
+            }
+        });
 
         GeoPosition france = new GeoPosition(46.603354, 1.888334);
         mapViewer.setZoom(13);
@@ -358,6 +377,8 @@ public class InterfaceIHMSAE extends JFrame {
                 }
             }
         });
+
+
           
         drawLinescouleurButton.addActionListener(new ActionListener() {
             @Override
