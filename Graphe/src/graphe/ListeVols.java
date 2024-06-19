@@ -179,6 +179,22 @@ public class ListeVols {
         }
         return null;
     }
+    
+    public void DsaturMAX() {
+        for (int y = 0; y < tab.size(); y++) {
+            int max = -1;
+            int indice = -1;
+            for (int i = 0; i < tab.size(); i++) {
+                if (tab.get(i).DSAT() > max) {
+                    indice = i;
+                    max = tab.get(i).DSAT();
+                }
+            }
+
+            tab.get(indice).setcouleur(tab.get(indice).first_available_color_kmax(kmax));
+        }
+    }
+    
 
     /**
      * Incrémente le nombre d'arêtes.

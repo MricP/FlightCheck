@@ -831,6 +831,45 @@ public class Main {
         
     }
     
+    public ListeVols DSaturFull(ListeVols list){
+        
+        int minconflits = Integer.MAX_VALUE;
+        ArrayList<Integer> best = list.getcouleurs();
+        int mincouleur = Integer.MAX_VALUE;
+        int cpt = 0;
+        int nb = list.getArraylist().size() * 6;
+        for (int y =0;y<nb;y++){
+            cpt++;
+            Collections.shuffle(list.getArraylist());
+            list.setcouleurdefault();
+            list.DsaturMAX();
+            if ((list.maxcouleur() < mincouleur) || (list.maxcouleur() == mincouleur && list.getnbconflit() < minconflits)){
+                mincouleur = list.maxcouleur();
+                //System.out.println("min " +mincouleur);
+                best = list.getcouleurs();
+                if (mincouleur == list.getkmax()){
+                    minconflits = list.getnbconflit();
+                }
+                if(minconflits == 0){
+                    break;
+                }
+            }
+            
+            
+        }
+        System.out.println("nb de boucles"+ cpt);
+        System.out.println("nb arretes"+ list.getnbarrte());
+        list.adresscouleurs(best);
+        System.out.println("fin couleur min " +list.maxcouleur());
+        System.out.println("fin nb conflits  " +list.getnbconflit());
+        //System.out.println("fin minconflits  " +minconflits);
+        System.out.println(list.goodcoloration());
+        return list;
+        
+    }
+    
+    
+    
     /**
      * Applique l'algorithme de Welsh-Powell de manière exhaustive pour trouver la coloration optimale.
      *
@@ -843,7 +882,8 @@ public class Main {
         ArrayList<Integer> best = list.getcouleurs();
         int mincouleur = Integer.MAX_VALUE;
         int cpt = 0;
-        for (int y =0;y<list.getArraylist().size();y++){
+        int nb = list.getArraylist().size() * list.getArraylist().size() * 2;
+        for (int y =0;y<nb ;y++){
             cpt++;
             list.setcouleurdefault();
             Collections.shuffle(list.getArraylist());
@@ -854,6 +894,9 @@ public class Main {
                 best = list.getcouleurs();
                 if (mincouleur == list.getkmax()){
                     minconflits = list.getnbconflit();
+                }
+                if(minconflits == 0){
+                    break;
                 }
             }
             
@@ -880,8 +923,8 @@ public class Main {
         int minconflits = Integer.MAX_VALUE;
         ArrayList<Integer> best = list.getcouleurs();
         int mincouleur = Integer.MAX_VALUE;
-        
-        for (int y =0;y<list.getArraylist().size() ;y++){
+        int nb = list.getArraylist().size() * list.getArraylist().size() * 2;
+        for (int y =0;y<nb ;y++){
             list.setcouleurdefault();
             Collections.shuffle(list.getArraylist());
             list.GreedyColor();
@@ -891,6 +934,9 @@ public class Main {
                 best = list.getcouleurs();
                 if (mincouleur == list.getkmax()){
                     minconflits = list.getnbconflit();
+                }
+                if(minconflits == 0){
+                    break;
                 }
             }
             
