@@ -363,7 +363,7 @@ public class InterfaceIHMSAE extends JFrame {
                 nameLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
                 JLabel versionLabel = new JLabel("Version: 1.0.0");
                 versionLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-                JLabel developersLabel = new JLabel("Credit: ROBIN, PETIT, PIERRA");
+                JLabel developersLabel = new JLabel("Credit: ROBIN, PETIT, PIRRERA");
                 developersLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
                 panel.add(Box.createRigidArea(new Dimension(0, 10))); // Espace
