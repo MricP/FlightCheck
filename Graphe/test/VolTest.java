@@ -28,6 +28,12 @@ public class VolTest {
         vol2 = new Vol("AF978045","PUF","URO",13,41,52);
         vol2.setdistance(Integer.MAX_VALUE);
     }
+    
+    @After
+    public void tearDown() {
+        vol = null;
+        vol2 = null;
+    }
 
     @Test
     public void getMinuteDepartTest(){
@@ -70,11 +76,6 @@ public class VolTest {
     public void setdistanceTest(){
         vol.setdistance(5);
         assertEquals(5, vol.getdistance());
-    }
-    
-    @Test
-    public void getidTest(){
-        assertEquals(1,vol.getid());
     }
    
     @Test

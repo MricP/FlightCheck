@@ -582,9 +582,9 @@ public class ListeVols {
      * @return Le vol correspondant à l'ID, ou null s'il n'existe pas.
      */
     public Vol getVolId(int id) {
-        for (int i = 0; i < tab.size(); i++) {
-            if (tab.get(i).getid() == id) {
-                return tab.get(i);
+        for (Vol vol : tab) {
+            if (vol.getid() == id) {
+                return vol;
             }
         }
         return null;
@@ -597,8 +597,8 @@ public class ListeVols {
      */
     public ArrayList<Integer> getcouleurs() {
         ArrayList<Integer> list = new ArrayList<>();
-        for (int i = 1; i <= tab.size(); i++) {
-            list.add(this.getVolId(i).getcouleur());
+        for (Vol vol : tab) {
+            list.add(vol.getcouleur());
         }
         return list;
     }
@@ -609,8 +609,14 @@ public class ListeVols {
      * @param list La liste des couleurs à assigner.
      */
     public void adresscouleurs(ArrayList<Integer> list) {
-        for (int i = 0; i < tab.size(); i++) {
-            this.getVolId(i + 1).setcouleur(list.get(i));
+        int i = 0;
+        for (Vol vol : tab) {
+            if (i < list.size()) {
+                vol.setcouleur(list.get(i));
+                i++;
+            } else {
+                break;
+            }
         }
     }
     

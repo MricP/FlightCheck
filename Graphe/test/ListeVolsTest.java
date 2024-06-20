@@ -253,7 +253,7 @@ public class ListeVolsTest {
         assertEquals(vol, liste.getVolId(vol.getid()));
     }
     
-    @Test
+@Test
     public void getcouleursTest() {
         liste.ajMembre(vol);
         liste.ajMembre(vol2);

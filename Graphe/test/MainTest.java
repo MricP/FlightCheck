@@ -81,7 +81,7 @@ public class MainTest {
 
     @Test
     public void testSetVolAeroports() {
-        File testFile = new File("C:/Users/Emric/OneDrive/Bureau/S2/SaeFinal/sae_mathieu_petit_pirrera/DataTest/vol-test8.csv");
+        File testFile = new File("C:/Users/Emric/OneDrive/Bureau/S2/SaeFin2/sae_mathieu_petit_pirrera/DataTest/vol-test8.csv");
         try{
            main.setvolaeroports(testFile);
         }
