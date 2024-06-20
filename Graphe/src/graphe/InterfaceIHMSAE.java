@@ -284,7 +284,7 @@ public class InterfaceIHMSAE extends JFrame {
         b.gridy = 0;
         bottomPanel.add(drawLinescouleurButton, b);
 
-        JButton graphstreambutton = new JButton("Show GraphStream");
+        JButton graphstreambutton = new JButton("GraphStream");
         styleButton(graphstreambutton, bgColor);
         b.gridx = 2;
         b.gridy = 1;
@@ -426,7 +426,9 @@ public class InterfaceIHMSAE extends JFrame {
         statsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                statisticDialog();
+                if(allgood || graphgood){
+                    statisticDialog();
+                }
             }
         });
 
@@ -733,7 +735,7 @@ public class InterfaceIHMSAE extends JFrame {
         }
     }
 
-    public void statisticDialog(){
+    public void statisticDialog() {
         JPanel myPanel1 = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
@@ -752,6 +754,7 @@ public class InterfaceIHMSAE extends JFrame {
                     Statistiques stats = main.calculerStatistiques(listeVolCarte);
                     StatisticsFrame statsFrame = new StatisticsFrame(stats, "flights and airports flight");
                     statsFrame.setVisible(true);
+                    JOptionPane.getRootFrame().dispose();
                 }
             });
         }
@@ -767,11 +770,11 @@ public class InterfaceIHMSAE extends JFrame {
                     Statistiques stats = main.calculerStatistiques(listeVolGraphe);
                     StatisticsFrame statsFrame = new StatisticsFrame(stats, "Simple Graphe");
                     statsFrame.setVisible(true);
+                    JOptionPane.getRootFrame().dispose();
                 }
             });
         }
 
-        // Affichage du dialog avec le panel
         JOptionPane.showMessageDialog(null, myPanel1, "Statistiques", JOptionPane.PLAIN_MESSAGE);
     }
 
