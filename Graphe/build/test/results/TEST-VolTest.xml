@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite errors="0" failures="0" hostname="MSI" name="VolTest" skipped="0" tests="28" time="0.112" timestamp="2024-06-20T07:04:04">
+<testsuite errors="0" failures="0" hostname="MSI" name="VolTest" skipped="0" tests="28" time="0.111" timestamp="2024-06-20T16:18:36">
   <properties>
     <property name="libs.spring-framework300.classpath" value="C:\Program Files\NetBeans-21\netbeans\platform\modules\org-apache-commons-logging.jar;C:\Program Files\NetBeans-21\netbeans\java\modules\ext\cglib-2.2.jar;C:\Program Files\NetBeans-21\netbeans\java\modules\ext\spring-3.0\spring-aop-3.2.18.RELEASE.jar;C:\Program Files\NetBeans-21\netbeans\java\modules\ext\spring-3.0\spring-aspects-3.2.18.RELEASE.jar;C:\Program Files\NetBeans-21\netbeans\java\modules\ext\spring-3.0\spring-beans-3.2.18.RELEASE.jar;C:\Program Files\NetBeans-21\netbeans\java\modules\ext\spring-3.0\spring-context-3.2.18.RELEASE.jar;C:\Program Files\NetBeans-21\netbeans\java\modules\ext\spring-3.0\spring-context-support-3.2.18.RELEASE.jar;C:\Program Files\NetBeans-21\netbeans\java\modules\ext\spring-3.0\spring-core-3.2.18.RELEASE.jar;C:\Program Files\NetBeans-21\netbeans\java\modules\ext\spring-3.0\spring-expression-3.2.18.RELEASE.jar;C:\Program Files\NetBeans-21\netbeans\java\modules\ext\spring-3.0\spring-instrument-3.2.18.RELEASE.jar;C:\Program Files\NetBeans-21\netbeans\java\modules\ext\spring-3.0\spring-instrument-tomcat-3.2.18.RELEASE.jar;C:\Program Files\NetBeans-21\netbeans\java\modules\ext\spring-3.0\spring-jdbc-3.2.18.RELEASE.jar;C:\Program Files\NetBeans-21\netbeans\java\modules\ext\spring-3.0\spring-jms-3.2.18.RELEASE.jar;C:\Program Files\NetBeans-21\netbeans\java\modules\ext\spring-3.0\spring-orm-3.2.18.RELEASE.jar;C:\Program Files\NetBeans-21\netbeans\java\modules\ext\spring-3.0\spring-oxm-3.2.18.RELEASE.jar;C:\Program Files\NetBeans-21\netbeans\java\modules\ext\spring-3.0\spring-struts-3.2.18.RELEASE.jar;C:\Program Files\NetBeans-21\netbeans\java\modules\ext\spring-3.0\spring-test-3.2.18.RELEASE.jar;C:\Program Files\NetBeans-21\netbeans\java\modules\ext\spring-3.0\spring-tx-3.2.18.RELEASE.jar;C:\Program Files\NetBeans-21\netbeans\java\modules\ext\spring-3.0\spring-web-3.2.18.RELEASE.jar;C:\Program Files\NetBeans-21\netbeans\java\modules\ext\spring-3.0\spring-webmvc-3.2.18.RELEASE.jar;C:\Program Files\NetBeans-21\netbeans\java\modules\ext\spring-3.0\spring-webmvc-portlet-3.2.18.RELEASE.jar" />
     <property name="javac.test.classpath" value="..\..\..\..\Downloads\jar_files\jxmapviewer2-2.8.jar:..\..\..\..\Downloads\jar_files\commons-logging-1.2.jar:../../../../Downloads/graphstream/gs-ui-1.1.2.jar:../../../../Downloads/graphstream/gs-core-1.1.2.jar:../../../../Downloads/graphstream/gs-algo-1.1.2.jar:../../../../Downloads/gs-core-2.0 (1).jar:..\..\..\..\..\Downloads\jar_files\jxmapviewer2-2.8.jar:..\..\..\..\..\Downloads\gs-algo-1.3.jar:..\..\..\..\..\Downloads\gs-core-1.3.jar:..\..\..\..\..\Downloads\gs-core-2.0 (1).jar:..\..\..\..\..\Downloads\gs-ui-1.3.jar:..\..\..\..\..\Downloads\jar_files\commons-logging-1.2.jar:C:\Users\Emric\OneDrive\Bureau\S2\SAE2\SAEJava\lib\gs-algo-1.3.jar:C:\Users\Emric\OneDrive\Bureau\S2\SAE2\SAEJava\lib\gs-core-1.3.jar:C:\Users\Emric\OneDrive\Bureau\S2\SAE2\SAEJava\lib\gs-ui-1.3.jar:C:\Users\Emric\Downloads\commons-logging-1.2.jar:C:\Users\Emric\Downloads\jxmapviewer2-2.8.jar:..\..\..\..\..\Downloads\Junit\hamcrest-core-1.3.jar:..\..\..\..\..\Downloads\Junit\hamcrest-junit-2.0.0.0.jar:..\..\..\..\..\Downloads\Junit\java-hamcrest-2.0.0.0.jar:..\..\..\..\..\Downloads\Junit\junit-4.12.jar:..\..\..\Librarie SAE\commons-logging-1.2.jar:..\..\..\Librarie SAE\gs-algo-1.3.jar:..\..\..\Librarie SAE\gs-core-1.3.jar:..\..\..\Librarie SAE\gs-core-2.0.jar:..\..\..\Librarie SAE\gs-ui-1.3.jar:..\..\..\Librarie SAE\jxmapviewer2-2.8.jar:C:\Users\Emric\OneDrive\Bureau\S2\QualitéDev\TP4\hamcrest-core-1.3.jar:C:\Users\Emric\OneDrive\Bureau\S2\QualitéDev\TP4\hamcrest-junit-2.0.0.0.jar:C:\Users\Emric\OneDrive\Bureau\S2\QualitéDev\TP4\java-hamcrest-2.0.0.0.jar:C:\Users\Emric\OneDrive\Bureau\S2\QualitéDev\TP4\junit-4.12.jar:build/classes" />
@@ -18,7 +18,7 @@
     <property name="libs.jsp-compilation.src" value="" />
     <property name="libs.JWSAntTasks.javadoc" value="" />
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk-22\bin" />
-    <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner VolTest skipNonTests=false filtertrace=true haltOnError=false haltOnFailure=false showoutput=true outputtoformatters=true logfailedtests=true threadid=0 logtestlistenerevents=true formatter=org.apache.tools.ant.taskdefs.optional.junit.BriefJUnitResultFormatter formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,C:\Users\Emric\OneDrive\Bureau\S2\SaeFin2\sae_mathieu_petit_pirrera\Graphe\build\test\results\TEST-VolTest.xml crashfile=C:\Users\Emric\OneDrive\Bureau\S2\SaeFin2\sae_mathieu_petit_pirrera\Graphe\build\junitvmwatcher7855341727536160574.properties propsfile=C:\Users\Emric\OneDrive\Bureau\S2\SaeFin2\sae_mathieu_petit_pirrera\Graphe\build\junit4572755284733408601.properties" />
+    <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner VolTest skipNonTests=false filtertrace=true haltOnError=false haltOnFailure=false showoutput=true outputtoformatters=true logfailedtests=true threadid=0 logtestlistenerevents=true formatter=org.apache.tools.ant.taskdefs.optional.junit.BriefJUnitResultFormatter formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,C:\Users\Emric\OneDrive\Bureau\S2\SaeFin2\sae_mathieu_petit_pirrera\Graphe\build\test\results\TEST-VolTest.xml crashfile=C:\Users\Emric\OneDrive\Bureau\S2\SaeFin2\sae_mathieu_petit_pirrera\Graphe\build\junitvmwatcher3457235604645497989.properties propsfile=C:\Users\Emric\OneDrive\Bureau\S2\SaeFin2\sae_mathieu_petit_pirrera\Graphe\build\junit10625619152563126374.properties" />
     <property name="jdk.debug" value="release" />
     <property name="libs.spring-framework300.src" value="" />
     <property name="javadoc.use" value="true" />
@@ -38,6 +38,7 @@
     <property name="libs.eclipselink.maven-pom" value="" />
     <property name="libs.metro.maven-pom" value="" />
     <property name="libs.JAXB-ENDORSED.javadoc" value="" />
+    <property name="org.openide.awt.SwingBrowserImpl.do-not-block-awt" value="false" />
     <property name="file.reference.jxmapviewer2-2.8.jar" value="..\..\..\..\Downloads\jar_files\jxmapviewer2-2.8.jar" />
     <property name="sun.java2d.noddraw" value="true" />
     <property name="file.reference.gs-ui-1.1.2.jar" value="../../../../Downloads/graphstream/gs-ui-1.1.2.jar" />
@@ -174,7 +175,6 @@
     <property name="file.reference.gs-algo-1.1.2.jar" value="../../../../Downloads/graphstream/gs-algo-1.1.2.jar" />
     <property name="libs.javaee-web-api-8.0.maven-pom" value="" />
     <property name="netbeans.dirs" value="C:\Program Files\NetBeans-21\netbeans\nb;C:\Program Files\NetBeans-21\netbeans\ergonomics;C:\Program Files\NetBeans-21\netbeans\ide;C:\Program Files\NetBeans-21\netbeans\extide;C:\Program Files\NetBeans-21\netbeans\java;C:\Program Files\NetBeans-21\netbeans\apisupport;C:\Program Files\NetBeans-21\netbeans\webcommon;C:\Program Files\NetBeans-21\netbeans\websvccommon;C:\Program Files\NetBeans-21\netbeans\enterprise;C:\Program Files\NetBeans-21\netbeans\mobility;C:\Program Files\NetBeans-21\netbeans\profiler;C:\Program Files\NetBeans-21\netbeans\python;C:\Program Files\NetBeans-21\netbeans\php;C:\Program Files\NetBeans-21\netbeans\identity;C:\Program Files\NetBeans-21\netbeans\harness;C:\Program Files\NetBeans-21\netbeans\cnd;C:\Program Files\NetBeans-21\netbeans\cndext;C:\Program Files\NetBeans-21\netbeans\cpplite;C:\Program Files\NetBeans-21\netbeans\dlight;C:\Program Files\NetBeans-21\netbeans\groovy;C:\Program Files\NetBeans-21\netbeans\extra;C:\Program Files\NetBeans-21\netbeans\javacard;C:\Program Files\NetBeans-21\netbeans\javafx;C:\Program Files\NetBeans-21\netbeans\rust" />
-    <property name="tests.failed" value="true" />
     <property name="ant.file.Graphe-impl" value="C:\Users\Emric\OneDrive\Bureau\S2\SaeFin2\sae_mathieu_petit_pirrera\Graphe\nbproject\build-impl.xml" />
     <property name="libs.hamcrest.maven-pom" value="" />
     <property name="javac.processorpath" value="..\..\..\..\Downloads\jar_files\jxmapviewer2-2.8.jar:..\..\..\..\Downloads\jar_files\commons-logging-1.2.jar:../../../../Downloads/graphstream/gs-ui-1.1.2.jar:../../../../Downloads/graphstream/gs-core-1.1.2.jar:../../../../Downloads/graphstream/gs-algo-1.1.2.jar:../../../../Downloads/gs-core-2.0 (1).jar:..\..\..\..\..\Downloads\jar_files\jxmapviewer2-2.8.jar:..\..\..\..\..\Downloads\gs-algo-1.3.jar:..\..\..\..\..\Downloads\gs-core-1.3.jar:..\..\..\..\..\Downloads\gs-core-2.0 (1).jar:..\..\..\..\..\Downloads\gs-ui-1.3.jar:..\..\..\..\..\Downloads\jar_files\commons-logging-1.2.jar:C:\Users\Emric\OneDrive\Bureau\S2\SAE2\SAEJava\lib\gs-algo-1.3.jar:C:\Users\Emric\OneDrive\Bureau\S2\SAE2\SAEJava\lib\gs-core-1.3.jar:C:\Users\Emric\OneDrive\Bureau\S2\SAE2\SAEJava\lib\gs-ui-1.3.jar:C:\Users\Emric\Downloads\commons-logging-1.2.jar:C:\Users\Emric\Downloads\jxmapviewer2-2.8.jar:..\..\..\..\..\Downloads\Junit\hamcrest-core-1.3.jar:..\..\..\..\..\Downloads\Junit\hamcrest-junit-2.0.0.0.jar:..\..\..\..\..\Downloads\Junit\java-hamcrest-2.0.0.0.jar:..\..\..\..\..\Downloads\Junit\junit-4.12.jar:..\..\..\Librarie SAE\commons-logging-1.2.jar:..\..\..\Librarie SAE\gs-algo-1.3.jar:..\..\..\Librarie SAE\gs-core-1.3.jar:..\..\..\Librarie SAE\gs-core-2.0.jar:..\..\..\Librarie SAE\gs-ui-1.3.jar:..\..\..\Librarie SAE\jxmapviewer2-2.8.jar:C:\Users\Emric\OneDrive\Bureau\S2\QualitéDev\TP4\hamcrest-core-1.3.jar:C:\Users\Emric\OneDrive\Bureau\S2\QualitéDev\TP4\hamcrest-junit-2.0.0.0.jar:C:\Users\Emric\OneDrive\Bureau\S2\QualitéDev\TP4\java-hamcrest-2.0.0.0.jar:C:\Users\Emric\OneDrive\Bureau\S2\QualitéDev\TP4\junit-4.12.jar" />
@@ -436,7 +436,6 @@
     <property name="libs.spring-framework300.maven-pom" value="" />
     <property name="ant.project.invoked-targets" value="test" />
     <property name="libs.jstl.classpath" value="C:\Program Files\NetBeans-21\netbeans\enterprise\modules\ext\jstl-impl.jar;C:\Program Files\NetBeans-21\netbeans\enterprise\modules\ext\jstl-api.jar" />
-    <property name="netbeans.automatic.build" value="true" />
     <property name="ap.cmd.line.internal" value="" />
     <property name="libs.PostgreSQLDriver.src" value="" />
     <property name="java.vendor.url.bug" value="https://bugreport.java.com/bugreport/" />
@@ -463,28 +462,28 @@
   </properties>
   <testcase classname="VolTest" name="getTraiteTest" time="0.004" />
   <testcase classname="VolTest" name="getMinuteDepartTest" time="0.0" />
-  <testcase classname="VolTest" name="setcomposanteTest" time="0.001" />
+  <testcase classname="VolTest" name="setcomposanteTest" time="0.0" />
   <testcase classname="VolTest" name="composanteTest" time="0.0" />
   <testcase classname="VolTest" name="getAdjacentindiceTest" time="0.001" />
-  <testcase classname="VolTest" name="getnbadjacentsTest" time="0.0" />
+  <testcase classname="VolTest" name="getnbadjacentsTest" time="0.001" />
   <testcase classname="VolTest" name="getDureeTest" time="0.0" />
   <testcase classname="VolTest" name="DijkstraTest" time="0.0" />
-  <testcase classname="VolTest" name="addadjacentTest" time="0.0" />
-  <testcase classname="VolTest" name="setTraiteTest" time="0.001" />
+  <testcase classname="VolTest" name="addadjacentTest" time="0.001" />
+  <testcase classname="VolTest" name="setTraiteTest" time="0.0" />
   <testcase classname="VolTest" name="first_available_colorTest" time="0.0" />
-  <testcase classname="VolTest" name="goodcolorTest" time="0.001" />
+  <testcase classname="VolTest" name="goodcolorTest" time="0.0" />
   <testcase classname="VolTest" name="getcomposanteTest" time="0.0" />
   <testcase classname="VolTest" name="distanceTest" time="0.0" />
   <testcase classname="VolTest" name="setcouleurTest" time="0.0" />
   <testcase classname="VolTest" name="possepasdeadjcouleurTest" time="0.0" />
-  <testcase classname="VolTest" name="getcodedepartTest" time="0.001" />
-  <testcase classname="VolTest" name="getminutes_arriveTest" time="0.001" />
+  <testcase classname="VolTest" name="getcodedepartTest" time="0.0" />
+  <testcase classname="VolTest" name="getminutes_arriveTest" time="0.0" />
   <testcase classname="VolTest" name="getcodearriveTest" time="0.0" />
-  <testcase classname="VolTest" name="zzzTest" time="0.0" />
-  <testcase classname="VolTest" name="DSATTest" time="0.001" />
+  <testcase classname="VolTest" name="zzzTest" time="0.001" />
+  <testcase classname="VolTest" name="DSATTest" time="0.0" />
   <testcase classname="VolTest" name="getcouleurTest" time="0.0" />
-  <testcase classname="VolTest" name="estAdjacentTest" time="0.001" />
-  <testcase classname="VolTest" name="estAdjacentidTest" time="0.001" />
+  <testcase classname="VolTest" name="estAdjacentTest" time="0.0" />
+  <testcase classname="VolTest" name="estAdjacentidTest" time="0.0" />
   <testcase classname="VolTest" name="setdistanceTest" time="0.0" />
   <testcase classname="VolTest" name="getheurearriveeTest" time="0.0" />
   <testcase classname="VolTest" name="getHeureDepartTest" time="0.0" />

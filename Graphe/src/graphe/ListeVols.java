@@ -172,9 +172,9 @@ public class ListeVols {
      * @return Le vol correspondant au numéro, ou null s'il n'existe pas.
      */
     public Vol getVolnumero(int numero) {
-        for (int i = 0; i < tab.size(); i++) {
-            if (tab.get(i).getid() == numero) {
-                return tab.get(i);
+        for (Vol vol : tab) {
+            if (vol.getid() == numero) {
+                return vol;
             }
         }
         return null;

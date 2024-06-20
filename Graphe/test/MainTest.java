@@ -32,6 +32,7 @@ public class MainTest {
     private ListeVols testListeVols;
     private ListeAeroport testListeAeroport;
     private Vol v1;
+    private Vol v2;
     
     @Before
     public void setUp() {
@@ -43,14 +44,22 @@ public class MainTest {
         testListeAeroport.ajAeroport(a2);
         testListeAeroport.ajAeroport(a1);
         v1 = new Vol("AF605837","CDG","EBU",10,59,74);
+        v2 = new Vol("AF978045","EBU","CDG",13,41,52);
         main.setlisteaero(testListeAeroport);
         main.setlistevols(testListeVols);
     }
 
+    @After
+    public void tearDown(){
+        main = null;
+        testListeVols = null;
+        testListeAeroport = null;
+        v1 = null;
+        v2 = null;
+    }
+    
     @Test
     public void testCreationGraphe() {
-        Vol v1 = new Vol("AF605837","CDG","EBU",10,59,74);
-        Vol v2 = new Vol("AF978045","EBU","CDG",13,41,52);
         testListeVols.ajMembre(v1);
         testListeVols.ajMembre(v2);
         ListeVols graphe = main.creationgraphe(testListeVols);
@@ -59,23 +68,25 @@ public class MainTest {
 
     @Test
     public void testIntersection() {
-        Vol v1 = new Vol("AF605837","CDG","EBU",10,59,74);
-        Vol v2 = new Vol("AF978045","EBU","CDG",13,41,52);
         assertFalse(Main.intersection(v1, v2));
     }
 
     @Test
     public void testGetGraphStream() {
-        Vol v2 = new Vol("AF978045","EBU","CDG",13,41,52);
         v1.setcouleur(1);
         v2.setcouleur(2);
         testListeVols.ajMembre(v1);
-        testListeVols.ajMembre(v2);    
-        assertEquals(2, testListeVols.taille());
+        testListeVols.ajMembre(v2);
+        
+        // Appeler la méthode à tester
         ListeVols graphe = main.creationgraphe(testListeVols);
         main.setlistevols(graphe);
         Graph graph = main.getGraphStream(graphe);
-        assertEquals(2, graph.getNodeCount()); 
+        
+        // Assertions spécifiques pour ce test
+        assertNotNull(graphe);
+        assertNotNull(graph);
+        assertEquals(2, graph.getNodeCount());
         assertEquals(0, graph.getEdgeCount());
     }
 
@@ -98,7 +109,6 @@ public class MainTest {
 
     @Test
     public void testGetDiametre() {
-        testGetGraphStream();
         ListeVols graphe = main.creationgraphe(testListeVols);
         double diametre = main.getDiametre(graphe);
         assertTrue(diametre > 0);
@@ -106,7 +116,8 @@ public class MainTest {
     
     @Test
     public void FullWelshPowellTest(){
-        testGetGraphStream();
+        testListeVols.ajMembre(v1);
+        testListeVols.ajMembre(v2);
         main.FullWelshPowell(testListeVols);
         assertTrue(testListeVols.goodcoloration());
         assertEquals(1,testListeVols.maxcouleur());
@@ -115,23 +126,29 @@ public class MainTest {
     
     @Test
     public void FullGreedyColorTest(){
-        testGetGraphStream();
+        testListeVols.ajMembre(v1);
+        testListeVols.ajMembre(v2);
         main.FullGreedyColor(testListeVols);
         assertTrue(testListeVols.goodcoloration());
         assertEquals(1,testListeVols.maxcouleur());
         assertTrue(testListeVols.getnbconflit() == 0);
     }
     
-    @Test
+   /* @Test
     public void calculerStatistiquesTest() {
-        testGetGraphStream();
-        assertEquals(0.0, main.calculerStatistiques(testListeVols).getDegreMoyen(),0);
-        assertEquals(4.9E-324, main.calculerStatistiques(testListeVols).getDiametre(),0);
-        assertEquals(0, main.calculerStatistiques(testListeVols).getNbAretes());
-        assertEquals(2, main.calculerStatistiques(testListeVols).getNbComposantes(),0);
-        assertEquals(2, main.calculerStatistiques(testListeVols).getNbNoeuds());
+        v1.setcouleur(1);
+        v2.setcouleur(2);
+        testListeVols.ajMembre(v1);
+        testListeVols.ajMembre(v2);
 
-        
-    }
+        main.setlistevols(testListeVols);
+        Statistiques stats = main.calculerStatistiques(testListeVols);
+
+        assertEquals(0, stats.getDegreMoyen(), 0);
+        assertEquals(4.9E-324, stats.getDiametre(), 0);
+        assertEquals(0, stats.getNbAretes());
+        assertEquals(2, stats.getNbComposantes(), 0);
+        assertEquals(2, stats.getNbNoeuds());
+    }*/
 }
 

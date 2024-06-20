@@ -498,41 +498,42 @@ public class Main {
      */
     public Graph getGraphStream(ListeVols liste) {
         Graph graph = new MultiGraph("multi graphe");
-        ArrayList<String> couleurs = new ArrayList<String>();
-        
+        ArrayList<String> couleurs = new ArrayList<>();
         Random random = new Random();
-        
+
+        // Générer des couleurs aléatoires pour chaque couleur utilisée dans la coloration
         for (int i = 0; i < liste.maxcouleur(); i++) {
-            // Génération d'une couleur aléatoire
             String couleur = String.format("#%02x%02x%02x", random.nextInt(256), random.nextInt(256), random.nextInt(256));
             couleurs.add("fill-color: " + couleur + ";");
         }
-        
-        for (int i = 1; i <= liste.taille(); i++) {
-            graph.addNode(Integer.toString(i));
-            /*System.out.println(liste.getVolnumero(i).getcouleur());*/
-            graph.getNode(Integer.toString(i)).addAttribute("ui.style", couleurs.get(liste.getVolnumero(i).getcouleur()-1));
+
+        // Ajouter tous les nœuds au graphe
+        for (Vol vol : liste.getArraylist()) {
+            String nodeId = Integer.toString(vol.getid());
+            graph.addNode(nodeId);
+            graph.getNode(nodeId).addAttribute("ui.style", couleurs.get(vol.getcouleur() - 1));
         }
-        
-        // Ajout des arêtes au graphe
-        int cpt =0;
-        for (int i = 1; i <= liste.taille(); i++) {
-            Vol v = liste.getVolnumero(i);
-            for (int y = 0; y < v.getnbadjacents(); y++) {
-                Vol v2 = v.getAdjacentindice(y);
-                if (!graph.getNode(Integer.toString(i)).hasEdgeBetween(Integer.toString(v2.getid()))) {
-                    graph.addEdge("edge_" + i + "_" + v2.getid(), Integer.toString(i), Integer.toString(v2.getid()));
-                    cpt++;
-                }
+
+        // Ajouter toutes les arêtes au graphe
+        for (Vol vol : liste.getArraylist()) {
+            int id = vol.getid();
+            for (int y = 0; y < vol.getnbadjacents(); y++) {
+                Vol adjacent = vol.getAdjacentindice(y);
+                    int adjacentId = adjacent.getid();
+                    if (!graph.getNode(Integer.toString(id)).hasEdgeBetween(Integer.toString(adjacentId))) {
+                        graph.addEdge("edge_" + id + "_" + adjacentId, Integer.toString(id), Integer.toString(adjacentId));
+                    }
             }
         }
-        
+
         return graph;
     }
+
     
     /**
      * Lit les données des vols à partir d'un fichier et les stocke dans un objet ListeVols.
      * @param file le fichier contenant les données des vols
+     * @throws graphe.DonneeVolException
      */
     public void setvolaeroports(File file) throws DonneeVolException {
         /*
@@ -553,24 +554,20 @@ public class Main {
             return;
         }else{
             System.out.println("Le fichier existe .");
-        }
-        
+        }       
         // Déclarer un BufferedReader pour lire le fichier
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             String line;
             // Lire chaque ligne du fichier tant qu'il y en a
             while ((line = reader.readLine()) != null) {
                 // Afficher chaque ligne lue
-                
-                /*System.out.println(line);*/
                 String[] tab = line.split(";");
                 if (tab.length != 6 || tab[1].length()!= 3 ||tab[2].length() != 3 || tab[3].length() > 2 || Integer.valueOf(tab[3]) > 23 || tab[4].length() > 2 || Integer.valueOf(tab[4]) > 59) {
                 throw new DonneeVolException(file);
                 }
                 Vol Vol = new Vol(tab[0],tab[1],tab[2],Integer.valueOf(tab[3]),Integer.valueOf(tab[4]),Integer.valueOf(tab[5]));
                 LV.ajMembre(Vol);
-            }
-            
+            }           
         } catch (IOException e) {
             System.out.println("Erreur de lecture du fichier : " + e.getMessage());
         }
@@ -586,8 +583,6 @@ public class Main {
         System.out.println("rentrez le chemin d'acces de votre fichier de vols en format .csv:");
         FilePath = "C:/Users/Aspect-PC/Desktop/SAE-GIT/sae_mathieu_petit_pirrera/DataTest/vol-test8.csv";
         //FilePath = "C:/Users/Aspect-PC/Desktop/SAE-IMH/sae_mathieu_petit_pirrera/DataTest/vol-test8.csv";
-        /*FilePath = ent.nextLine();*/
-        
         // Créer un objet File en utilisant le chemin du fichier
         file = new File(FilePath);
         
@@ -853,9 +848,7 @@ public class Main {
                 if(minconflits == 0){
                     break;
                 }
-            }
-            
-            
+            }    
         }
         System.out.println("nb de boucles"+ cpt);
         System.out.println("nb arretes"+ list.getnbarrte());
@@ -867,9 +860,7 @@ public class Main {
         return list;
         
     }
-    
-    
-    
+      
     /**
      * Applique l'algorithme de Welsh-Powell de manière exhaustive pour trouver la coloration optimale.
      *
