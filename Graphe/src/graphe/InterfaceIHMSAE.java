@@ -48,11 +48,9 @@ public class InterfaceIHMSAE extends JFrame {
     private static int lastheure = 0;
     private static JXMapViewer mapViewer;
     private static Set<MyWaypoint> waypoints;
-    private static ListeAeroport listeAeroport;
-    private static ListeVols listeVolCarte;
-    private static ListeVols listeVolGraphe;
+    
     private static boolean graphgood = false;
-    private static Main main;
+    private static Modele modele;
     private static CompoundPainter<JXMapViewer> compoundPainter;
     private static List<Color> colorList;
     private static ArrayList<String> codeaero;
@@ -70,7 +68,7 @@ public class InterfaceIHMSAE extends JFrame {
 
     public InterfaceIHMSAE() {
         allgood = false;
-        main = new Main();
+        modele = new Modele();
         colorList = new ArrayList<>();
         airportIcon = new ImageIcon(getClass().getResource("/graphe/aero.png"));
         logoIcon = new ImageIcon(getClass().getResource("/graphe/logo.png"));
@@ -81,7 +79,7 @@ public class InterfaceIHMSAE extends JFrame {
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
 
-
+        
         JMenuBar menuBar = new JMenuBar();
 
         // JMenu
@@ -427,12 +425,12 @@ public class InterfaceIHMSAE extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (allgood){
-                    Graph G2 = main.getGraphStream(listeVolCarte);
+                    Graph G2 = modele.getMain().getGraphStream(modele.getListeVolCarte());
                     GraphStreamFrame framegraphstream = new GraphStreamFrame(G2,"Graph with flights and airports");
                     framegraphstream.setVisible(true);
                 }
                 if(graphgood){
-                    Graph G1 = main.getGraphStream(listeVolGraphe);
+                    Graph G1 = modele.getMain().getGraphStream(modele.getListeVolGraphe());
                     GraphStreamFrame framegraphstream = new GraphStreamFrame(G1, "simple graph");
                     framegraphstream.setVisible(true);
                 }
@@ -515,18 +513,18 @@ public class InterfaceIHMSAE extends JFrame {
                 int value = (int) ((JSpinner) e.getSource()).getValue();
                 if (allgood){
 
-                    listeVolCarte.setkmax(value);
+                    modele.getListeVolCarte().setkmax(value);
 
-                    if (listeVolCarte.havekmax()){
+                    if (modele.getListeVolCarte().havekmax()){
                         coloration();
                     }
                 }
                 System.out.println("Valeur actuelle : " + value);
                 if (graphgood){
+                    
+                    modele.getListeVolGraphe().setkmax(value);
 
-                    listeVolGraphe.setkmax(value);
-
-                    if (listeVolGraphe.havekmax()){
+                    if (modele.getListeVolGraphe().havekmax()){
                         coloration();
                     }
                 }
@@ -540,11 +538,11 @@ public class InterfaceIHMSAE extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 if (allgood){
                     if (kmaxCheckbox.isSelected()) {
-                        listeVolCarte.sethavekmax(true);
+                        modele.getListeVolCarte().sethavekmax(true);
 
                     } else {
-                        listeVolCarte.sethavekmax(false);
-                        ;
+                        modele.getListeVolCarte().sethavekmax(false);
+                        
                     }
 
                     coloration();
@@ -553,17 +551,17 @@ public class InterfaceIHMSAE extends JFrame {
                 }
                 if(graphgood){
                     if (kmaxCheckbox.isSelected()) {
-                        listeVolGraphe.sethavekmax(true);
+                        modele.getListeVolGraphe().sethavekmax(true);
 
                     } else {
-                        listeVolGraphe.sethavekmax(false);
-                        ;
+                        modele.getListeVolGraphe().sethavekmax(false);
+                        
                     }
                     coloration();
                 }
             }
         });
-
+        
         JButton exitButton = new JButton("Exit");
         styleButton(exitButton, Color.decode("#007BFF"));
         exitButton.addActionListener(e -> System.exit(0));
@@ -603,13 +601,13 @@ public class InterfaceIHMSAE extends JFrame {
             File selectedFile = fileChooser.getSelectedFile();
             //loadAeroportFile(selectedFile);
             try{
-                main.setAeroportlist(selectedFile);
+                modele.getMain().setAeroportlist(selectedFile);
             }
             catch(DonneeVolException e){
                 System.err.println(e.getMessage());
                 JOptionPane.showMessageDialog(null, "Please enter a valid file", "Wrong airport data", JOptionPane.ERROR_MESSAGE);
             }
-            listeAeroport = main.getlisteaero();
+            modele.setListeAeroport(modele.getMain().getlisteaero());
             addAirportMarkers();
 
         }
@@ -624,17 +622,17 @@ public class InterfaceIHMSAE extends JFrame {
         if (result == JFileChooser.APPROVE_OPTION) {
             File selectedFile = fileChooser.getSelectedFile();
             try{
-               main.setvolaeroports(selectedFile);
+               modele.getMain().setvolaeroports(selectedFile);
             }
             catch(DonneeVolException e){
                 System.err.println(e.getMessage());
                 JOptionPane.showMessageDialog(null, "Please enter a valid file", "Wrong flights data", JOptionPane.ERROR_MESSAGE);
 
             }
-            listeVolCarte = main.getlisteVols();
-            listeVolCarte = main.creationgraphe(listeVolCarte);
-            listeVolCarte = main.FullGreedyColor(listeVolCarte);
-            listeVolCarte.setkmax((int) kmaxSpinner.getValue());
+            modele.setListeVolCarte(modele.getMain().getlisteVols());
+            modele.setListeVolCarte(modele.getMain().creationgraphe(modele.getListeVolCarte()));
+            modele.setListeVolCarte(modele.getMain().FullGreedyColor(modele.getListeVolCarte()));
+            modele.getListeVolCarte().setkmax((int) kmaxSpinner.getValue());
             if(!graphgood){
                 setcolorlist();
             }
@@ -642,7 +640,7 @@ public class InterfaceIHMSAE extends JFrame {
 
         }
     }
-
+    
     /**
     * Ouvre un sélecteur de fichiers pour choisir un fichier de graphes.
     */
@@ -653,14 +651,14 @@ public class InterfaceIHMSAE extends JFrame {
             File selectedFile = fileChooser.getSelectedFile();
             //loadAeroportFile(selectedFile);
             try{
-                listeVolGraphe = main.CreateGraphText(selectedFile);
+                modele.setListeVolGraphe(modele.getMain().CreateGraphText(selectedFile));
             }
             catch(DonneeVolException e){
                 System.err.println(e.getMessage());
                 JOptionPane.showMessageDialog(null, "Veuillez saisir un fichier valide", "Wrong airports data", JOptionPane.ERROR_MESSAGE);
             }
-            listeVolGraphe = main.FullGreedyColor(listeVolGraphe);
-            listeVolGraphe.setkmax((int) kmaxSpinner.getValue());
+            modele.setListeVolGraphe(modele.getMain().FullGreedyColor(modele.getListeVolGraphe()));
+            modele.getListeVolGraphe().setkmax((int) kmaxSpinner.getValue());
             if(!allgood){
                 setcolorlist();
             }
@@ -676,7 +674,7 @@ public class InterfaceIHMSAE extends JFrame {
     * Ajoute des marqueurs pour chaque aéroport de la liste des aéroports.
     */
     private void addAirportMarkers() {
-        if (listeAeroport == null || listeAeroport.taillelisteaero() == 0) {
+        if (modele.getListeAeroport() == null || modele.getListeAeroport().taillelisteaero() == 0) {
             System.out.println("Aucun aéroport à afficher.");
             return;
         }
@@ -684,9 +682,9 @@ public class InterfaceIHMSAE extends JFrame {
         waypoints.clear();
         codeaero.clear();
         geoCondition.clear();
-
-        for (int i = 0; i < listeAeroport.taillelisteaero(); i++) {
-            Aeroport aeroport = listeAeroport.getaeroport(i);
+        
+        for (int i = 0; i < modele.getListeAeroport().taillelisteaero(); i++) {
+            Aeroport aeroport = modele.getListeAeroport().getaeroport(i);
             GeoPosition position = new GeoPosition(aeroport.getlongitude(), aeroport.getlatitude());
             waypoints.add(new MyWaypoint(aeroport.getcode(),position));
             codeaero.add(aeroport.getcode());
@@ -707,10 +705,10 @@ public class InterfaceIHMSAE extends JFrame {
         }
         compoundPainter = new CompoundPainter<>();
         lastaction = 1;
-        RoutePainter routePainter;
-        for (int i = 0; i < listeVolCarte.taille(); i++) {
+        RoutePainter routePainter;  
+        for (int i = 0; i < modele.getListeVolCarte().taille(); i++) {
             List<GeoPosition> positions = new ArrayList<>();
-            Vol vol = listeVolCarte.getVolindice(i);
+            Vol vol = modele.getListeVolCarte().getVolindice(i);
             String codedepart = vol.getcodedepart();
             String codearrivee = vol.getcodearrive();
             GeoPosition positionDepart = null;
@@ -747,7 +745,7 @@ public class InterfaceIHMSAE extends JFrame {
      * Ouvre une boîte de dialogue pour saisir un numéro.
      */
     private void openNumberDialog() {
-        int kmax = listeVolCarte.maxcouleur();
+        int kmax = modele.getListeVolCarte().maxcouleur();
         JTextField numberField = new JTextField(5);
 
         JPanel myPanel = new JPanel();
@@ -828,7 +826,7 @@ public class InterfaceIHMSAE extends JFrame {
             btnFlight.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    Statistiques stats = main.calculerStatistiques(listeVolCarte);
+                    Statistiques stats = modele.getMain().calculerStatistiques(modele.getListeVolCarte());
                     StatisticsFrame statsFrame = new StatisticsFrame(stats, "flights and airports flight");
                     statsFrame.setVisible(true);
                     JOptionPane.getRootFrame().dispose();
@@ -844,7 +842,7 @@ public class InterfaceIHMSAE extends JFrame {
             btnFlight1.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    Statistiques stats = main.calculerStatistiques(listeVolGraphe);
+                    Statistiques stats = modele.getMain().calculerStatistiques(modele.getListeVolGraphe());
                     StatisticsFrame statsFrame = new StatisticsFrame(stats, "Simple Graphe");
                     statsFrame.setVisible(true);
                     JOptionPane.getRootFrame().dispose();
@@ -871,9 +869,9 @@ public class InterfaceIHMSAE extends JFrame {
         lastcouleur = couleur;
         compoundPainter = new CompoundPainter<>();
         RoutePainter routePainter;
-        for (int i = 0; i < listeVolCarte.taille(); i++) {
+        for (int i = 0; i < modele.getListeVolCarte().taille(); i++) {
             List<GeoPosition> positions = new ArrayList<>();
-            Vol vol = listeVolCarte.getVolindice(i);
+            Vol vol = modele.getListeVolCarte().getVolindice(i);
             if(vol.getcouleur() == couleur){
                 String codedepart = vol.getcodedepart();
                 String codearrivee = vol.getcodearrive();
@@ -923,12 +921,12 @@ public class InterfaceIHMSAE extends JFrame {
         lastminute = minute;
         lastheure = heure;
         RoutePainter routePainter;
-        System.out.println("coloration avec horaire, couleurs max : "+ listeVolCarte.maxcouleur());
+        System.out.println("coloration avec horaire, couleurs max : "+ modele.getListeVolCarte().maxcouleur());
         compoundPainter = new CompoundPainter<>();
         int minutes = heure * 60 + minute;
-        for (int i = 0; i < listeVolCarte.taille(); i++) {
+        for (int i = 0; i < modele.getListeVolCarte().taille(); i++) {
             List<GeoPosition> positions = new ArrayList<>();
-            Vol vol = listeVolCarte.getVolindice(i);
+            Vol vol = modele.getListeVolCarte().getVolindice(i);
             if (vol.getminutesdepart() <= minutes && vol.getminutes_arrive() >= minutes){
                 String codedepart = vol.getcodedepart();
                 String codearrivee = vol.getcodearrive();
@@ -942,7 +940,7 @@ public class InterfaceIHMSAE extends JFrame {
                         positionArrivee = geoCondition.get(y);
                     }
                 }
-
+                
                 if (positionDepart != null && positionArrivee != null) {
                     positions.add(positionDepart);
                     positions.add(positionArrivee);
@@ -1025,7 +1023,7 @@ public class InterfaceIHMSAE extends JFrame {
             colorList.add(randomColor);
         }
     }
-
+    
     /**
     * Dessine les points sur la carte.
     */
@@ -1045,7 +1043,7 @@ public class InterfaceIHMSAE extends JFrame {
                     if(!allgood){
                         data = new Object[0][0];
                     }else{
-                        data = listeVolCarte.getlistvolsfromaero(d.getName());
+                        data = modele.getListeVolCarte().getlistvolsfromaero(d.getName());
                     }
 
                     LVF = null;
@@ -1069,12 +1067,12 @@ public class InterfaceIHMSAE extends JFrame {
 
             if (algorithmComboBox.getSelectedItem().equals("Glouton")) {
                 System.out.println("glouton");
-                listeVolCarte = main.FullGreedyColor(listeVolCarte);
+                modele.setListeVolCarte( modele.getMain().FullGreedyColor(modele.getListeVolCarte()));
             } else {
                 System.out.println("welsh");
-                listeVolCarte = main.FullWelshPowell(listeVolCarte);
+                modele.setListeVolCarte(modele.getMain().FullWelshPowell(modele.getListeVolCarte()));
             }
-
+            
             if(lastaction ==  1){
                 drawLinesAllVolsWithColoration();
             }else if(lastaction == 2){
@@ -1087,10 +1085,10 @@ public class InterfaceIHMSAE extends JFrame {
 
             if (algorithmComboBox.getSelectedItem().equals("Glouton")) {
                 System.out.println("glouton");
-                listeVolGraphe = main.FullGreedyColor(listeVolGraphe);
+                modele.setListeVolGraphe(modele.getMain().FullGreedyColor(modele.getListeVolGraphe()));
             } else {
                 System.out.println("welsh");
-                listeVolGraphe = main.FullWelshPowell(listeVolGraphe);
+                modele.setListeVolGraphe(modele.getMain().FullWelshPowell(modele.getListeVolGraphe()));
             }
         }
 

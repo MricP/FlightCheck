@@ -837,7 +837,7 @@ public class Main {
         ArrayList<Integer> best = list.getcouleurs();
         int mincouleur = Integer.MAX_VALUE;
         int cpt = 0;
-        int nb = list.getArraylist().size() * 6;
+        int nb = list.getArraylist().size() /*  * 6  */;
         for (int y =0;y<nb;y++){
             cpt++;
             Collections.shuffle(list.getArraylist());
@@ -882,7 +882,7 @@ public class Main {
         ArrayList<Integer> best = list.getcouleurs();
         int mincouleur = Integer.MAX_VALUE;
         int cpt = 0;
-        int nb = list.getArraylist().size() * list.getArraylist().size() * 2;
+        int nb = list.getArraylist().size() /* * list.getArraylist().size() * 2*/;
         for (int y =0;y<nb ;y++){
             cpt++;
             list.setcouleurdefault();
@@ -923,7 +923,7 @@ public class Main {
         int minconflits = Integer.MAX_VALUE;
         ArrayList<Integer> best = list.getcouleurs();
         int mincouleur = Integer.MAX_VALUE;
-        int nb = list.getArraylist().size() * list.getArraylist().size() * 2;
+        int nb = list.getArraylist().size() /* * list.getArraylist().size() * 2 */;
         for (int y =0;y<nb ;y++){
             list.setcouleurdefault();
             Collections.shuffle(list.getArraylist());
