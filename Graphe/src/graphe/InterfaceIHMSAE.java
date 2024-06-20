@@ -96,44 +96,7 @@ public class InterfaceIHMSAE extends JFrame {
 
         JMenuItem aboutItem = new JMenuItem("Information");
         menu1.add(aboutItem);
-
-        // Ajouter un ActionListener au JMenuItem "About"
-        aboutItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JDialog aboutDialog = new JDialog(InterfaceIHMSAE.this, "À propos", true);
-                aboutDialog.setSize(300, 200);
-                aboutDialog.setLocationRelativeTo(InterfaceIHMSAE.this);
-
-                // Contenu de la JDialog
-                JPanel panel = new JPanel();
-                panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-
-                // Centrer les labels horizontalement
-                JLabel nameLabel = new JLabel("FlightSAE");
-                nameLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-                JLabel versionLabel = new JLabel("Version: 1.0.0");
-                versionLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-                JLabel developersLabel = new JLabel("Credit: ROBIN, PETIT, PIERRA");
-                developersLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-                panel.add(Box.createRigidArea(new Dimension(0, 10))); // Espace
-                panel.add(nameLabel);
-                panel.add(Box.createRigidArea(new Dimension(0, 10)));
-                panel.add(versionLabel);
-                panel.add(Box.createRigidArea(new Dimension(0, 10)));
-                panel.add(developersLabel);
-                panel.add(Box.createRigidArea(new Dimension(0, 10)));
-
-                panel.add(nameLabel);
-                panel.add(versionLabel);
-                panel.add(developersLabel);
-
-                aboutDialog.add(panel);
-                aboutDialog.setVisible(true);
-            }
-        });
-
+        
         // JMenuItems Files
 
         JMenuItem loadAirport = new JMenuItem("Load Airports");
