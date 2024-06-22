@@ -360,7 +360,7 @@ public class Main {
      * @param file le fichier contenant les données du graphe
      * @return un objet ListeVols représentant le graphe
      */
-    public ListeVols CreateGraphText(File file) throws DonneeVolException {
+    public ListeVols CreateGraphText(File file) throws DonneeVolException,FichierTropVolumineux {
         /*
         System.out.println("rentrez le chemin d'acces de votre graphe sous forme .txt:");
         
@@ -406,6 +406,9 @@ public class Main {
                     String[] tab = line.split(" ");
                     if(tab.length > 2){
                         throw new DonneeVolException(file);
+                    }
+                    if(file.length() > (1000000000 * 10)){
+                        throw new FichierTropVolumineux();
                     }
                     int x = Integer.valueOf(tab[0]);
                     int y = Integer.valueOf(tab[1]);
@@ -535,7 +538,7 @@ public class Main {
      * @param file le fichier contenant les données des vols
      * @throws graphe.DonneeVolException
      */
-    public void setvolaeroports(File file) throws DonneeVolException {
+    public void setvolaeroports(File file) throws DonneeVolException,FichierTropVolumineux {
         /*
         String FilePath;
         File file;
@@ -565,6 +568,9 @@ public class Main {
                 if (tab.length != 6 || tab[1].length()!= 3 ||tab[2].length() != 3 || tab[3].length() > 2 || Integer.valueOf(tab[3]) > 23 || tab[4].length() > 2 || Integer.valueOf(tab[4]) > 59) {
                 throw new DonneeVolException(file);
                 }
+                if(file.length() > 1000000000 * 10){
+                        throw new FichierTropVolumineux();
+                    }
                 Vol Vol = new Vol(tab[0],tab[1],tab[2],Integer.valueOf(tab[3]),Integer.valueOf(tab[4]),Integer.valueOf(tab[5]));
                 LV.ajMembre(Vol);
             }           
@@ -619,7 +625,7 @@ public class Main {
      * Lit les données des aéroports à partir d'un fichier et les stocke dans la liste appropriée.
      * @param file le fichier contenant les données des aéroports
      */
-    public void setAeroportlist(File file) throws DonneeVolException{
+    public void setAeroportlist(File file) throws DonneeVolException,FichierTropVolumineux{
         /*
         System.out.println("rentrez le chemin d'acces de votre fichier deaéroports sous forme .txt:");
         
@@ -650,6 +656,9 @@ public class Main {
                 // ex : EBU;Saint-Etienne;45;32;26;N;4;17;47;E
                 if (tab.length != 10 || tab[0].length() != 3 || tab[5].length() != 1 || tab[9].length() != 1) {
                 throw new DonneeVolException(file);
+                }
+                if(file.length() > 1000000000 * 10){
+                        throw new FichierTropVolumineux();
                 }
                 Aeroport Aero = new Aeroport(tab[0],tab[1],Integer.valueOf(tab[2]),Integer.valueOf(tab[3]),Integer.valueOf(tab[4]),tab[5],Integer.valueOf(tab[6]),Integer.valueOf(tab[7]),Integer.valueOf(tab[8]),tab[9]);
                 L.ajAeroport(Aero);

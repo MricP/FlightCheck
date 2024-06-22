@@ -564,7 +564,13 @@ public class InterfaceIHMSAE extends JFrame {
             File selectedFile = fileChooser.getSelectedFile();
             //loadAeroportFile(selectedFile);
             try{
-                modele.getMain().setAeroportlist(selectedFile);
+                try{
+                    modele.getMain().setAeroportlist(selectedFile);
+                }
+                catch(FichierTropVolumineux e){
+                    System.err.println(e.getMessage());
+                    JOptionPane.showMessageDialog(null, "The file is too big", "Please enter a valid file", JOptionPane.ERROR_MESSAGE);
+                }
             }
             catch(DonneeVolException e){
                 System.err.println(e.getMessage());
@@ -585,7 +591,13 @@ public class InterfaceIHMSAE extends JFrame {
         if (result == JFileChooser.APPROVE_OPTION) {
             File selectedFile = fileChooser.getSelectedFile();
             try{
-               modele.getMain().setvolaeroports(selectedFile);
+                try{
+                   modele.getMain().setvolaeroports(selectedFile); 
+                }
+                catch(FichierTropVolumineux e){
+                    System.err.println(e.getMessage());
+                    JOptionPane.showMessageDialog(null, "File is too big", "Please enter a valid file", JOptionPane.ERROR_MESSAGE);
+                }
             }
             catch(DonneeVolException e){
                 System.err.println(e.getMessage());
@@ -614,7 +626,13 @@ public class InterfaceIHMSAE extends JFrame {
             File selectedFile = fileChooser.getSelectedFile();
             //loadAeroportFile(selectedFile);
             try{
-                modele.setListeVolGraphe(modele.getMain().CreateGraphText(selectedFile));
+                try{
+                   modele.setListeVolGraphe(modele.getMain().CreateGraphText(selectedFile)); 
+                }
+                catch(FichierTropVolumineux e){
+                    System.err.println(e.getMessage());
+                    JOptionPane.showMessageDialog(null, "File is too big", "Please enter a valid file", JOptionPane.ERROR_MESSAGE);
+                }
             }
             catch(DonneeVolException e){
                 System.err.println(e.getMessage());

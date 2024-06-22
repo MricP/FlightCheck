@@ -15,6 +15,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.function.Consumer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class CSVcolorationmaker {
     
@@ -51,6 +53,8 @@ public class CSVcolorationmaker {
                             
                         }catch(DonneeVolException e){
                             
+                        } catch (FichierTropVolumineux ex) {
+                            Logger.getLogger(CSVcolorationmaker.class.getName()).log(Level.SEVERE, null, ex);
                         }
                         
                         //list = main.DSaturFull(list);
