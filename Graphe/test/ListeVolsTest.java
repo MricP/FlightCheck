@@ -33,6 +33,7 @@ public class ListeVolsTest {
     public void getkmaxTest() {
         liste.setkmax(5);
         assertEquals(5, liste.getkmax());
+        assertNotNull(liste.getkmax());
     }
     
     @Test
@@ -40,42 +41,49 @@ public class ListeVolsTest {
         assertFalse(liste.havekmax());
         liste.setkmax(3);
         assertTrue(liste.getkmax() == 3);
+        assertNotNull(liste.getkmax());
     }
     
     @Test
     public void setkmaxTest() {
         liste.setkmax(4);
         assertEquals(4, liste.getkmax());
+        assertNotNull(liste.getkmax());
     }
    
     @Test
     public void getnbarrteTest() {
         liste.setnbarrete(10);
         assertEquals(10, liste.getnbarrte());
+        assertNotNull(liste.getnbarrte());
     }
     
     @Test
     public void ajMembreTest() {
         liste.ajMembre(vol);
         assertEquals(1, liste.taille());
+        assertNotNull(liste.taille());
     }
     
     @Test
     public void accesMembrenomTest() {
         liste.ajMembre(vol);
         assertEquals(vol, liste.accesMembrenom("AF605837"));
+        assertNotNull(liste.accesMembrenom("AF605837"));
     }
     
     @Test
     public void accesMembrenumTest() {
         liste.ajMembre(vol);
         assertEquals(vol, liste.accesMembrenum(vol.getid()));
+        assertNotNull(liste.accesMembrenum(vol.getid()));
     }
     
     @Test
     public void setnbarreteTest() {
         liste.setnbarrete(5);
         assertEquals(5, liste.getnbarrte());
+        assertNotNull(liste.getnbarrte());
     }
     
     @Test
@@ -83,18 +91,21 @@ public class ListeVolsTest {
         assertEquals(0, liste.taille());
         liste.ajMembre(vol);
         assertEquals(1, liste.taille());
+        assertNotNull(liste.taille());
     }
     
     @Test
     public void getVolindiceTest() {
         liste.ajMembre(vol);
         assertEquals(vol, liste.getVolindice(0));
+        assertNotNull(liste.getVolindice(0));
     }
     
     @Test
     public void getVolnumeroTest() {
         liste.ajMembre(vol);
         assertEquals(vol, liste.getVolnumero(vol.getid()));
+        assertNotNull(liste.getVolnumero(vol.getid()));
     }
     
     @Test

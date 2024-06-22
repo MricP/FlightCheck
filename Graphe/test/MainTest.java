@@ -78,13 +78,9 @@ public class MainTest {
         v2.setcouleur(2);
         testListeVols.ajMembre(v1);
         testListeVols.ajMembre(v2);
-        
-        // Appeler la méthode à tester
         ListeVols graphe = main.creationgraphe(testListeVols);
         main.setlistevols(graphe);
         Graph graph = main.getGraphStream(graphe);
-        
-        // Assertions spécifiques pour ce test
         assertNotNull(graphe);
         assertNotNull(graph);
         assertEquals(2, graph.getNodeCount());
@@ -137,22 +133,5 @@ public class MainTest {
         assertEquals(1,testListeVols.maxcouleur());
         assertTrue(testListeVols.getnbconflit() == 0);
     }
-    
-   /* @Test
-    public void calculerStatistiquesTest() {
-        v1.setcouleur(1);
-        v2.setcouleur(2);
-        testListeVols.ajMembre(v1);
-        testListeVols.ajMembre(v2);
-
-        main.setlistevols(testListeVols);
-        Statistiques stats = main.calculerStatistiques(testListeVols);
-
-        assertEquals(0, stats.getDegreMoyen(), 0);
-        assertEquals(4.9E-324, stats.getDiametre(), 0);
-        assertEquals(0, stats.getNbAretes());
-        assertEquals(2, stats.getNbComposantes(), 0);
-        assertEquals(2, stats.getNbNoeuds());
-    }*/
 }
 

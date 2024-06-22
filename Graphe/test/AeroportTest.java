@@ -4,6 +4,7 @@
  */
 
 import graphe.Aeroport;
+import graphe.FichierTropVolumineux;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -32,39 +33,45 @@ public class AeroportTest {
         aeroport = new Aeroport("CDG", "Paris-Charles de Gaulle",49, 0, 35, "N",2, 32, 52, "E");
     }
     @Test
-    public void testOpenfile() throws IOException {
+    public void testOpenfile() throws IOException{
         String filePath = "C:/Users/Emric/OneDrive/Bureau/S2/SaeFin/sae_mathieu_petit_pirrera/DataTest/aeroports.txt";
         File file = new File(filePath);
         BufferedReader reader = new BufferedReader(new FileReader(file));
         String line = reader.readLine();
         reader.close();
     }
+    
     @Test
     public void getlongitudeTest(){
       double expectedlongitude = 49.00972222222222;
         assertEquals(expectedlongitude, aeroport.getlongitude(),0.00000000000001);
+        assertNotNull(aeroport.getlongitude());
     } 
     
     @Test
     public void getlatitudeTest(){
       double expectedlongitude = 2.5477777777777777;
         assertEquals(expectedlongitude, aeroport.getlatitude(),0.00000000000001);
+        assertNotNull(aeroport.getlatitude());
     } 
     
     @Test
     public void getcodeTest(){
         assertEquals("CDG",aeroport.getcode());
+        assertNotNull(aeroport.getcode());
     }
     
     @Test
     public void getlieuTest(){
         assertEquals("Paris-Charles de Gaulle", aeroport.getlieu());
+        assertNotNull(aeroport.getlieu());
     }
     
     @Test
     public void getXTest() {
         double expectedX = 6371 * Math.cos(Math.toRadians(aeroport.getlongitude())) * Math.sin(Math.toRadians(aeroport.getlatitude()));
         assertEquals(expectedX, aeroport.getX(),0.0001);
+        assertNotNull(aeroport.getX());
 
     }
 
@@ -72,6 +79,7 @@ public class AeroportTest {
     public void getYTest() {
         double expectedY = 6371 * Math.cos(Math.toRadians(aeroport.getlongitude())) * Math.cos(Math.toRadians(aeroport.getlatitude()));
         assertEquals(expectedY, aeroport.getY(),0.0001);
+        assertNotNull(aeroport.getY());
     }
 
     

@@ -34,12 +34,14 @@ public class ListeAeroportTest {
     public void ajAeroportTest(){
         liste.ajAeroport(aeroport);
         assertEquals(1,liste.taillelisteaero());
+        assertNotNull(liste.taillelisteaero());
     }
     
     @Test
     public void accesAeroportTest() {
        liste.ajAeroport(aeroport2);
        assertEquals(aeroport2,liste.accesAeroport("EBU"));
+       assertNotNull(liste.accesAeroport("EBU"));
     }
     
     @Test
@@ -47,6 +49,7 @@ public class ListeAeroportTest {
         liste.ajAeroport(aeroport);
         liste.ajAeroport(aeroport2);
         assertEquals(2,liste.taillelisteaero());
+        assertNotNull(liste.taillelisteaero());
     }
     
     @Test
@@ -54,5 +57,7 @@ public class ListeAeroportTest {
         liste.ajAeroport(aeroport);
         liste.ajAeroport(aeroport2);
         liste.getaeroport(1);
+        assertEquals(aeroport2,liste.getaeroport(1));
+        assertNotNull(liste.getaeroport(1));
     }
 }
