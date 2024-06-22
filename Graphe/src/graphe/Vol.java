@@ -354,7 +354,7 @@ public class Vol {
 
         int dsat = 0;
         ArrayList<Integer> list = new ArrayList<Integer>();
-
+        
         for (int i = 0; i < adjacents.size(); i++) {
             if (adjacents.get(i).getcouleur() != -1 && !list.contains(adjacents.get(i).getcouleur())) {
                 list.add(adjacents.get(i).getcouleur());
@@ -497,4 +497,35 @@ public class Vol {
         
         return indiceMin;
     }
+    
+    public ArrayList<Vol> getAdjacents(){
+        return adjacents;
+    }
+    
+    public boolean adjacentscontainscolor(int color){
+        boolean res = false;
+        for (Vol vol : adjacents){
+            if(vol.getcouleur() == color){
+                res =true;
+            }
+        }
+        return res;
+    }
+    
+    public int nbadjacnetsneighbors(int color){
+        int res =0;
+        for (Vol vol : adjacents){
+            if(vol.adjacentscontainscolor(color)){
+                res++;
+            }
+        }
+        return res;
+    }
+    
+   
+    
+    
+   
+    
+    
 }

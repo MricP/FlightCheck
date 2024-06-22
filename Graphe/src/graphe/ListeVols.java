@@ -5,8 +5,10 @@
 package graphe;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 
 /**
  *
@@ -190,9 +192,69 @@ public class ListeVols {
                     max = tab.get(i).DSAT();
                 }
             }
-
+            
             tab.get(indice).setcouleur(tab.get(indice).first_available_color_kmax(kmax));
         }
+    }
+    
+    
+    public void LRF(){
+        int color = 1;
+        while (color <= kmax && !this.iscolored()) {
+            //System.out.println("deb ");
+            Vol vol = new Vol(-1);
+            boolean found =true;
+            while (found){
+                //System.out.println("neuille ");
+                found =false;
+                vol = null;
+                int max = -1;
+                int min = Integer.MAX_VALUE;
+                for (int i = 0; i < tab.size(); i++) {
+                    if (tab.get(i).getcouleur() == -1 && !tab.get(i).adjacentscontainscolor(color) ) {
+                        if ( tab.get(i).nbadjacnetsneighbors(color) > max ){
+                            vol = tab.get(i);
+                            max = vol.nbadjacnetsneighbors(color);
+                            min = vol.getnbadjacents();
+                            found = true;
+                        }else if(tab.get(i).nbadjacnetsneighbors(color) ==  max  &&  tab.get(i).getnbadjacents() < min){
+                            vol = tab.get(i);
+                            max =vol.nbadjacnetsneighbors(color);
+                            min = vol.getnbadjacents();
+                            found = true;
+                        }
+                        
+                    }
+                }
+                if(found){
+                    vol.setcouleur(color);
+                    //System.out.println(vol.getcouleur());
+                }
+                
+            }
+            color++;
+            
+        }
+        if(!this.iscolored()){
+            for (int i = 0; i < tab.size(); i++) {
+                if(tab.get(i).getcouleur() == -1){
+                    tab.get(i).setcouleur(tab.get(i).first_available_color_kmax(kmax));
+                }
+            }
+        }
+        
+            
+        
+    }
+        
+    public boolean iscolored(){
+        boolean rep = true;
+        for (Vol vol : tab){
+            if (vol.getcouleur() == -1){
+                rep  =false;
+            }
+        }
+        return rep;
     }
     
 
@@ -597,25 +659,26 @@ public class ListeVols {
      */
     public ArrayList<Integer> getcouleurs() {
         ArrayList<Integer> list = new ArrayList<>();
-        for (Vol vol : tab) {
-            list.add(vol.getcouleur());
-        }
+        for (int i=1; i <= tab.size(); i++)
+            for (Vol vol : tab) {
+                if(vol.getid() == i){
+                    list.add(vol.getcouleur());
+                }
+            }
         return list;
     }
-
+    
     /**
      * Assigne des couleurs aux vols depuis une liste donnée.
      *
      * @param list La liste des couleurs à assigner.
      */
     public void adresscouleurs(ArrayList<Integer> list) {
-        int i = 0;
-        for (Vol vol : tab) {
-            if (i < list.size()) {
-                vol.setcouleur(list.get(i));
-                i++;
-            } else {
-                break;
+        for (int i=0; i< tab.size();i++){
+            for (Vol vol : tab) {
+                if (vol.getid() == i+1) {
+                    vol.setcouleur(list.get(i));
+                }
             }
         }
     }

@@ -44,22 +44,22 @@ public class CSVcolorationmaker {
                         // Écrire le numéro de ligne et le nom du fichier dans le fichier CSV
                         
                         try{
-                            //list = main.CreateGraphText(path.toFile());
-                            
+                            list = main.CreateGraphText(path.toFile());
+                            /*
                             list1 = main.CreateGraphText(path.toFile());
                             list2 = main.CreateGraphText(path.toFile());
                             list3 = main.CreateGraphText(path.toFile());
                             list4 = main.CreateGraphText(path.toFile());
-                            
+                            */
                         }catch(DonneeVolException e){
                             
                         } catch (FichierTropVolumineux ex) {
                             Logger.getLogger(CSVcolorationmaker.class.getName()).log(Level.SEVERE, null, ex);
                         }
                         
-                        //list = main.DSaturFull(list);
+                        list = main.FULL_LRF(list);
                         
-                        
+                        /*
                         list1 = main.DSaturFull(list1);
                         if(list1.getnbconflit() != 0){
                             list2 = main.FullGreedyColor(list2);
@@ -67,7 +67,7 @@ public class CSVcolorationmaker {
                                 list3 = main.FullWelshPowell(list3);
                             }
                         }
-                        
+                        */
                         
                         //list4 = main.FullGreedyColor(list4);
                         
@@ -83,7 +83,7 @@ public class CSVcolorationmaker {
                         }
                         */
                         //feur
-                        
+                        /*
                          if(list1.getnbconflit() <= list2.getnbconflit() && list1.getnbconflit() <= list3.getnbconflit()){
                             list = list1;
                         }else if( list2.getnbconflit() <= list3.getnbconflit()){
@@ -91,7 +91,7 @@ public class CSVcolorationmaker {
                         }else{
                             list = list3;
                         }
-                        
+                        */
                         
                         
                         /*

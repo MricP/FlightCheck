@@ -575,17 +575,27 @@ public class InterfaceIHMSAE extends JFrame {
         waypoints = new HashSet<>();
 
         //pour tester les graphetest
-        /*
-        String FilePath = "C:/Users/Robi6/OneDrive/Bureau/DataTest/graph-test2.txt";
+        
+        String FilePath = "C:/Users/Robi6/OneDrive/Bureau/DataTest/graph-test6.txt";
         //C:/Users/Emric/OneDrive/Bureau/S2/SaeFinal/sae_mathieu_petit_pirrera/DataTest/vol-test8.csv
         File file = new File(FilePath);
-        listeVolGraphe = main.CreateGraphText(file);
+        Main main= new Main();
+        ListeVols listeVolGraphe;
+        try{
+            listeVolGraphe = main.CreateGraphText(file);
+        }catch(Exception e){
+            listeVolGraphe = new ListeVols();
+        }
         //listeVolGraphe = main.FullGreedyColor(listeVolGraphe);
         //listeVolGraphe.setcouleurdefault();
-
+        
         //listeVolGraphe = main.FullWelshPowell(listeVolGraphe);
         listeVolGraphe = main.FullWelshPowell(listeVolGraphe);
-
+        System.out.println("W "+listeVolGraphe.getnbconflit());
+        listeVolGraphe = main.FULL_LRF(listeVolGraphe);
+        //listeVolGraphe = main.LRFFull(listeVolGraphe);
+        System.out.println("LRF  "+listeVolGraphe.getnbconflit());
+        /*
         Graph G2 = main.getGraphStream(listeVolGraphe);
         G2.display();
         */

@@ -837,13 +837,49 @@ public class Main {
         
     }
     
+    public ListeVols FULL_LRF(ListeVols list){
+        
+        int minconflits = Integer.MAX_VALUE;
+        ArrayList<Integer> best = list.getcouleurs();
+        int mincouleur = Integer.MAX_VALUE;
+        int cpt = 0;
+        int nb = list.getArraylist().size() ;
+        for (int y =0;y<nb;y++){
+            cpt++;
+            Collections.shuffle(list.getArraylist());
+            list.setcouleurdefault();
+            list.LRF();
+            if ((list.maxcouleur() < mincouleur) || (list.maxcouleur() == mincouleur && list.getnbconflit() < minconflits)){
+                mincouleur = list.maxcouleur();
+                //System.out.println("min " +mincouleur);
+                best = list.getcouleurs();
+                if (mincouleur == list.getkmax()){
+                    minconflits = list.getnbconflit();
+                }
+                if(minconflits == 0){
+                    break;
+                }
+            }
+            //System.out.println("mid  " +minconflits);
+        }
+        //System.out.println("nb de boucles"+ cpt);
+        //System.out.println("nb arretes"+ list.getnbarrte());
+        list.adresscouleurs(best);
+        //System.out.println("fin couleur max " +list.maxcouleur());
+        System.out.println("fin nb conflits  " +list.getnbconflit());
+        //System.out.println("fin minconflits  " +minconflits);
+        System.out.println(list.goodcoloration());
+        return list;
+        
+    }
+    
     public ListeVols DSaturFull(ListeVols list){
         
         int minconflits = Integer.MAX_VALUE;
         ArrayList<Integer> best = list.getcouleurs();
         int mincouleur = Integer.MAX_VALUE;
         int cpt = 0;
-        int nb = list.getArraylist().size() /*  * 6  */;
+        int nb = /* list.getArraylist().size() *  */ 6  ;
         for (int y =0;y<nb;y++){
             cpt++;
             Collections.shuffle(list.getArraylist());
@@ -884,7 +920,7 @@ public class Main {
         ArrayList<Integer> best = list.getcouleurs();
         int mincouleur = Integer.MAX_VALUE;
         int cpt = 0;
-        int nb = list.getArraylist().size() /* * list.getArraylist().size() * 2*/;
+        int nb = list.getArraylist().size() /*  * list.getArraylist().size() * 2   */;
         for (int y =0;y<nb ;y++){
             cpt++;
             list.setcouleurdefault();
@@ -925,7 +961,7 @@ public class Main {
         int minconflits = Integer.MAX_VALUE;
         ArrayList<Integer> best = list.getcouleurs();
         int mincouleur = Integer.MAX_VALUE;
-        int nb = list.getArraylist().size() /* * list.getArraylist().size() * 2 */;
+        int nb = list.getArraylist().size()   /*  * list.getArraylist().size() * 2  */ ;
         for (int y =0;y<nb ;y++){
             list.setcouleurdefault();
             Collections.shuffle(list.getArraylist());
