@@ -65,6 +65,7 @@ public class InterfaceIHMSAE extends JFrame {
     private static Icon airportIcon;
     private static JComboBox<String> algorithmComboBox;
     private static ImageIcon logoIcon;
+    private static JSpinner dureecolision;
 
     public InterfaceIHMSAE() {
         allgood = false;
@@ -224,7 +225,7 @@ public class InterfaceIHMSAE extends JFrame {
         rc.anchor = GridBagConstraints.EAST;
         rightControlPanel.add(kmaxLabel, rc);
 
-        kmaxSpinner = new JSpinner(new SpinnerNumberModel(3, 1, 10, 1));
+        kmaxSpinner = new JSpinner(new SpinnerNumberModel(3, 1, 100, 1));
         rc.gridx = 1;
         rc.gridy = 2;
         rightControlPanel.add(kmaxSpinner, rc);
@@ -240,7 +241,19 @@ public class InterfaceIHMSAE extends JFrame {
         rc.gridx = 0;
         rc.gridy = 1;
         rightControlPanel.add(colorationCheckbox, rc);
-
+        
+        JLabel dureecolLabel = new JLabel("temps collision : ");
+        dureecolLabel.setForeground(Color.WHITE);
+        rc.gridx = 0;
+        rc.gridy = 3;
+        rc.anchor = GridBagConstraints.EAST;
+        rightControlPanel.add(dureecolLabel, rc);
+        
+        dureecolision =  new JSpinner(new SpinnerNumberModel(15, 1, 60, 1));
+        rc.gridx = 1;
+        rc.gridy = 3;
+        rightControlPanel.add(dureecolision, rc);
+        
         gbc.gridx = 3;
         gbc.gridy = 0;
         gbc.gridheight = 4;
@@ -460,7 +473,7 @@ public class InterfaceIHMSAE extends JFrame {
                 }
             }
         });
-
+        
         statsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -469,7 +482,7 @@ public class InterfaceIHMSAE extends JFrame {
                 }
             }
         });
-
+        
         kmaxSpinner.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
@@ -495,7 +508,7 @@ public class InterfaceIHMSAE extends JFrame {
             }
         });
 
-
+        
         kmaxCheckbox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -522,6 +535,31 @@ public class InterfaceIHMSAE extends JFrame {
                     }
                     coloration();
                 }
+            }
+        });
+        
+        dureecolision.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                int value = (int) ((JSpinner) e.getSource()).getValue();
+                if (allgood){
+
+                    modele.getListeVolCarte().setkmax(value);
+
+                    if (modele.getListeVolCarte().havekmax()){
+                        coloration();
+                    }
+                }
+                System.out.println("Valeur actuelle : " + value);
+                if (graphgood){
+                    
+                    modele.getListeVolGraphe().setkmax(value);
+
+                    if (modele.getListeVolGraphe().havekmax()){
+                        coloration();
+                    }
+                }
+
             }
         });
         
@@ -557,6 +595,7 @@ public class InterfaceIHMSAE extends JFrame {
     /**
     * Ouvre un sélecteur de fichiers pour choisir un fichier d'aéroports.
     */
+    
     private void openFileChooser() {
         JFileChooser fileChooser = new JFileChooser();
         int result = fileChooser.showOpenDialog(this);
@@ -581,10 +620,11 @@ public class InterfaceIHMSAE extends JFrame {
 
         }
     }
-
+    
     /**
     * Ouvre un sélecteur de fichiers pour choisir un fichier de vols.
     */
+    
     private void openFileChooserVols() {
         JFileChooser fileChooser = new JFileChooser();
         int result = fileChooser.showOpenDialog(this);
@@ -592,6 +632,7 @@ public class InterfaceIHMSAE extends JFrame {
             File selectedFile = fileChooser.getSelectedFile();
             try{
                 try{
+                   System.out.println(modele.getListeVolCarte());
                    modele.getMain().setvolaeroports(selectedFile); 
                 }
                 catch(FichierTropVolumineux e){
@@ -886,7 +927,7 @@ public class InterfaceIHMSAE extends JFrame {
         dessinerpoints();
         System.out.println("Les lignes entre les points de passage ont été tracées.");
     }
-
+    
     /**
     * Dessine les lignes des vols ayant lieu à l'heure spécifiée.
     *
@@ -937,7 +978,7 @@ public class InterfaceIHMSAE extends JFrame {
                 }
             }
         }
-
+        
         dessinerpoints();
         System.out.println("Les lignes entre les waypoints ont été dessinées avec coloration");
     }
@@ -1009,7 +1050,7 @@ public class InterfaceIHMSAE extends JFrame {
     * Dessine les points sur la carte.
     */
     public static void dessinerpoints(){
-
+        
         WaypointPainter<MyWaypoint> wp = new WaypointRenderer();
         compoundPainter.addPainter(wp);
         wp.setWaypoints(waypoints);

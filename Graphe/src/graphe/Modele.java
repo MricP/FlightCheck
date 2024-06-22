@@ -33,6 +33,7 @@ public class Modele {
     }
 
     public void setListeVolCarte(ListeVols listeVolCarte) {
+        this.listeVolCarte = new ListeVols();
         this.listeVolCarte = listeVolCarte;
     }
 
@@ -41,6 +42,7 @@ public class Modele {
     }
 
     public void setListeVolGraphe(ListeVols listeVolGraphe) {
+        this.listeVolGraphe = new ListeVols();
         this.listeVolGraphe = listeVolGraphe;
     }
 

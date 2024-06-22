@@ -539,6 +539,7 @@ public class Main {
      * @throws graphe.DonneeVolException
      */
     public void setvolaeroports(File file) throws DonneeVolException,FichierTropVolumineux {
+        LV = new ListeVols();
         /*
         String FilePath;
         File file;
@@ -637,13 +638,14 @@ public class Main {
         File file = new File(FilePath);
         */
         // Vérifier si le fichier existe
+        
         if (!file.exists()) {
             System.out.println("Le fichier n'existe pas.");
             return;
         }else{
             System.out.println("Le fichier existe .");
         }
-        
+        L = new ListeAeroport();
         // Déclarer un BufferedReader pour lire le fichier
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             String line;
