@@ -5,6 +5,7 @@
 
 import graphe.Aeroport;
 import graphe.DonneeVolException;
+import graphe.FichierTropVolumineux;
 import graphe.ListeAeroport;
 import graphe.ListeVols;
 import graphe.Main;
@@ -94,7 +95,10 @@ public class MainTest {
     public void testSetVolAeroports() {
         File testFile = new File("C:/Users/Emric/OneDrive/Bureau/S2/SaeFin/sae_mathieu_petit_pirrera/DataTest/vol-test8.csv");
         try{
-           main.setvolaeroports(testFile);
+            try{
+                main.setvolaeroports(testFile);
+            }
+           catch(FichierTropVolumineux eg){}
         }
         catch(DonneeVolException e){
             System.err.println(e.getMessage());
