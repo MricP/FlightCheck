@@ -156,7 +156,7 @@ public class ListeVols {
             System.out.println(tab.get(i).toString());
         }
     }
-
+    
     /**
      * Retourne le vol à un indice donné.
      *
@@ -166,7 +166,7 @@ public class ListeVols {
     public Vol getVolindice(int indice) {
         return tab.get(indice);
     }
-
+    
     /**
      * Retourne le vol avec un numéro donné.
      *
@@ -182,82 +182,107 @@ public class ListeVols {
         return null;
     }
     
-    public void DsaturMAX() {
-        for (int y = 0; y < tab.size(); y++) {
-            int max = -1;
-            int indice = -1;
-            for (int i = 0; i < tab.size(); i++) {
-                if (tab.get(i).DSAT() > max) {
-                    indice = i;
-                    max = tab.get(i).DSAT();
-                }
-            }
-            
-            tab.get(indice).setcouleur(tab.get(indice).first_available_color_kmax(kmax));
-        }
-    }
+    /**
+    * Applique l'algorithme de coloration DSATUR pour colorier les sommets d'un graphe.
+    * L'algorithme DSATUR sélectionne en premier les sommets avec le plus haut degré de saturation,
+    * c'est-à-dire ceux ayant le plus de couleurs distinctes dans leurs voisins, puis leur assigne la
+    * première couleur disponible.
+    */
+   public void DsaturMAX() {
+       // Boucle jusqu'à ce que tous les sommets soient colorés
+       while (!this.iscolored()) {
+           int max = -1;
+           int indice = -1;
+
+           // Trouve le sommet avec le degré de saturation le plus élevé
+           for (int i = 0; i < tab.size(); i++) {
+               if (tab.get(i).DSAT() > max) {
+                   indice = i;
+                   max = tab.get(i).DSAT();
+               }
+           }
+
+           // Assigne la première couleur disponible au sommet trouvé
+           tab.get(indice).setcouleur(tab.get(indice).first_available_color_kmax(kmax));
+       }
+   }
+   
     
     
-    public void LRF(){
+    /**
+     * Applique l'algorithme de coloration Largest First (LRF) pour colorier les sommets d'un graphe.
+     * L'algorithme tente d'assigner des couleurs aux sommets en suivant une heuristique où
+     * les sommets avec le plus grand nombre de voisins non colorés sont colorés en premier.
+     * Si une coloration complète n'est pas atteinte, les sommets restants sont colorés avec 
+     * la première couleur disponible jusqu'à `kmax`.
+     */
+    public void LRF() {
         int color = 1;
+        // Boucle jusqu'à ce que toutes les couleurs soient utilisées ou que tous les sommets soient coloriés
         while (color <= kmax && !this.iscolored()) {
-            //System.out.println("deb ");
             Vol vol = new Vol(-1);
-            boolean found =true;
-            while (found){
-                //System.out.println("neuille ");
-                found =false;
+            boolean found = true;
+            // Cherche un sommet à colorier
+            while (found) {
+                found = false;
                 vol = null;
                 int max = -1;
                 int min = Integer.MAX_VALUE;
-                for (int i = 0; i < tab.size(); i++) {
-                    if (tab.get(i).getcouleur() == -1 && !tab.get(i).adjacentscontainscolor(color) ) {
-                        if ( tab.get(i).nbadjacnetsneighbors(color) > max ){
-                            vol = tab.get(i);
+                // Parcourt tous les sommets pour trouver celui avec le plus de voisins non colorés
+                for (Vol voll : tab) {
+                    if (voll.getcouleur() == -1 && !voll.adjacentscontainscolor(color)) {
+                        if (voll.nbadjacnetsneighbors(color) > max) {
+                            vol = voll;
                             max = vol.nbadjacnetsneighbors(color);
                             min = vol.getnbadjacents();
                             found = true;
-                        }else if(tab.get(i).nbadjacnetsneighbors(color) ==  max  &&  tab.get(i).getnbadjacents() < min){
-                            vol = tab.get(i);
-                            max =vol.nbadjacnetsneighbors(color);
+                        } else if (voll.nbadjacnetsneighbors(color) == max && voll.getnbadjacents() < min) {
+                            vol = voll;
+                            max = vol.nbadjacnetsneighbors(color);
                             min = vol.getnbadjacents();
                             found = true;
                         }
-                        
                     }
                 }
-                if(found){
+                // Colore le sommet trouvé
+                if (found) {
                     vol.setcouleur(color);
-                    //System.out.println(vol.getcouleur());
                 }
-                
             }
             color++;
-            
         }
-        if(!this.iscolored()){
-            for (int i = 0; i < tab.size(); i++) {
-                if(tab.get(i).getcouleur() == -1){
-                    tab.get(i).setcouleur(tab.get(i).first_available_color_kmax(kmax));
+        
+        // Vérifie si tous les sommets sont coloriés, sinon applique une couleur disponible jusqu'à kmax
+        if (!this.iscolored()) {
+            for (Vol vol : tab) {
+                if (vol.getcouleur() == -1) {
+                    vol.setcouleur(vol.first_available_color_kmax(kmax));
                 }
             }
         }
-        
-            
-        
+
+        // Affiche le nombre de conflits après coloration
+        System.out.println(this.getnbconflit());
     }
         
-    public boolean iscolored(){
+    /**
+     * Vérifie si tous les sommets du graphe sont colorés.
+     * Cette méthode parcourt tous les sommets dans la liste `tab`
+     * et vérifie si chacun a une couleur assignée.
+     *
+     * @return true si tous les sommets sont colorés, false sinon.
+     */
+    public boolean iscolored() {
         boolean rep = true;
-        for (Vol vol : tab){
-            if (vol.getcouleur() == -1){
-                rep  =false;
+        for (Vol vol : tab) {
+            if (vol.getcouleur() == -1) {
+                rep = false;
             }
         }
         return rep;
     }
-    
 
+    
     /**
      * Incrémente le nombre d'arêtes.
      */
@@ -336,7 +361,7 @@ public class ListeVols {
 
         return nbCouleurs;
     }
-
+    
     /**
      * Applique l'algorithme Welsh-Powell pour colorier les vols.
      *
@@ -364,7 +389,7 @@ public class ListeVols {
             } else {
                 var2 = false;
             }
-
+            
             while (i < tab.size()) {
                 if (tab.get(i).possepasdeadjcouleur(nbCouleurs) && (tab.get(i).getcouleur() == -1)) {
                     tab.get(i).setcouleur(nbCouleurs);
@@ -376,7 +401,7 @@ public class ListeVols {
 
         return nbCouleurs;
     }
-
+    
     /**
      * Applique une coloration aléatoire aux vols.
      *

@@ -351,7 +351,7 @@ public class Vol {
         if (couleur != -1) {
             return -1;
         }
-
+        
         int dsat = 0;
         ArrayList<Integer> list = new ArrayList<Integer>();
         
@@ -498,30 +498,47 @@ public class Vol {
         return indiceMin;
     }
     
-    public ArrayList<Vol> getAdjacents(){
+    /**
+     * Retourne la liste des sommets adjacents à ce sommet.
+     *
+     * @return une liste des sommets adjacents (instances de Vol).
+     */
+    public ArrayList<Vol> getAdjacents() {
         return adjacents;
     }
     
-    public boolean adjacentscontainscolor(int color){
+    /**
+     * Vérifie si l'un des sommets adjacents a la couleur spécifiée.
+     *
+     * @param color la couleur à vérifier.
+     * @return true si l'un des sommets adjacents a la couleur spécifiée, false sinon.
+     */
+    public boolean adjacentscontainscolor(int color) {
         boolean res = false;
-        for (Vol vol : adjacents){
-            if(vol.getcouleur() == color){
-                res =true;
+        for (Vol vol : adjacents) {
+            if (vol.getcouleur() == color) {
+                res = true;
             }
         }
         return res;
     }
     
-    public int nbadjacnetsneighbors(int color){
-        int res =0;
-        for (Vol vol : adjacents){
-            if(vol.adjacentscontainscolor(color)){
+    /**
+     * Compte le nombre de sommets adjacents ayant un voisin de la couleur spécifiée.
+     *
+     * @param color la couleur à vérifier parmi les voisins des sommets adjacents.
+     * @return le nombre de sommets adjacents ayant un voisin de la couleur spécifiée.
+     */
+    public int nbadjacnetsneighbors(int color) {
+        int res = 0;
+        for (Vol vol : adjacents) {
+            if (vol.adjacentscontainscolor(color)) {
                 res++;
             }
         }
         return res;
     }
-    
+
    
     
     
