@@ -104,7 +104,7 @@ public class Main {
      * @param liste la liste de vols
      * @return la liste de vols mise à jour avec les arêtes
      */
-    public ListeVols creationgraphe(ListeVols liste){
+    public ListeVols creationgraphe(ListeVols liste, int temps){
         /*
         System.out.println(LV.getVolindice(3).toString());
         System.out.println(LV.getVolindice(17).toString());
@@ -118,7 +118,7 @@ public class Main {
         for (int i = 0; i< taille; i++){
             for (int y=i+1; y < taille; y++){
                 cpt++;
-                if(intersection(LV.getVolindice(i),liste.getVolindice(y))){
+                if(intersection(LV.getVolindice(i),liste.getVolindice(y), temps)){
                     gpt++;
                     liste.getVolindice(i).addadjacent(liste.getVolindice(y));
                     //System.out.println(liste.getVolindice(i).id+ "  :  "+ liste.getVolindice(y).id);
@@ -155,7 +155,7 @@ public class Main {
         for (int i = 0; i< taille; i++){
             for (int y=i+1; y < taille; y++){
                 cpt++;
-                if(intersection(LV.getVolindice(i),liste.getVolindice(y))){
+                if(intersection(LV.getVolindice(i),liste.getVolindice(y), 15)){
                     gpt++;
                     liste.getVolindice(i).addadjacent(liste.getVolindice(y));
                     //System.out.println(liste.getVolindice(i).id+ "  :  "+ liste.getVolindice(y).id);
@@ -178,7 +178,7 @@ public class Main {
      * @param V2 le deuxième vol
      * @return true si les vols se croisent ou sont proches, false sinon
      */
-    public static boolean intersection(Vol V1, Vol V2){
+    public static boolean intersection(Vol V1, Vol V2, int temps){
         
         if (V1 == V2){
             
@@ -200,28 +200,28 @@ public class Main {
         Aeroport A4 = L.accesAeroport(V2.getcodearrive());
         
         //A1 = A3 regarder  heure de depart
-        if (A1 == A3 && (Math.abs(V1.getminutesdepart() - V2.getminutesdepart()) < 15)){
+        if (A1 == A3 && (Math.abs(V1.getminutesdepart() - V2.getminutesdepart()) < temps)){
             return true;
         }
         //A2= A4 regarder heure arrivée
-        if (A2 == A4 && (Math.abs(V1.getminutes_arrive() - V2.getminutes_arrive()) < 15)){
+        if (A2 == A4 && (Math.abs(V1.getminutes_arrive() - V2.getminutes_arrive()) < temps)){
             return true;
         }
         //A1 = A4 regarder heure de depart de 1 puis heure d'arrivée de 2
         /*System.out.println(Math.abs(V1.getminutesdepart() - V2.getminutes_arrive()));*/
-        if (A1 == A4 && (Math.abs(V1.getminutesdepart() - V2.getminutes_arrive()) < 15)){
+        if (A1 == A4 && (Math.abs(V1.getminutesdepart() - V2.getminutes_arrive()) < temps)){
             return true;
         }
         //A2 = A3 regarder heure de depart de 2 puis heure d'arrivée de 1
-        if (A2 == A3 && (Math.abs(V1.getminutes_arrive() - V2.getminutesdepart()) < 15)){
+        if (A2 == A3 && (Math.abs(V1.getminutes_arrive() - V2.getminutesdepart()) < temps)){
             return true;
         }
         
         if (A1 ==  A4 && A2 == A3){
-            if (Math.abs(V1.getminutesdepart() - V2.getminutesdepart()) < 15){
+            if (Math.abs(V1.getminutesdepart() - V2.getminutesdepart()) < temps){
                 return true;
             }
-            if (Math.abs(V1.getminutes_arrive() - V2.getminutes_arrive()) < 15){
+            if (Math.abs(V1.getminutes_arrive() - V2.getminutes_arrive()) < temps){
                 return true;
             }
         }
@@ -281,7 +281,7 @@ public class Main {
         double heure2 = V2.getminutesdepart() + (V2.getduree() * pourcentage2);
         
         
-        if (Math.abs(heure1 - heure2) < 15) {
+        if (Math.abs(heure1 - heure2) < temps) {
             return true; // Collision détectée
         }
         

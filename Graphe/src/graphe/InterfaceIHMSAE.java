@@ -36,11 +36,8 @@ import javax.swing.event.ChangeListener;
 import org.graphstream.graph.Graph;
 import org.jxmapviewer.VirtualEarthTileFactoryInfo;
 
-
-
-
-
 public class InterfaceIHMSAE extends JFrame {
+
     private static ListeVolsFrame LVF = null;
     private static int lastaction = 0;
     private static int lastcouleur = 0;
@@ -48,7 +45,7 @@ public class InterfaceIHMSAE extends JFrame {
     private static int lastheure = 0;
     private static JXMapViewer mapViewer;
     private static Set<MyWaypoint> waypoints;
-    
+
     private static boolean graphgood = false;
     private static Modele modele;
     private static CompoundPainter<JXMapViewer> compoundPainter;
@@ -80,11 +77,9 @@ public class InterfaceIHMSAE extends JFrame {
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
 
-        
         JMenuBar menuBar = new JMenuBar();
 
         // JMenu
-
         JMenu menu1 = new JMenu("About");
         menuBar.add(menu1);
         JMenu menu2 = new JMenu("Files");
@@ -97,9 +92,8 @@ public class InterfaceIHMSAE extends JFrame {
 
         JMenuItem aboutItem = new JMenuItem("Information");
         menu1.add(aboutItem);
-        
-        // JMenuItems Files
 
+        // JMenuItems Files
         JMenuItem loadAirport = new JMenuItem("Load Airports");
         menu2.add(loadAirport);
         JPopupMenu.Separator separator = new JPopupMenu.Separator();
@@ -112,15 +106,12 @@ public class InterfaceIHMSAE extends JFrame {
         menu2.add(loadGraphes);
 
         // JMenuItems Action
-
         JCheckBoxMenuItem enableKmax = new JCheckBoxMenuItem("K-max");
         menu3.add(enableKmax);
         JCheckBoxMenuItem enableColoring = new JCheckBoxMenuItem("Coloration");
         menu3.add(enableColoring);
 
         // JMenuItems Light Mode
-
-
         Color bgColor = Color.decode("#283C4F");
         getContentPane().setBackground(bgColor);
         compoundPainter = new CompoundPainter<>();
@@ -216,8 +207,7 @@ public class InterfaceIHMSAE extends JFrame {
         rc.gridx = 0;
         rc.gridy = 1;
         rightControlPanel.add(conflitsCheckbox, rc);
-        */
-
+         */
         JLabel kmaxLabel = new JLabel("K-max : ");
         kmaxLabel.setForeground(Color.WHITE);
         rc.gridx = 0;
@@ -241,19 +231,19 @@ public class InterfaceIHMSAE extends JFrame {
         rc.gridx = 0;
         rc.gridy = 1;
         rightControlPanel.add(colorationCheckbox, rc);
-        
+
         JLabel dureecolLabel = new JLabel("temps collision : ");
         dureecolLabel.setForeground(Color.WHITE);
         rc.gridx = 0;
         rc.gridy = 3;
         rc.anchor = GridBagConstraints.EAST;
         rightControlPanel.add(dureecolLabel, rc);
-        
-        dureecolision =  new JSpinner(new SpinnerNumberModel(15, 1, 60, 1));
+
+        dureecolision = new JSpinner(new SpinnerNumberModel(15, 1, 60, 1));
         rc.gridx = 1;
         rc.gridy = 3;
         rightControlPanel.add(dureecolision, rc);
-        
+
         gbc.gridx = 3;
         gbc.gridy = 0;
         gbc.gridheight = 4;
@@ -270,13 +260,13 @@ public class InterfaceIHMSAE extends JFrame {
         GridBagConstraints b = new GridBagConstraints();
         b.insets = new Insets(5, 5, 5, 5);
         b.fill = GridBagConstraints.HORIZONTAL;
-/*
+        /*
         JButton startButton = new JButton("Start");
         styleButton(startButton, bgColor);
         b.gridx = 1;
         b.gridy = 0;
         bottomPanel.add(startButton, b);
-*/
+         */
 
         JButton drawLinesButton = new JButton("Draw all Lines");
         styleButton(drawLinesButton, bgColor);
@@ -319,7 +309,7 @@ public class InterfaceIHMSAE extends JFrame {
         b.gridx = 1;
         b.gridy = 1;
         bottomPanel.add(algorithmComboBox, b);
-      /*
+        /*
         JLabel kmaxLabel = new JLabel("K-max : ");
         kmaxLabel.setForeground(Color.WHITE);
         b.gridx = 2;
@@ -332,8 +322,7 @@ public class InterfaceIHMSAE extends JFrame {
         b.gridy = 1;
         bottomPanel.add(kmaxSpinner, b);
 
-        */
-
+         */
 
         gbc.gridx = 1;
         gbc.gridy = 4;
@@ -358,7 +347,8 @@ public class InterfaceIHMSAE extends JFrame {
         });
 
         /**
-         *  * Cette fenêtre affiche le nom du logiciel, sa version et les développeurs, [informations du logiciel].
+         *  * Cette fenêtre affiche le nom du logiciel, sa version et les
+         * développeurs, [informations du logiciel].
          */
         aboutItem.addActionListener(new ActionListener() {
             @Override
@@ -396,16 +386,15 @@ public class InterfaceIHMSAE extends JFrame {
             }
         });
 
-
         graphstreambutton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (allgood){
+                if (allgood) {
                     Graph G2 = modele.getMain().getGraphStream(modele.getListeVolCarte());
-                    GraphStreamFrame framegraphstream = new GraphStreamFrame(G2,"Graph with flights and airports");
+                    GraphStreamFrame framegraphstream = new GraphStreamFrame(G2, "Graph with flights and airports");
                     framegraphstream.setVisible(true);
                 }
-                if(graphgood){
+                if (graphgood) {
                     Graph G1 = modele.getMain().getGraphStream(modele.getListeVolGraphe());
                     GraphStreamFrame framegraphstream = new GraphStreamFrame(G1, "simple graph");
                     framegraphstream.setVisible(true);
@@ -413,12 +402,10 @@ public class InterfaceIHMSAE extends JFrame {
             }
         });
 
-
-
         drawLinescouleurButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (allgood){
+                if (allgood) {
                     //regle a 1
                     openNumberDialog();
                 }
@@ -437,7 +424,7 @@ public class InterfaceIHMSAE extends JFrame {
         drawLinesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(allgood){
+                if (allgood) {
                     drawLinesAllVolsWithColoration();
                 }
 
@@ -468,39 +455,39 @@ public class InterfaceIHMSAE extends JFrame {
         colorationCheckbox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(allgood){
+                if (allgood) {
                     coloration();
                 }
             }
         });
-        
+
         statsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(allgood || graphgood){
+                if (allgood || graphgood) {
                     statisticDialog();
                 }
             }
         });
-        
+
         kmaxSpinner.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
                 int value = (int) ((JSpinner) e.getSource()).getValue();
-                if (allgood){
+                if (allgood) {
 
                     modele.getListeVolCarte().setkmax(value);
 
-                    if (modele.getListeVolCarte().havekmax()){
+                    if (modele.getListeVolCarte().havekmax()) {
                         coloration();
                     }
                 }
                 System.out.println("Valeur actuelle : " + value);
-                if (graphgood){
-                    
+                if (graphgood) {
+
                     modele.getListeVolGraphe().setkmax(value);
 
-                    if (modele.getListeVolGraphe().havekmax()){
+                    if (modele.getListeVolGraphe().havekmax()) {
                         coloration();
                     }
                 }
@@ -508,30 +495,28 @@ public class InterfaceIHMSAE extends JFrame {
             }
         });
 
-        
         kmaxCheckbox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (allgood){
+                if (allgood) {
                     if (kmaxCheckbox.isSelected()) {
                         modele.getListeVolCarte().sethavekmax(true);
 
                     } else {
                         modele.getListeVolCarte().sethavekmax(false);
-                        
+
                     }
 
                     coloration();
 
-
                 }
-                if(graphgood){
+                if (graphgood) {
                     if (kmaxCheckbox.isSelected()) {
                         modele.getListeVolGraphe().sethavekmax(true);
 
                     } else {
                         modele.getListeVolGraphe().sethavekmax(false);
-                        
+
                     }
                     coloration();
                 }
@@ -542,23 +527,17 @@ public class InterfaceIHMSAE extends JFrame {
             @Override
             public void stateChanged(ChangeEvent e) {
                 int value = (int) ((JSpinner) e.getSource()).getValue();
-                if (allgood){
+                System.out.println(modele.getListeVolCarte().getnbarrte());
+                if (allgood) {
 
-                    modele.getListeVolCarte().setkmax(value);
+                    modele.setListeVolCarte(modele.getMain().creationgraphe(modele.getListeVolCarte(), (int) dureecolision.getValue()));
+                    modele.setListeVolCarte(modele.getMain().FullGreedyColor(modele.getListeVolCarte()));
+                    modele.getListeVolCarte().setkmax((int) kmaxSpinner.getValue());
+                    coloration();
 
-                    if (modele.getListeVolCarte().havekmax()){
-                        coloration();
-                    }
                 }
                 System.out.println("Valeur actuelle : " + value);
-                if (graphgood){
-                    
-                    modele.getListeVolGraphe().setkmax(value);
-
-                    if (modele.getListeVolGraphe().havekmax()){
-                        coloration();
-                    }
-                }
+                System.out.println(modele.getListeVolCarte().getnbarrte());
 
             }
         });
@@ -573,7 +552,7 @@ public class InterfaceIHMSAE extends JFrame {
         add(exitButton, gbc);
 
         waypoints = new HashSet<>();
-        
+
         //pour tester les graphetest
         /*
         
@@ -599,30 +578,26 @@ public class InterfaceIHMSAE extends JFrame {
         
         Graph G2 = main.getGraphStream(listeVolGraphe);
         G2.display();
-        */
-
+         */
     }
 
     /**
-    * Ouvre un sélecteur de fichiers pour choisir un fichier d'aéroports.
-    */
-    
+     * Ouvre un sélecteur de fichiers pour choisir un fichier d'aéroports.
+     */
     private void openFileChooser() {
         JFileChooser fileChooser = new JFileChooser();
         int result = fileChooser.showOpenDialog(this);
         if (result == JFileChooser.APPROVE_OPTION) {
             File selectedFile = fileChooser.getSelectedFile();
             //loadAeroportFile(selectedFile);
-            try{
-                try{
+            try {
+                try {
                     modele.getMain().setAeroportlist(selectedFile);
-                }
-                catch(FichierTropVolumineux e){
+                } catch (FichierTropVolumineux e) {
                     System.err.println(e.getMessage());
                     JOptionPane.showMessageDialog(null, "The file is too big", "Please enter a valid file", JOptionPane.ERROR_MESSAGE);
                 }
-            }
-            catch(DonneeVolException e){
+            } catch (DonneeVolException e) {
                 System.err.println(e.getMessage());
                 JOptionPane.showMessageDialog(null, "Please enter a valid file", "Wrong airport data", JOptionPane.ERROR_MESSAGE);
             }
@@ -631,81 +606,73 @@ public class InterfaceIHMSAE extends JFrame {
 
         }
     }
-    
+
     /**
-    * Ouvre un sélecteur de fichiers pour choisir un fichier de vols.
-    */
-    
+     * Ouvre un sélecteur de fichiers pour choisir un fichier de vols.
+     */
     private void openFileChooserVols() {
         JFileChooser fileChooser = new JFileChooser();
         int result = fileChooser.showOpenDialog(this);
         if (result == JFileChooser.APPROVE_OPTION) {
             File selectedFile = fileChooser.getSelectedFile();
-            try{
-                try{
-                   System.out.println(modele.getListeVolCarte());
-                   modele.getMain().setvolaeroports(selectedFile); 
-                }
-                catch(FichierTropVolumineux e){
+            try {
+                try {
+                    System.out.println(modele.getListeVolCarte());
+                    modele.getMain().setvolaeroports(selectedFile);
+                } catch (FichierTropVolumineux e) {
                     System.err.println(e.getMessage());
                     JOptionPane.showMessageDialog(null, "File is too big", "Please enter a valid file", JOptionPane.ERROR_MESSAGE);
                 }
-            }
-            catch(DonneeVolException e){
+            } catch (DonneeVolException e) {
                 System.err.println(e.getMessage());
                 JOptionPane.showMessageDialog(null, "Please enter a valid file", "Wrong flights data", JOptionPane.ERROR_MESSAGE);
 
             }
             modele.setListeVolCarte(modele.getMain().getlisteVols());
-            modele.setListeVolCarte(modele.getMain().creationgraphe(modele.getListeVolCarte()));
+            modele.setListeVolCarte(modele.getMain().creationgraphe(modele.getListeVolCarte(), (int) dureecolision.getValue()));
             modele.setListeVolCarte(modele.getMain().FullGreedyColor(modele.getListeVolCarte()));
             modele.getListeVolCarte().setkmax((int) kmaxSpinner.getValue());
-            if(!graphgood){
+            if (!graphgood) {
                 setcolorlist();
             }
             allgood = true;
 
         }
     }
-    
+
     /**
-    * Ouvre un sélecteur de fichiers pour choisir un fichier de graphes.
-    */
+     * Ouvre un sélecteur de fichiers pour choisir un fichier de graphes.
+     */
     private void openFileChooserGraph() {
         JFileChooser fileChooser = new JFileChooser();
         int result = fileChooser.showOpenDialog(this);
         if (result == JFileChooser.APPROVE_OPTION) {
             File selectedFile = fileChooser.getSelectedFile();
             //loadAeroportFile(selectedFile);
-            try{
-                try{
-                   modele.setListeVolGraphe(modele.getMain().CreateGraphText(selectedFile)); 
-                }
-                catch(FichierTropVolumineux e){
+            try {
+                try {
+                    modele.setListeVolGraphe(modele.getMain().CreateGraphText(selectedFile));
+                } catch (FichierTropVolumineux e) {
                     System.err.println(e.getMessage());
                     JOptionPane.showMessageDialog(null, "File is too big", "Please enter a valid file", JOptionPane.ERROR_MESSAGE);
                 }
-            }
-            catch(DonneeVolException e){
+            } catch (DonneeVolException e) {
                 System.err.println(e.getMessage());
                 JOptionPane.showMessageDialog(null, "Veuillez saisir un fichier valide", "Wrong airports data", JOptionPane.ERROR_MESSAGE);
             }
             modele.setListeVolGraphe(modele.getMain().FullGreedyColor(modele.getListeVolGraphe()));
             modele.getListeVolGraphe().setkmax((int) kmaxSpinner.getValue());
-            if(!allgood){
+            if (!allgood) {
                 setcolorlist();
             }
             graphgood = true;
 
-
-
         }
     }
 
-
     /**
-    * Ajoute des marqueurs pour chaque aéroport de la liste des aéroports.
-    */
+     * Ajoute des marqueurs pour chaque aéroport de la liste des aéroports.
+     */
     private void addAirportMarkers() {
         if (modele.getListeAeroport() == null || modele.getListeAeroport().taillelisteaero() == 0) {
             System.out.println("Aucun aéroport à afficher.");
@@ -715,11 +682,11 @@ public class InterfaceIHMSAE extends JFrame {
         waypoints.clear();
         codeaero.clear();
         geoCondition.clear();
-        
+
         for (int i = 0; i < modele.getListeAeroport().taillelisteaero(); i++) {
             Aeroport aeroport = modele.getListeAeroport().getaeroport(i);
             GeoPosition position = new GeoPosition(aeroport.getlongitude(), aeroport.getlatitude());
-            waypoints.add(new MyWaypoint(aeroport.getcode(),position));
+            waypoints.add(new MyWaypoint(aeroport.getcode(), position));
             codeaero.add(aeroport.getcode());
             geoCondition.add(position);
         }
@@ -738,7 +705,7 @@ public class InterfaceIHMSAE extends JFrame {
         }
         compoundPainter = new CompoundPainter<>();
         lastaction = 1;
-        RoutePainter routePainter;  
+        RoutePainter routePainter;
         for (int i = 0; i < modele.getListeVolCarte().taille(); i++) {
             List<GeoPosition> positions = new ArrayList<>();
             Vol vol = modele.getListeVolCarte().getVolindice(i);
@@ -758,9 +725,9 @@ public class InterfaceIHMSAE extends JFrame {
             if (positionDepart != null && positionArrivee != null) {
                 positions.add(positionDepart);
                 positions.add(positionArrivee);
-                if (colorationCheckbox.isSelected()){
+                if (colorationCheckbox.isSelected()) {
                     routePainter = new RoutePainter(positions, colorList.get(vol.getcouleur() + 1));
-                }else{
+                } else {
                     routePainter = new RoutePainter(positions, Color.BLUE);
                 }
 
@@ -774,7 +741,7 @@ public class InterfaceIHMSAE extends JFrame {
         System.out.println("Les lignes entre les waypoints ont été dessinées avec coloration");
     }
 
-     /**
+    /**
      * Ouvre une boîte de dialogue pour saisir un numéro.
      */
     private void openNumberDialog() {
@@ -786,7 +753,7 @@ public class InterfaceIHMSAE extends JFrame {
         myPanel.add(numberField);
 
         int result = JOptionPane.showConfirmDialog(null, myPanel,
-                 "Veuillez saisir un numéro", JOptionPane.OK_CANCEL_OPTION);
+                "Veuillez saisir un numéro", JOptionPane.OK_CANCEL_OPTION);
         if (result == JOptionPane.OK_OPTION) {
             try {
                 int number = Integer.parseInt(numberField.getText());
@@ -802,8 +769,8 @@ public class InterfaceIHMSAE extends JFrame {
     }
 
     /**
-    * Ouvre une boîte de dialogue pour saisir une heure et une minute.
-    */
+     * Ouvre une boîte de dialogue pour saisir une heure et une minute.
+     */
     private void openHourMinuteDialog() {
         JPanel myPanel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
@@ -831,7 +798,7 @@ public class InterfaceIHMSAE extends JFrame {
         myPanel.add(minuteField, gbc);
 
         int result = JOptionPane.showConfirmDialog(null, myPanel,
-                 "Veuillez saisir l'heure et les minutes", JOptionPane.OK_CANCEL_OPTION);
+                "Veuillez saisir l'heure et les minutes", JOptionPane.OK_CANCEL_OPTION);
         if (result == JOptionPane.OK_OPTION) {
             try {
                 int heure = Integer.parseInt(heureField.getText());
@@ -886,12 +853,11 @@ public class InterfaceIHMSAE extends JFrame {
         JOptionPane.showMessageDialog(null, myPanel1, "Statistiques", JOptionPane.PLAIN_MESSAGE);
     }
 
-
     /**
-    * Dessine les lignes des vols ayant la couleur spécifiée.
-    *
-    * @param couleur La couleur des vols à dessiner.
-    */
+     * Dessine les lignes des vols ayant la couleur spécifiée.
+     *
+     * @param couleur La couleur des vols à dessiner.
+     */
     private static void drawLinesColorVolsWithColoration(int couleur) {
 
         if (waypoints.isEmpty()) {
@@ -905,7 +871,7 @@ public class InterfaceIHMSAE extends JFrame {
         for (int i = 0; i < modele.getListeVolCarte().taille(); i++) {
             List<GeoPosition> positions = new ArrayList<>();
             Vol vol = modele.getListeVolCarte().getVolindice(i);
-            if(vol.getcouleur() == couleur){
+            if (vol.getcouleur() == couleur) {
                 String codedepart = vol.getcodedepart();
                 String codearrivee = vol.getcodearrive();
                 GeoPosition positionDepart = null;
@@ -923,9 +889,9 @@ public class InterfaceIHMSAE extends JFrame {
                     positions.add(positionDepart);
                     positions.add(positionArrivee);
 
-                    if (colorationCheckbox.isSelected()){
+                    if (colorationCheckbox.isSelected()) {
                         routePainter = new RoutePainter(positions, colorList.get(vol.getcouleur() + 1));
-                    }else{
+                    } else {
                         routePainter = new RoutePainter(positions, Color.BLUE);
                     }
                     compoundPainter.addPainter(routePainter);
@@ -938,13 +904,13 @@ public class InterfaceIHMSAE extends JFrame {
         dessinerpoints();
         System.out.println("Les lignes entre les points de passage ont été tracées.");
     }
-    
+
     /**
-    * Dessine les lignes des vols ayant lieu à l'heure spécifiée.
-    *
-    * @param heure  L'heure des vols à dessiner.
-    * @param minute Les minutes des vols à dessiner.
-    */
+     * Dessine les lignes des vols ayant lieu à l'heure spécifiée.
+     *
+     * @param heure L'heure des vols à dessiner.
+     * @param minute Les minutes des vols à dessiner.
+     */
     private static void drawLinesHourVolsWithColoration(int heure, int minute) {
         if (waypoints.isEmpty()) {
             System.out.println("Aucun waypoint n'est disponible pour tracer les lignes.");
@@ -954,13 +920,13 @@ public class InterfaceIHMSAE extends JFrame {
         lastminute = minute;
         lastheure = heure;
         RoutePainter routePainter;
-        System.out.println("coloration avec horaire, couleurs max : "+ modele.getListeVolCarte().maxcouleur());
+        System.out.println("coloration avec horaire, couleurs max : " + modele.getListeVolCarte().maxcouleur());
         compoundPainter = new CompoundPainter<>();
         int minutes = heure * 60 + minute;
         for (int i = 0; i < modele.getListeVolCarte().taille(); i++) {
             List<GeoPosition> positions = new ArrayList<>();
             Vol vol = modele.getListeVolCarte().getVolindice(i);
-            if (vol.getminutesdepart() <= minutes && vol.getminutes_arrive() >= minutes){
+            if (vol.getminutesdepart() <= minutes && vol.getminutes_arrive() >= minutes) {
                 String codedepart = vol.getcodedepart();
                 String codearrivee = vol.getcodearrive();
                 GeoPosition positionDepart = null;
@@ -973,14 +939,14 @@ public class InterfaceIHMSAE extends JFrame {
                         positionArrivee = geoCondition.get(y);
                     }
                 }
-                
+
                 if (positionDepart != null && positionArrivee != null) {
                     positions.add(positionDepart);
                     positions.add(positionArrivee);
 
-                    if (colorationCheckbox.isSelected()){
+                    if (colorationCheckbox.isSelected()) {
                         routePainter = new RoutePainter(positions, colorList.get(vol.getcouleur() + 1));
-                    }else{
+                    } else {
                         routePainter = new RoutePainter(positions, Color.BLUE);
                     }
                     compoundPainter.addPainter(routePainter);
@@ -989,17 +955,17 @@ public class InterfaceIHMSAE extends JFrame {
                 }
             }
         }
-        
+
         dessinerpoints();
         System.out.println("Les lignes entre les waypoints ont été dessinées avec coloration");
     }
 
     /**
-    * Applique un style aux boutons.
-    *
-    * @param button  Le bouton à styliser.
-    * @param bgColor La couleur de fond du bouton.
-    */
+     * Applique un style aux boutons.
+     *
+     * @param button Le bouton à styliser.
+     * @param bgColor La couleur de fond du bouton.
+     */
     private void styleButton(JButton button, Color bgColor) {
         button.setBackground(bgColor);
         button.setForeground(Color.WHITE);
@@ -1008,23 +974,22 @@ public class InterfaceIHMSAE extends JFrame {
     }
 
     /**
-    * Applique un style aux cases à cocher.
-    *
-    * @param checkBox La case à cocher à styliser.
-    * @param bgColor  La couleur de fond de la case à cocher.
-    */
+     * Applique un style aux cases à cocher.
+     *
+     * @param checkBox La case à cocher à styliser.
+     * @param bgColor La couleur de fond de la case à cocher.
+     */
     private void styleCheckBox(JCheckBox checkBox, Color bgColor) {
         checkBox.setBackground(bgColor);
         checkBox.setForeground(Color.WHITE);
         checkBox.setOpaque(true);
     }
 
-
     /**
-    * Point d'entrée principal de l'application.
-    *
-    * @param args Les arguments de la ligne de commande.
-    */
+     * Point d'entrée principal de l'application.
+     *
+     * @param args Les arguments de la ligne de commande.
+     */
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
@@ -1035,10 +1000,10 @@ public class InterfaceIHMSAE extends JFrame {
     }
 
     /**
-    * Génère une couleur aléatoire.
-    *
-    * @return Une couleur aléatoire.
-    */
+     * Génère une couleur aléatoire.
+     *
+     * @return Une couleur aléatoire.
+     */
     private static Color getRandomColor() {
         int red = (int) (Math.random() * 256);
         int green = (int) (Math.random() * 256);
@@ -1048,42 +1013,42 @@ public class InterfaceIHMSAE extends JFrame {
     }
 
     /**
-    * Initialise la liste des couleurs avec des couleurs aléatoires.
-    */
-    private static void setcolorlist(){
+     * Initialise la liste des couleurs avec des couleurs aléatoires.
+     */
+    private static void setcolorlist() {
         for (int i = 0; i < 100; i++) {
             Color randomColor = getRandomColor();
             colorList.add(randomColor);
         }
     }
-    
+
     /**
-    * Dessine les points sur la carte.
-    */
-    public static void dessinerpoints(){
-        
+     * Dessine les points sur la carte.
+     */
+    public static void dessinerpoints() {
+
         WaypointPainter<MyWaypoint> wp = new WaypointRenderer();
         compoundPainter.addPainter(wp);
         wp.setWaypoints(waypoints);
         mapViewer.setOverlayPainter(compoundPainter);
-        if(!allgood){
+        if (!allgood) {
             for (MyWaypoint d : waypoints) {
                 JButton button = d.getButton();
                 button.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent ae) {
-                    Object[][] data;
-                    if(!allgood){
-                        data = new Object[0][0];
-                    }else{
-                        data = modele.getListeVolCarte().getlistvolsfromaero(d.getName());
+                    @Override
+                    public void actionPerformed(ActionEvent ae) {
+                        Object[][] data;
+                        if (!allgood) {
+                            data = new Object[0][0];
+                        } else {
+                            data = modele.getListeVolCarte().getlistvolsfromaero(d.getName());
+                        }
+
+                        LVF = null;
+                        LVF = new ListeVolsFrame(data, d.getName());
+                        LVF.setVisible(true);
+
                     }
-
-                    LVF = null;
-                    LVF = new ListeVolsFrame(data, d.getName());
-                    LVF.setVisible(true);
-
-                }
                 });
                 mapViewer.add(d.getButton());
             }
@@ -1095,22 +1060,22 @@ public class InterfaceIHMSAE extends JFrame {
     /**
      * Applique la coloration aux données.
      */
-    public static void coloration(){
+    public static void coloration() {
         if (allgood) { // Remplacer true par la condition allgood
 
             if (algorithmComboBox.getSelectedItem().equals("Glouton")) {
                 System.out.println("glouton");
-                modele.setListeVolCarte( modele.getMain().FullGreedyColor(modele.getListeVolCarte()));
+                modele.setListeVolCarte(modele.getMain().FullGreedyColor(modele.getListeVolCarte()));
             } else {
                 System.out.println("welsh");
                 modele.setListeVolCarte(modele.getMain().FullWelshPowell(modele.getListeVolCarte()));
             }
-            
-            if(lastaction ==  1){
+
+            if (lastaction == 1) {
                 drawLinesAllVolsWithColoration();
-            }else if(lastaction == 2){
+            } else if (lastaction == 2) {
                 drawLinesColorVolsWithColoration(lastcouleur);
-            }else if (lastaction == 3){
+            } else if (lastaction == 3) {
                 drawLinesHourVolsWithColoration(lastheure, lastminute);
             }
         }
@@ -1124,7 +1089,6 @@ public class InterfaceIHMSAE extends JFrame {
                 modele.setListeVolGraphe(modele.getMain().FullWelshPowell(modele.getListeVolGraphe()));
             }
         }
-
 
     }
 }
