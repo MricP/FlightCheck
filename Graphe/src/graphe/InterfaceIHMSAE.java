@@ -84,8 +84,6 @@ public class InterfaceIHMSAE extends JFrame {
         menuBar.add(menu1);
         JMenu menu2 = new JMenu("Files");
         menuBar.add(menu2);
-        JMenu menu3 = new JMenu("Actions");
-        menuBar.add(menu3);
         JCheckBoxMenuItem darkMode = new JCheckBoxMenuItem("Dark Mode");
         menuBar.add(darkMode);
         setJMenuBar(menuBar);
@@ -102,14 +100,8 @@ public class InterfaceIHMSAE extends JFrame {
         menu2.add(loadFlight);
         JPopupMenu.Separator separator1 = new JPopupMenu.Separator();
         menu2.add(separator1);
-        JMenuItem loadGraphes = new JMenuItem("Load Graphes");
+        JMenuItem loadGraphes = new JMenuItem("Load Graphs");
         menu2.add(loadGraphes);
-
-        // JMenuItems Action
-        JCheckBoxMenuItem enableKmax = new JCheckBoxMenuItem("K-max");
-        menu3.add(enableKmax);
-        JCheckBoxMenuItem enableColoring = new JCheckBoxMenuItem("Coloration");
-        menu3.add(enableColoring);
 
         // JMenuItems Light Mode
         Color bgColor = Color.decode("#283C4F");
@@ -220,13 +212,13 @@ public class InterfaceIHMSAE extends JFrame {
         rc.gridy = 0;
         rightControlPanel.add(kmaxCheckbox, rc);
 
-        colorationCheckbox = new JCheckBox("coloring");
+        colorationCheckbox = new JCheckBox("Coloring");
         styleCheckBox(colorationCheckbox, bgColor);
         rc.gridx = 0;
         rc.gridy = 1;
         rightControlPanel.add(colorationCheckbox, rc);
 
-        JLabel dureecolLabel = new JLabel("safety margin : ");
+        JLabel dureecolLabel = new JLabel("Safety Margin : ");
         dureecolLabel.setForeground(Color.WHITE);
         rc.gridx = 0;
         rc.gridy = 3;
@@ -339,7 +331,7 @@ public class InterfaceIHMSAE extends JFrame {
                 nameLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
                 JLabel versionLabel = new JLabel("Version: 1.0.0");
                 versionLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-                JLabel developersLabel = new JLabel("Credit: ROBIN, PETIT, PIRRERA");
+                JLabel developersLabel = new JLabel("Credit: MATHIEU, PETIT, PIRRERA");
                 developersLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
                 panel.add(Box.createRigidArea(new Dimension(0, 10))); // Espace
@@ -554,7 +546,7 @@ public class InterfaceIHMSAE extends JFrame {
                 }
             }
         });
-        
+         
         JButton exitButton = new JButton("Exit");
         styleButton(exitButton, Color.decode("#007BFF"));
         exitButton.addActionListener(e -> System.exit(0));
