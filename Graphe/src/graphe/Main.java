@@ -105,12 +105,6 @@ public class Main {
      * @return la liste de vols mise à jour avec les arêtes
      */
     public ListeVols creationgraphe(ListeVols liste, int temps){
-        /*
-        System.out.println(LV.getVolindice(3).toString());
-        System.out.println(LV.getVolindice(17).toString());
-        System.out.println(intersection(LV.getVolindice(3),LV.getVolindice(17)));
-        */
-        
         int taille = liste.taille();
         int gpt = 0;
         //System.out.println("taille  : "+ liste.taille());
@@ -136,41 +130,6 @@ public class Main {
     }
 
     
-    /**
-     * Crée un graphe statiquement à partir d'une liste de vols.
-     * @param liste la liste de vols
-     * @return la liste de vols mise à jour avec les arêtes
-     */
-    public static ListeVols creationgraphe_static(ListeVols liste){
-        /*
-        System.out.println(LV.getVolindice(3).toString());
-        System.out.println(LV.getVolindice(17).toString());
-        System.out.println(intersection(LV.getVolindice(3),LV.getVolindice(17)));
-        */
-        
-        int taille = liste.taille();
-        int gpt = 0;
-        //System.out.println("taille  : "+ liste.taille());
-        int cpt=0;
-        for (int i = 0; i< taille; i++){
-            for (int y=i+1; y < taille; y++){
-                cpt++;
-                if(intersection(LV.getVolindice(i),liste.getVolindice(y), 15)){
-                    gpt++;
-                    liste.getVolindice(i).addadjacent(liste.getVolindice(y));
-                    //System.out.println(liste.getVolindice(i).id+ "  :  "+ liste.getVolindice(y).id);
-                    liste.getVolindice(y).addadjacent(liste.getVolindice(i));
-                    
-                    liste.addaerrete();
-                    
-                }
-            }
-        }     
-        //System.out.println("compteur  : "+ cpt);
-        //System.out.println("nbarretes  : "+ gpt);
-        return liste;
-        
-    }
     
     /**
      * Vérifie si deux vols se croisent ou sont proches en temps et en espace.
@@ -289,71 +248,6 @@ public class Main {
            
     }
     
-    /**
-     * Crée un graphe à partir d'un fichier texte.
-     * @return la liste des vols générée à partir du fichier texte
-     */
-    public static ListeVols CreateGraphText_static(){
-        System.out.println("rentrez le chemin d'acces de votre graphe sous forme .txt:");
-        
-        String FilePath = "C:/Users/Aspect-PC/Desktop/SAE-GIT/sae_mathieu_petit_pirrera/DataTest/graph-test2.txt";
-        //String FilePath = "C:/Users/Aspect-PC/Desktop/SAE-IMH/sae_mathieu_petit_pirrera/DataTest/graph-test2.txt";
-        /*String FilePath = ent.nextLine();*/
-        
-        // Créer un objet File en utilisant le chemin du fichier
-        File file = new File(FilePath);
-        
-        // Vérifier si le fichier existe
-        if (!file.exists()) {
-            System.out.println("Le fichier n'existe pas.");
-            return null;
-        }else{
-            System.out.println("Le fichier existe .");
-        }
-        
-        // Déclarer un BufferedReader pour lire le fichier
-        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-            String line;
-            // Lire chaque ligne du fichier tant qu'il y en a
-            ListeVols LVol = new ListeVols();
-            int cpt = 0;
-            while ((line = reader.readLine()) != null) {
-                // Afficher chaque ligne lue
-                if (cpt ==0){
-                    int kmax = Integer.valueOf(line);
-                    LVol.setkmax(kmax);
-                    
-                    
-                }else if (cpt == 1){
-                    int nbsommets = Integer.valueOf(line);
-                    LVol.setnbarrete(nbsommets);
-                    for (int i =1; i <= nbsommets;i++){
-                        Vol Vol = new Vol(i);
-                        LVol.ajMembre(Vol);
-                    }
-                    
-                }else{
-                    String[] tab = line.split(" ");
-                    int x = Integer.valueOf(tab[0]);
-                    int y = Integer.valueOf(tab[1]);
-                    Vol Vol1 = LVol.getVolnumero(x);
-                    Vol Vol2 = LVol.getVolnumero(y);
-                    Vol1.addadjacent(Vol2);
-                    Vol2.addadjacent(Vol1);
-                    
-                    
-                }
-                /*System.out.println(line);*/
-                
-                cpt ++;
-            }
-            
-            return LVol;
-        } catch (IOException e) {
-            System.out.println("Erreur de lecture du fichier : " + e.getMessage());
-        }
-        return null;
-    }
         
     /**
      * Crée un graphe à partir du fichier texte fourni.
@@ -433,67 +327,15 @@ public class Main {
     
     
     /**
-     * Génère un graphe GraphStream à partir d'un objet ListeVols.
-     * @param liste l'objet ListeVols contenant les données des vols
-     * @return un objet Graph pour la visualisation
-     */ 
-    public static Graph getGraphStream_static(ListeVols liste) {
-        Graph graph = new MultiGraph("multi graphe");
-        ArrayList<String> couleurs = new ArrayList<String>();
-        
-        Random random = new Random();
-        
-        for (int i = 0; i < liste.maxcouleur(); i++) {
-            // Génération d'une couleur aléatoire
-            String couleur = String.format("#%02x%02x%02x", random.nextInt(256), random.nextInt(256), random.nextInt(256));
-            couleurs.add("fill-color: " + couleur + ";");
-        }
-        
-        for (int i = 1; i <= liste.taille(); i++) {
-            graph.addNode(Integer.toString(i));
-            /*System.out.println(liste.getVolnumero(i).getcouleur());*/
-            if(liste.getVolnumero(i).getcouleur()>= 1){
-                graph.getNode(Integer.toString(i)).addAttribute("ui.style", couleurs.get(liste.getVolnumero(i).getcouleur()-1));
-            }
-        }
-        
-        // Ajout des arêtes au graphe
-        int cpt =0;
-        for (int i = 1; i <= liste.taille(); i++) {
-            Vol v = liste.getVolnumero(i);
-            for (int y = 0; y < v.getnbadjacents(); y++) {
-                Vol v2 = v.getAdjacentindice(y);
-                if (!graph.getNode(Integer.toString(i)).hasEdgeBetween(Integer.toString(v2.getid()))) {
-                    graph.addEdge("edge_" + i + "_" + v2.getid(), Integer.toString(i), Integer.toString(v2.getid()));
-                    cpt++;
-                }
-            }
-        }
-        
-        return graph;
-    }
-    
-    /**
      * Calcule le diamètre du graphe.
      * @param liste l'objet ListeVols représentant le graphe
      * @return le diamètre du graphe
      */
     public double getDiametre(ListeVols liste){
-        Graph G = getGraphStream_static(liste);
+        Graph G = getGraphStream(liste);
         return org.graphstream.algorithm.Toolkit.diameter(G);
     }
-    
-    /**
-     * Méthode statique pour calculer le diamètre du graphe.
-     * @param liste l'objet ListeVols représentant le graphe
-     * @return le diamètre du graphe
-     */
-    public static double getDiametre_static(ListeVols liste){
-        Graph G = getGraphStream_static(liste);
-        return org.graphstream.algorithm.Toolkit.diameter(G);
-    }
-    
-    
+
     /**
      * Génère un graphe GraphStream à partir d'un objet ListeVols.
      * @param liste l'objet ListeVols contenant les données des vols
@@ -540,18 +382,7 @@ public class Main {
      */
     public void setvolaeroports(File file) throws DonneeVolException,FichierTropVolumineux {
         LV = new ListeVols();
-        /*
-        String FilePath;
-        File file;
-        // Chemin du fichier texte
-        System.out.println("rentrez le chemin d'acces de votre fichier de vols en format .csv:");
-        FilePath = "C:/Users/Aspect-PC/Desktop/SAE-GIT/sae_mathieu_petit_pirrera/DataTest/vol-test8.csv";
-        //FilePath = "C:/Users/Aspect-PC/Desktop/SAE-IMH/sae_mathieu_petit_pirrera/DataTest/vol-test8.csv";
         
-        
-        // Créer un objet File en utilisant le chemin du fichier
-        file = new File(FilePath);
-        */
         // Vérifier si le fichier existe
         if (!file.exists()) {
             System.out.println("Le fichier n'existe pas.");
@@ -580,65 +411,14 @@ public class Main {
         }
     }   
     
-    /**
-     * Méthode statique pour lire les données des vols à partir d'un chemin de fichier prédéfini et les stocker dans un objet ListeVols.
-     */
-    public static void setvolaeroports_static(){
-        String FilePath;
-        File file;
-        // Chemin du fichier texte
-        System.out.println("rentrez le chemin d'acces de votre fichier de vols en format .csv:");
-        FilePath = "C:/Users/Aspect-PC/Desktop/SAE-GIT/sae_mathieu_petit_pirrera/DataTest/vol-test8.csv";
-        //FilePath = "C:/Users/Aspect-PC/Desktop/SAE-IMH/sae_mathieu_petit_pirrera/DataTest/vol-test8.csv";
-        // Créer un objet File en utilisant le chemin du fichier
-        file = new File(FilePath);
-        
-        // Vérifier si le fichier existe
-        if (!file.exists()) {
-            System.out.println("Le fichier n'existe pas.");
-            return;
-        }else{
-            System.out.println("Le fichier existe .");
-        }
-        
-        // Déclarer un BufferedReader pour lire le fichier
-        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-            String line;
-            // Lire chaque ligne du fichier tant qu'il y en a
-            while ((line = reader.readLine()) != null) {
-                // Afficher chaque ligne lue
-                
-                /*System.out.println(line);*/
-                String[] tab = line.split(";");
-                Vol Vol = new Vol(tab[0],tab[1],tab[2],Integer.valueOf(tab[3]),Integer.valueOf(tab[4]),Integer.valueOf(tab[5]));
-                LV.ajMembre(Vol);
-            }
-            
-        } catch (IOException e) {
-            System.out.println("Erreur de lecture du fichier : " + e.getMessage());
-        }
-    }    
-        
-    
-    
     
     /**
      * Lit les données des aéroports à partir d'un fichier et les stocke dans la liste appropriée.
      * @param file le fichier contenant les données des aéroports
      */
     public void setAeroportlist(File file) throws DonneeVolException,FichierTropVolumineux{
-        /*
-        System.out.println("rentrez le chemin d'acces de votre fichier deaéroports sous forme .txt:");
         
-        String FilePath = "C:/Users/Aspect-PC/Desktop/SAE-GIT/sae_mathieu_petit_pirrera/DataTest/aeroports.txt";
-        //String FilePath = "C:/Users/Aspect-PC/Desktop/SAE-IMH/sae_mathieu_petit_pirrera/DataTest/aeroports.txt";
-        
-        
-        // Créer un objet File en utilisant le chemin du fichier
-        File file = new File(FilePath);
-        */
         // Vérifier si le fichier existe
-        
         if (!file.exists()) {
             System.out.println("Le fichier n'existe pas.");
             return;
@@ -669,173 +449,7 @@ public class Main {
             System.out.println("Erreur de lecture du fichier : " + e.getMessage());
         }
     }
-    
-    /**
-     * Méthode statique pour lire les données des aéroports à partir d'un chemin de fichier prédéfini et les stocker dans la liste appropriée.
-     */
-    public static void setAeroportlist_static(){
-        System.out.println("rentrez le chemin d'acces de votre fichier deaéroports sous forme .txt:");
-        String filtePath;
-        String FilePath = "C:/Users/Aspect-PC/Desktop/SAE-GIT/sae_mathieu_petit_pirrera/DataTest/aeroports.txt";
-        /*String FilePath = ent.nextLine();*/
-        
-        // Créer un objet File en utilisant le chemin du fichier
-        File file = new File(FilePath);
-        
-        // Vérifier si le fichier existe
-        if (!file.exists()) {
-            System.out.println("Le fichier n'existe pas.");
-            return;
-        }else{
-            System.out.println("Le fichier existe .");
-        }
-        
-        // Déclarer un BufferedReader pour lire le fichier
-        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-            String line;
-            // Lire chaque ligne du fichier tant qu'il y en a
-            while ((line = reader.readLine()) != null) {
-                // Afficher chaque ligne lue
-                
-                /*System.out.println(line);*/
-                String[] tab = line.split(";");
-                Aeroport Aero = new Aeroport(tab[0],tab[1],Integer.valueOf(tab[2]),Integer.valueOf(tab[3]),Integer.valueOf(tab[4]),tab[5],Integer.valueOf(tab[6]),Integer.valueOf(tab[7]),Integer.valueOf(tab[8]),tab[9]);
-                L.ajAeroport(Aero);
-            }
-        } catch (IOException e) {
-            System.out.println("Erreur de lecture du fichier : " + e.getMessage());
-        }
-    }
-    
-    /**
-     * Méthode principale pour exécuter le programme.
-     * @param args les arguments de la ligne de commande
-     */
-    public static void main(String[] args) {
-        Scanner ent = new Scanner(System.in);
-        
-        
-        setAeroportlist_static();
-        setvolaeroports_static();
-        
-        LV  = creationgraphe_static(LV);
-        
-        
-        //System.out.println("feur");
-        LV.WelshPowell();
-        //System.out.println(LV.goodcoloration());
-        //System.out.println("feur");
-        
-        //System.out.println("feur");
-        //System.out.println(LV.maxcouleur());
-        LV.setcouleurdefault();
-        
-        
-        
-        LV.GreedyColor();
-        //System.out.println(LV.goodcoloration());
-        //System.out.println("feur");
-        
-        //System.out.println("feur");
-        //System.out.println(LV.maxcouleur());
-        LV.setcouleurdefault();
-        
-        LV.Dsatur();
-        //System.out.println(LV.goodcoloration());
-        //System.out.println("feur");
-        
-        //System.out.println("fedfvergergr");
-        //System.out.println(LV.maxcouleur());
-        
-        
-        
-        /*System.out.println(intersection(LV.accesMembre("AF000090"),LV.accesMembre("AF000132")));*/
-        
-        
-        //System.out.println("nbarretes : "+ LV.getnbarrte());
-        //System.out.println("degre moyen : "+LV.getdegremoyen());
-        //System.out.println("nb composantes  : "+LV.getnbcomposante());
-        //System.out.println(LV.getnbcomposantede(4));
-        
-        
-        
-        
-        //System.out.println("diametre : "+ LV.getdiametre());
-        
-        
-        /*
-        LV.shownumcomposante();
-        */
-        
-        
-        
-        
-        
-        
-        //Partie graph-test
-        
-        LL = CreateGraphText_static();
-        
-        
-        
-        
-        
-        
-        LL.tostring();
-        //System.out.println("nbarretes : "+ LL.getnbarrte());
-        //System.out.println("degre moyen : "+LL.getdegremoyen());
-        //System.out.println("nb composantes  : "+LL.getnbcomposante());
-        
-        LL.Dsatur();
-        //System.out.println(LL.goodcoloration());
-        //System.out.println("feur");
-        
-        //System.out.println("fedfvergergr");
-        //System.out.println("nb de couleurs : "+LL.maxcouleur());
-        //System.out.println("kmax :  "+ LL.getkmax());
-        LL.setcouleurdefault();
-        
-        LL.WelshPowell();
-        //System.out.println("nb de couleurs : "+LL.maxcouleur());
-        //System.out.println(LL.taille());
-        //System.out.println(LL.getnbarrte());
-        
-        /*
-        LL.setcouleurdefault();
-        System.out.println("default   "+LL.getnbconflit());
-        LL = descent(LL);
-        */
-                
-        /*
-        LL.setcouleurdefault();
-        LL.MAXWelshPowell();
-        System.out.println("MAX  "+LL.getnbconflit());
-        */
-        LL.setcouleurdefault();
-        
-        
-        LL = FullGreedyColor_static(LL);
-        LL.adresscouleurs(LL.getcouleurs());
-        LL.MAXWelshPowell();
-        /*
-        LL.setcouleurdefault();
-        LL.MAXWelshPowell();
-        */
-        LL.adresscouleurs(LL.getcouleurs());
-        //System.out.println(LL.goodcoloration());
-        
-        Graph G = getGraphStream_static(LL);
-        //System.out.println(LL.getnbconflit());
-        //System.out.println(LL.goodcoloration());
-        
-                
-        //System.out.println(LL.getdiametre());
-//      //System.out.println(org.graphstream.algorithm.Toolkit.diameter(G));
-        //System.out.println(LL.maxcouleur());
-        
-        G.display();
-        
-    }
+
     
     /**
      * Applique l'algorithme de coloration LRF (Largest First) de manière répétitive pour obtenir une coloration optimale.
@@ -1016,75 +630,11 @@ public class Main {
         int nbComposantes = list.getnbcomposante();
         int nbNoeuds = list.taille();
         int nbAretes = list.getnbarrte();
-        double diametre = getDiametre_static(list); // Assurez-vous que cette méthode existe et fonctionne
+        double diametre = getDiametre(list); // Assurez-vous que cette méthode existe et fonctionne
         int nbConflits = list.getnbconflit();
 
         return new Statistiques(degreMoyen, nbComposantes, nbNoeuds, nbAretes, diametre, nbConflits);
     }
-    
-    /**
-     * Applique l'algorithme de coloration gourmande de manière exhaustive pour trouver la coloration optimale (statique).
-     *
-     * @param list La liste de vols à colorier.
-     * @return La liste de vols avec la coloration optimale trouvée.
-     */
-    public static ListeVols FullGreedyColor_static(ListeVols list){
-        
-        int minconflits = Integer.MAX_VALUE;
-        ArrayList<Integer> best = list.getcouleurs();
-        int mincouleur = Integer.MAX_VALUE;
-        
-        for (int y =0;y<list.getArraylist().size() * 9;y++){
-            list.setcouleurdefault();
-            Collections.shuffle(list.getArraylist());
-            list.GreedyColor();
-            if ((list.maxcouleur() < mincouleur) || (list.maxcouleur() == mincouleur && list.getnbconflit() < minconflits)){
-                mincouleur = list.maxcouleur();
-                //System.out.println("min " +mincouleur);
-                best = list.getcouleurs();
-                if (mincouleur == list.getkmax()){
-                    minconflits = list.getnbconflit();
-                }
-            }
-            
-        }
-        list.adresscouleurs(best);
-        System.out.println("fin couleur min " +list.maxcouleur());
-        System.out.println("fin nb conflits  " +list.getnbconflit());
-        //System.out.println("fin minconflits  " +minconflits);
-        
-        return list;
-        
-    }
-    
-    /**
-    * Crée un fichier CSV nommé "colo-eval.csv" contenant les informations de coloration des vols.
-    * Chaque ligne du fichier CSV correspond à un vol et contient son identifiant et sa couleur, séparés par un point-virgule.
-    *
-    * @param liste La liste des vols à écrire dans le fichier CSV.
-    */
-    public static void createcsv(ListeVols liste){
-        String csvFile = "colo-eval.csv";
-        String delimiter = ";";
-        
-        try (FileWriter fileWriter = new FileWriter(csvFile);
-             PrintWriter printWriter = new PrintWriter(fileWriter)) {
-
-            
-            for (int i=1; i <= liste.taille();i++){
-                Vol vol = liste.accesMembrenum(i);
-                printWriter.println(vol.getid() + delimiter + vol.getcouleur());
-                
-            }
-            // Écrire les données des vols
-            System.out.println("Fichier CSV créé avec succès.");
-            System.out.println("Chemin absolu : " + new java.io.File(csvFile).getAbsolutePath());
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    
     
     
 }

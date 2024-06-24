@@ -42,10 +42,10 @@ public class CSVcolorationmaker {
                 public void accept(Path path) {
                     String fileName = path.getFileName().toString();
                     try {
-                        // Écrire le numéro de ligne et le nom du fichier dans le fichier CSV
+                        
                         
                         try{
-                            //list = main.CreateGraphText(path.toFile());
+                           
                             
                             list1 = main.CreateGraphText(path.toFile());
                             list2 = main.CreateGraphText(path.toFile());
@@ -59,7 +59,6 @@ public class CSVcolorationmaker {
                             Logger.getLogger(CSVcolorationmaker.class.getName()).log(Level.SEVERE, null, ex);
                         }
                         
-                        //list = main.FULL_LRF(list);
                         
                         
                         list1 = main.DSaturFull(list1);
@@ -74,9 +73,6 @@ public class CSVcolorationmaker {
                         }
                         
                         
-                        //list4 = main.FullGreedyColor(list4);
-                        
-                        
                         if(list1.getnbconflit() <= list2.getnbconflit() && list1.getnbconflit() <= list3.getnbconflit() && list1.getnbconflit() <= list4.getnbconflit() ){
                             list = list1;
                         }else if( list2.getnbconflit() <= list3.getnbconflit() && list2.getnbconflit() <= list4.getnbconflit() ){
@@ -87,44 +83,6 @@ public class CSVcolorationmaker {
                             list = list4;
                         }
                         
-                        //feur
-                        /*
-                         if(list1.getnbconflit() <= list2.getnbconflit() && list1.getnbconflit() <= list3.getnbconflit()){
-                            list = list1;
-                        }else if( list2.getnbconflit() <= list3.getnbconflit()){
-                            list = list2;
-                        }else{
-                            list = list3;
-                        }
-                        */
-                        
-                        /*
-                        if (list1.getnbconflit() <= list2.getnbconflit() &&
-                            list1.getnbconflit() <= list3.getnbconflit() &&
-                            list1.getnbconflit() <= list4.getnbconflit() &&
-                            list1.getnbconflit() <= list5.getnbconflit()) {
-                            list = list1;
-                        } else if (list2.getnbconflit() <= list3.getnbconflit() &&
-                                   list2.getnbconflit() <= list4.getnbconflit() &&
-                                   list2.getnbconflit() <= list5.getnbconflit()) {
-                            list = list2;
-                        } else if (list3.getnbconflit() <= list4.getnbconflit() &&
-                                   list3.getnbconflit() <= list5.getnbconflit()) {
-                            list = list3;
-                        } else if (list4.getnbconflit() <= list5.getnbconflit()) {
-                            list = list4;
-                        } else {
-                            list = list5;
-                        }
-                        */
-                        
-                        /*
-                        if (list1.getnbconflit() <= list2.getnbconflit()){
-                            list = list1;
-                        }else{
-                            list = list2;
-                        }
-                        */
                         writer.append(fileName + ";" + list.getnbconflit()).append("\n") ;
                         createTextFileWithFirstLine(path.toFile(), lineNumber);
                         lineNumber++; // Incrémenter le numéro de ligne

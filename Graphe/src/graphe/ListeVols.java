@@ -349,9 +349,9 @@ public class ListeVols {
             while (i < tab.size()) {
                 if (tab.get(i).getcouleur() == -1) {
                     if (havekmax){
-                        couleur = tab.get(i).zzz(kmax);
+                        couleur = tab.get(i).firstcoloravailable(kmax);
                     }else{
-                        couleur = tab.get(i).zzz(0);
+                        couleur = tab.get(i).firstcoloravailable(0);
                     }
                     tab.get(i).setcouleur(couleur);
                 }

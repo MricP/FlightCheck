@@ -198,6 +198,6 @@ public class VolTest {
     public void zzzTest(){
         vol.addadjacent(vol2);
         vol2.setcouleur(2);
-        assertEquals(1, vol.zzz(3));
+        assertEquals(1, vol.firstcoloravailable(3));
     }
 }

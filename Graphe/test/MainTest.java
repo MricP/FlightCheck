@@ -9,7 +9,6 @@ import graphe.FichierTropVolumineux;
 import graphe.ListeAeroport;
 import graphe.ListeVols;
 import graphe.Main;
-import static graphe.Main.getGraphStream_static;
 import graphe.Statistiques;
 import graphe.Vol;
 import java.io.File;
@@ -63,13 +62,13 @@ public class MainTest {
     public void testCreationGraphe() {
         testListeVols.ajMembre(v1);
         testListeVols.ajMembre(v2);
-        ListeVols graphe = main.creationgraphe(testListeVols);
+        ListeVols graphe = main.creationgraphe(testListeVols, 15);
         assertEquals(2, graphe.taille());
     }
 
     @Test
     public void testIntersection() {
-        assertFalse(Main.intersection(v1, v2));
+        assertFalse(Main.intersection(v1, v2, 15));
     }
 
     @Test
@@ -78,7 +77,7 @@ public class MainTest {
         v2.setcouleur(2);
         testListeVols.ajMembre(v1);
         testListeVols.ajMembre(v2);
-        ListeVols graphe = main.creationgraphe(testListeVols);
+        ListeVols graphe = main.creationgraphe(testListeVols, 15);
         main.setlistevols(graphe);
         Graph graph = main.getGraphStream(graphe);
         assertNotNull(graphe);
@@ -109,7 +108,7 @@ public class MainTest {
 
     @Test
     public void testGetDiametre() {
-        ListeVols graphe = main.creationgraphe(testListeVols);
+        ListeVols graphe = main.creationgraphe(testListeVols, 15);
         double diametre = main.getDiametre(graphe);
         assertTrue(diametre > 0);
     }

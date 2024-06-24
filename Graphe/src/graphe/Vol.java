@@ -467,7 +467,7 @@ public class Vol {
      * @param kmax le nombre maximal de couleurs.
      * @return l'indice de la première couleur disponible.
      */
-    public int zzz(int kmax) {
+    public int firstcoloravailable(int kmax) {
         //System.out.println("1");
         if(kmax == 0){
             return 1;
