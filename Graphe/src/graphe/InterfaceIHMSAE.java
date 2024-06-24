@@ -305,7 +305,7 @@ public class InterfaceIHMSAE extends JFrame {
         b.anchor = GridBagConstraints.EAST;
         bottomPanel.add(algorithmLabel, b);
 
-        algorithmComboBox = new JComboBox<>(new String[]{"Welsh et Powell", "Glouton"});
+        algorithmComboBox = new JComboBox<>(new String[]{"Welsh et Powell", "Glouton", "Dsatur", "LFR"});
         b.gridx = 1;
         b.gridy = 1;
         bottomPanel.add(algorithmComboBox, b);
@@ -529,7 +529,7 @@ public class InterfaceIHMSAE extends JFrame {
                 int value = (int) ((JSpinner) e.getSource()).getValue();
                 System.out.println(modele.getListeVolCarte().getnbarrte());
                 if (allgood) {
-
+                    
                     modele.setListeVolCarte(modele.getMain().creationgraphe(modele.getListeVolCarte(), (int) dureecolision.getValue()));
                     modele.setListeVolCarte(modele.getMain().FullGreedyColor(modele.getListeVolCarte()));
                     modele.getListeVolCarte().setkmax((int) kmaxSpinner.getValue());
@@ -539,6 +539,46 @@ public class InterfaceIHMSAE extends JFrame {
                 System.out.println("Valeur actuelle : " + value);
                 System.out.println(modele.getListeVolCarte().getnbarrte());
 
+            }
+        });
+        
+        algorithmComboBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (allgood) { 
+                    modele.getListeVolCarte().setcouleurdefault();
+                    if (algorithmComboBox.getSelectedItem().equals("Glouton")) {
+                        System.out.println("glouton");
+                        modele.setListeVolCarte(modele.getMain().FullGreedyColor(modele.getListeVolCarte()));
+                    } else if (algorithmComboBox.getSelectedItem().equals("Glouton")){
+                        System.out.println("welsh");
+                        modele.setListeVolCarte(modele.getMain().FullWelshPowell(modele.getListeVolCarte()));
+                    } else if (algorithmComboBox.getSelectedItem().equals("Glouton")){
+                        System.out.println("Dsatur");
+                        modele.setListeVolCarte(modele.getMain().DSaturFull(modele.getListeVolCarte()));
+                    } else {
+                        System.out.println("LFR");
+                        modele.setListeVolCarte(modele.getMain().FULL_LRF(modele.getListeVolCarte()));
+                    }
+                    coloration();
+                    
+                }
+                if (graphgood) { // Remplacer true par la condition allgood
+                    modele.getListeVolGraphe().setcouleurdefault();
+                    if (algorithmComboBox.getSelectedItem().equals("Glouton")) {
+                        System.out.println("glouton");
+                        modele.setListeVolGraphe(modele.getMain().FullGreedyColor(modele.getListeVolGraphe()));
+                    } else if (algorithmComboBox.getSelectedItem().equals("Glouton")){
+                        System.out.println("welsh");
+                        modele.setListeVolGraphe(modele.getMain().FullWelshPowell(modele.getListeVolGraphe()));
+                    } else if (algorithmComboBox.getSelectedItem().equals("Glouton")){
+                        System.out.println("Dsatur");
+                        modele.setListeVolGraphe(modele.getMain().DSaturFull(modele.getListeVolGraphe()));
+                    } else {
+                        System.out.println("LFR");
+                        modele.setListeVolGraphe(modele.getMain().FULL_LRF(modele.getListeVolGraphe()));
+                    }
+                }
             }
         });
         
@@ -655,10 +695,12 @@ public class InterfaceIHMSAE extends JFrame {
                 } catch (FichierTropVolumineux e) {
                     System.err.println(e.getMessage());
                     JOptionPane.showMessageDialog(null, "File is too big", "Please enter a valid file", JOptionPane.ERROR_MESSAGE);
+                    return;
                 }
             } catch (DonneeVolException e) {
                 System.err.println(e.getMessage());
-                JOptionPane.showMessageDialog(null, "Veuillez saisir un fichier valide", "Wrong airports data", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Veuillez saisir un fichier valide", "Wrong graph data", JOptionPane.ERROR_MESSAGE);
+                return;
             }
             modele.setListeVolGraphe(modele.getMain().FullGreedyColor(modele.getListeVolGraphe()));
             modele.getListeVolGraphe().setkmax((int) kmaxSpinner.getValue());
@@ -826,10 +868,12 @@ public class InterfaceIHMSAE extends JFrame {
             btnFlight.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
+                    JOptionPane.getRootFrame().dispose();
                     Statistiques stats = modele.getMain().calculerStatistiques(modele.getListeVolCarte());
                     StatisticsFrame statsFrame = new StatisticsFrame(stats, "flights and airports flight");
+                    
                     statsFrame.setVisible(true);
-                    JOptionPane.getRootFrame().dispose();
+                    
                 }
             });
         }
@@ -842,10 +886,11 @@ public class InterfaceIHMSAE extends JFrame {
             btnFlight1.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
+                    JOptionPane.getRootFrame().dispose();
                     Statistiques stats = modele.getMain().calculerStatistiques(modele.getListeVolGraphe());
                     StatisticsFrame statsFrame = new StatisticsFrame(stats, "Simple Graphe");
                     statsFrame.setVisible(true);
-                    JOptionPane.getRootFrame().dispose();
+                    
                 }
             });
         }
@@ -959,7 +1004,7 @@ public class InterfaceIHMSAE extends JFrame {
         dessinerpoints();
         System.out.println("Les lignes entre les waypoints ont été dessinées avec coloration");
     }
-
+    
     /**
      * Applique un style aux boutons.
      *
@@ -972,7 +1017,7 @@ public class InterfaceIHMSAE extends JFrame {
         button.setOpaque(true);
         button.setBorderPainted(false);
     }
-
+    
     /**
      * Applique un style aux cases à cocher.
      *
@@ -1060,17 +1105,24 @@ public class InterfaceIHMSAE extends JFrame {
     /**
      * Applique la coloration aux données.
      */
+    
     public static void coloration() {
         if (allgood) { // Remplacer true par la condition allgood
-
+            modele.getListeVolCarte().setcouleurdefault();
             if (algorithmComboBox.getSelectedItem().equals("Glouton")) {
                 System.out.println("glouton");
                 modele.setListeVolCarte(modele.getMain().FullGreedyColor(modele.getListeVolCarte()));
-            } else {
+            } else if (algorithmComboBox.getSelectedItem().equals("Glouton")){
                 System.out.println("welsh");
                 modele.setListeVolCarte(modele.getMain().FullWelshPowell(modele.getListeVolCarte()));
+            } else if (algorithmComboBox.getSelectedItem().equals("Glouton")){
+                System.out.println("Dsatur");
+                modele.setListeVolCarte(modele.getMain().DSaturFull(modele.getListeVolCarte()));
+            } else {
+                System.out.println("LFR");
+                modele.setListeVolCarte(modele.getMain().FULL_LRF(modele.getListeVolCarte()));
             }
-
+            
             if (lastaction == 1) {
                 drawLinesAllVolsWithColoration();
             } else if (lastaction == 2) {
@@ -1080,13 +1132,19 @@ public class InterfaceIHMSAE extends JFrame {
             }
         }
         if (graphgood) { // Remplacer true par la condition allgood
-
+            modele.getListeVolGraphe().setcouleurdefault();
             if (algorithmComboBox.getSelectedItem().equals("Glouton")) {
                 System.out.println("glouton");
                 modele.setListeVolGraphe(modele.getMain().FullGreedyColor(modele.getListeVolGraphe()));
-            } else {
+            } else if (algorithmComboBox.getSelectedItem().equals("Glouton")){
                 System.out.println("welsh");
                 modele.setListeVolGraphe(modele.getMain().FullWelshPowell(modele.getListeVolGraphe()));
+            } else if (algorithmComboBox.getSelectedItem().equals("Glouton")){
+                System.out.println("Dsatur");
+                modele.setListeVolGraphe(modele.getMain().DSaturFull(modele.getListeVolGraphe()));
+            } else {
+                System.out.println("LFR");
+                modele.setListeVolGraphe(modele.getMain().FULL_LRF(modele.getListeVolGraphe()));
             }
         }
 

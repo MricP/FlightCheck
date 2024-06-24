@@ -31,7 +31,7 @@ public class StatisticsFrame extends JFrame {
         
         Color bgColor = Color.decode("#283C4F");
         getContentPane().setBackground(bgColor);
-
+        
         JButton exitButton = new JButton("Exit");
         exitButton.setBackground(Color.decode("#007BFF"));
         exitButton.setForeground(Color.WHITE);

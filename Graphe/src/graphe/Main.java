@@ -274,6 +274,19 @@ public class Main {
             
         }
         
+        try {
+            if (estFichierTxt(file) && contientSeulementChiffresEtEspaces(file)) {
+                System.out.println("Le fichier ne contient que des caractères chiffrés.");
+            } else {
+                System.out.println("Le fichier contient des caractères non chiffrés ou n'est pas un fichier texte valide.");
+                throw new DonneeVolException(file);
+                
+            }
+        } catch (IOException e) {
+            System.out.println("Une erreur s'est produite lors de la lecture du fichier : " + e.getMessage());
+            throw new DonneeVolException(file);
+        }
+        int nbsommets = 0;
         // Déclarer un BufferedReader pour lire le fichier
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             String line;
@@ -289,7 +302,7 @@ public class Main {
                     
                     
                 }else if (cpt == 1){
-                    int nbsommets = Integer.valueOf(line);
+                    nbsommets = Integer.valueOf(line);
                     LVol.setnbarrete(nbsommets);
                     for (int i =1; i <= nbsommets;i++){
                         Vol Vol = new Vol(i);
@@ -298,14 +311,20 @@ public class Main {
                     
                 }else{
                     String[] tab = line.split(" ");
-                    if(tab.length > 2){
+                    if(tab.length != 2){
                         throw new DonneeVolException(file);
                     }
                     if(file.length() > (1000000000 * 10)){
                         throw new FichierTropVolumineux();
                     }
                     int x = Integer.valueOf(tab[0]);
+                    if(0 > x || nbsommets < x){
+                        throw new DonneeVolException(file);
+                    }
                     int y = Integer.valueOf(tab[1]);
+                    if(0 > y || nbsommets < y){
+                        throw new DonneeVolException(file);
+                    }
                     Vol Vol1 = LVol.getVolnumero(x);
                     Vol Vol2 = LVol.getVolnumero(y);
                     Vol1.addadjacent(Vol2);
@@ -323,8 +342,27 @@ public class Main {
             System.out.println("Erreur de lecture du fichier : " + e.getMessage());
         }
         return null;
+        
+        
+        
     }
     
+    public static boolean estFichierTxt(File fichier) {
+        // Vérifie si le fichier existe, s'il est un fichier et s'il se termine par .txt
+        return fichier.exists() && fichier.isFile() && fichier.getName().toLowerCase().endsWith(".txt");
+    }
+
+    public static boolean contientSeulementChiffresEtEspaces(File fichier) throws IOException {
+        try (BufferedReader br = new BufferedReader(new FileReader(fichier))) {
+            int caractere;
+            while ((caractere = br.read()) != -1) {
+                if (!Character.isDigit(caractere) && !Character.isWhitespace(caractere)) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
     
     /**
      * Calcule le diamètre du graphe.
