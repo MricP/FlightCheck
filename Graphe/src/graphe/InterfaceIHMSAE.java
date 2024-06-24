@@ -201,13 +201,6 @@ public class InterfaceIHMSAE extends JFrame {
         rc.insets = new Insets(5, 5, 5, 5);
         rc.fill = GridBagConstraints.HORIZONTAL;
 
-        /*
-        JCheckBox conflitsCheckbox = new JCheckBox("conflits");
-        styleCheckBox(conflitsCheckbox, bgColor);
-        rc.gridx = 0;
-        rc.gridy = 1;
-        rightControlPanel.add(conflitsCheckbox, rc);
-         */
         JLabel kmaxLabel = new JLabel("K-max : ");
         kmaxLabel.setForeground(Color.WHITE);
         rc.gridx = 0;
@@ -260,13 +253,6 @@ public class InterfaceIHMSAE extends JFrame {
         GridBagConstraints b = new GridBagConstraints();
         b.insets = new Insets(5, 5, 5, 5);
         b.fill = GridBagConstraints.HORIZONTAL;
-        /*
-        JButton startButton = new JButton("Start");
-        styleButton(startButton, bgColor);
-        b.gridx = 1;
-        b.gridy = 0;
-        bottomPanel.add(startButton, b);
-         */
 
         JButton drawLinesButton = new JButton("Draw all Lines");
         styleButton(drawLinesButton, bgColor);
@@ -309,20 +295,6 @@ public class InterfaceIHMSAE extends JFrame {
         b.gridx = 1;
         b.gridy = 1;
         bottomPanel.add(algorithmComboBox, b);
-        /*
-        JLabel kmaxLabel = new JLabel("K-max : ");
-        kmaxLabel.setForeground(Color.WHITE);
-        b.gridx = 2;
-        b.gridy = 1;
-        b.anchor = GridBagConstraints.EAST;
-        bottomPanel.add(kmaxLabel, b);
-
-        JSpinner kmaxSpinner = new JSpinner(new SpinnerNumberModel(3, 1, 100, 1));
-        b.gridx = 3;
-        b.gridy = 1;
-        bottomPanel.add(kmaxSpinner, b);
-
-         */
 
         gbc.gridx = 1;
         gbc.gridy = 4;
@@ -592,33 +564,6 @@ public class InterfaceIHMSAE extends JFrame {
         add(exitButton, gbc);
 
         waypoints = new HashSet<>();
-
-        //pour tester les graphetest
-        /*
-        
-        String FilePath = "C:/Users/Robi6/OneDrive/Bureau/DataTest/graph-test15.txt";
-        //C:/Users/Emric/OneDrive/Bureau/S2/SaeFinal/sae_mathieu_petit_pirrera/DataTest/vol-test8.csv
-        File file = new File(FilePath);
-        Main main= new Main();
-        ListeVols listeVolGraphe;
-        try{
-            listeVolGraphe = main.CreateGraphText(file);
-        }catch(Exception e){
-            listeVolGraphe = new ListeVols();
-        }
-        //listeVolGraphe = main.FullGreedyColor(listeVolGraphe);
-        //listeVolGraphe.setcouleurdefault();
-        
-        //listeVolGraphe = main.FullWelshPowell(listeVolGraphe);
-        listeVolGraphe = main.FullWelshPowell(listeVolGraphe);
-        System.out.println("W "+listeVolGraphe.getnbconflit());
-        listeVolGraphe = main.FULL_LRF(listeVolGraphe);
-        //listeVolGraphe = main.LRFFull(listeVolGraphe);
-        System.out.println("LRF  "+listeVolGraphe.getnbconflit());
-        
-        Graph G2 = main.getGraphStream(listeVolGraphe);
-        G2.display();
-         */
     }
     
     /**
@@ -629,7 +574,6 @@ public class InterfaceIHMSAE extends JFrame {
         int result = fileChooser.showOpenDialog(this);
         if (result == JFileChooser.APPROVE_OPTION) {
             File selectedFile = fileChooser.getSelectedFile();
-            //loadAeroportFile(selectedFile);
             try {
                 try {
                     modele.getMain().setAeroportlist(selectedFile);
@@ -688,7 +632,6 @@ public class InterfaceIHMSAE extends JFrame {
         int result = fileChooser.showOpenDialog(this);
         if (result == JFileChooser.APPROVE_OPTION) {
             File selectedFile = fileChooser.getSelectedFile();
-            //loadAeroportFile(selectedFile);
             try {
                 try {
                     modele.setListeVolGraphe(modele.getMain().CreateGraphText(selectedFile));

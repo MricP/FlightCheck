@@ -54,7 +54,7 @@ import org.jxmapviewer.painter.*;
 /**
  * La classe principale qui gère les aéroports, les vols et la création de graphes.
  */
-public class Main {
+public class GraphController {
     
     
     private static int minColors = Integer.MAX_VALUE;
@@ -63,7 +63,7 @@ public class Main {
     private static ListeVols LV = new ListeVols();       
     private static ListeVols LL = new ListeVols();       
     
-    public Main(){
+    public GraphController(){
         
     }
     
@@ -107,7 +107,6 @@ public class Main {
     public ListeVols creationgraphe(ListeVols liste, int temps){
         int taille = liste.taille();
         int gpt = 0;
-        //System.out.println("taille  : "+ liste.taille());
         int cpt=0;
         for (int i = 0; i< taille; i++){
             for (int y=i+1; y < taille; y++){
@@ -115,7 +114,6 @@ public class Main {
                 if(intersection(LV.getVolindice(i),liste.getVolindice(y), temps)){
                     gpt++;
                     liste.getVolindice(i).addadjacent(liste.getVolindice(y));
-                    //System.out.println(liste.getVolindice(i).id+ "  :  "+ liste.getVolindice(y).id);
                     liste.getVolindice(y).addadjacent(liste.getVolindice(i));
                     
                     liste.addaerrete();
@@ -123,8 +121,6 @@ public class Main {
                 }
             }
         }     
-        //System.out.println("compteur  : "+ cpt);
-        //System.out.println("nbarretes  : "+ gpt);
         return liste;
         
     }
@@ -167,11 +163,9 @@ public class Main {
             return true;
         }
         //A1 = A4 regarder heure de depart de 1 puis heure d'arrivée de 2
-        /*System.out.println(Math.abs(V1.getminutesdepart() - V2.getminutes_arrive()));*/
         if (A1 == A4 && (Math.abs(V1.getminutesdepart() - V2.getminutes_arrive()) < temps)){
             return true;
         }
-        //A2 = A3 regarder heure de depart de 2 puis heure d'arrivée de 1
         if (A2 == A3 && (Math.abs(V1.getminutes_arrive() - V2.getminutesdepart()) < temps)){
             return true;
         }
@@ -191,13 +185,11 @@ public class Main {
         
         double intersection_x = ((A1.getX() * A2.getY() - A1.getY() * A2.getX()) * (A3.getX() - A4.getX()) - (A1.getX() - A2.getX()) * (A3.getX() * A4.getY() - A3.getY() * A4.getX())) / ((A1.getX() - A2.getX()) * (A3.getY() - A4.getY()) - (A1.getY() - A2.getY()) * (A3.getX() - A4.getX()));
         double intersection_y = ((A1.getX() * A2.getY() - A1.getY() * A2.getX()) * (A3.getY() - A4.getY()) - (A1.getY() - A2.getY()) * (A3.getX() * A4.getY() - A3.getY() * A4.getX())) / ((A1.getX() - A2.getX()) * (A3.getY() - A4.getY()) - (A1.getY() - A2.getY()) * (A3.getX() - A4.getX()));
-        /*System.out.println(intersection_x + " , "+ intersection_y);*/
                 
         double min_x =  Math.min(A1.getX(), A2.getX());
         double max_x = Math.max(A1.getX(), A2.getX());
         double min_y = Math.min(A1.getY(), A2.getY());
         double max_y = Math.max(A1.getY(), A2.getY());
-        /*System.out.println(min_x + " , "+ max_x + " "+min_y + " , "+ max_y + " ");*/
         
         // Répéter le même processus pour le second segment
         double min_x2 =  (Math.min(A3.getX(), A4.getX()));
@@ -209,7 +201,6 @@ public class Main {
             (min_y <= intersection_y && intersection_y <= max_y) &&
             (min_x2 <= intersection_x && intersection_x <= max_x2) &&
             (min_y2 <= intersection_y && intersection_y <= max_y2))) {
-            /*System.out.println("fake");*/
             return false;
         }
         
@@ -324,7 +315,6 @@ public class Main {
                     
                     
                 }
-                /*System.out.println(line);*/
                 
                 cpt ++;
             }
@@ -586,7 +576,6 @@ public class Main {
         ArrayList<Integer> best = list.getcouleurs();
         int mincouleur = Integer.MAX_VALUE;
         int cpt = 0;
-        //int nb = list.getArraylist().size() * list.getArraylist().size();
         int nb = list.getArraylist().size();
         for (int y =0;y<nb ;y++){
             cpt++;
@@ -595,7 +584,6 @@ public class Main {
             list.MAXWelshPowell();
             if ((list.maxcouleur() < mincouleur) || (list.maxcouleur() == mincouleur && list.getnbconflit() < minconflits)){
                 mincouleur = list.maxcouleur();
-                //System.out.println("min " +mincouleur);
                 best = list.getcouleurs();
                 if (mincouleur == list.getkmax()){
                     minconflits = list.getnbconflit();
@@ -611,7 +599,6 @@ public class Main {
         list.adresscouleurs(best);
         System.out.println("fin couleur min " +list.maxcouleur());
         System.out.println("fin nb conflits  " +list.getnbconflit());
-        //System.out.println("fin minconflits  " +minconflits);
         System.out.println(list.goodcoloration());
         return list;
         
@@ -628,7 +615,6 @@ public class Main {
         int minconflits = Integer.MAX_VALUE;
         ArrayList<Integer> best = list.getcouleurs();
         int mincouleur = Integer.MAX_VALUE;
-        //int nb = list.getArraylist().size() * list.getArraylist().size() ;
         int nb = list.getArraylist().size();
         for (int y =0;y<nb ;y++){
             list.setcouleurdefault();
@@ -636,7 +622,6 @@ public class Main {
             list.GreedyColor();
             if ((list.maxcouleur() < mincouleur) || (list.maxcouleur() == mincouleur && list.getnbconflit() < minconflits)){
                 mincouleur = list.maxcouleur();
-                //System.out.println("min " +mincouleur);
                 best = list.getcouleurs();
                 if (mincouleur == list.getkmax()){
                     minconflits = list.getnbconflit();
@@ -650,7 +635,6 @@ public class Main {
         list.adresscouleurs(best);
         System.out.println("fin couleur min " +list.maxcouleur());
         System.out.println("fin nb conflits  " +list.getnbconflit());
-        //System.out.println("fin minconflits  " +minconflits);
         System.out.println(list.goodcoloration());
         return list;
         

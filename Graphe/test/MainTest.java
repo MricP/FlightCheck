@@ -8,7 +8,7 @@ import graphe.DonneeVolException;
 import graphe.FichierTropVolumineux;
 import graphe.ListeAeroport;
 import graphe.ListeVols;
-import graphe.Main;
+import graphe.GraphController;
 import graphe.Statistiques;
 import graphe.Vol;
 import java.io.File;
@@ -28,7 +28,7 @@ import static org.junit.Assert.*;
 
 public class MainTest {
 
-    private Main main;
+    private GraphController main;
     private ListeVols testListeVols;
     private ListeAeroport testListeAeroport;
     private Vol v1;
@@ -36,7 +36,7 @@ public class MainTest {
     
     @Before
     public void setUp() {
-        main = new Main();
+        main = new GraphController();
         testListeVols = new ListeVols();
         testListeAeroport = new ListeAeroport();
         Aeroport a1 = new Aeroport("CDG", "Paris-Charles de Gaulle",49, 0, 35, "N",2, 32, 52, "E");
@@ -69,8 +69,8 @@ public class MainTest {
 
     @Test
     public void testIntersection() {
-        assertFalse(Main.intersection(v1, v2, 15));
-        assertNotNull(Main.intersection(v1, v2, 15));
+        assertFalse(GraphController.intersection(v1, v2, 15));
+        assertNotNull(GraphController.intersection(v1, v2, 15));
     }
 
     @Test
