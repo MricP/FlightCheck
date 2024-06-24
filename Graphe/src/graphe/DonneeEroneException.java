@@ -10,13 +10,13 @@ import java.io.File;
  *
  * @author Emric
  */
-public class DonneeVolException extends Exception {
+public class DonneeEroneException extends Exception {
 
     /**
      * Creates a new instance of <code>DonneeVolException</code> without detail
      * message.
      */
-    public DonneeVolException() {
+    public DonneeEroneException() {
     }
 
     /**
@@ -25,7 +25,7 @@ public class DonneeVolException extends Exception {
      *
      * @param file the detail file.
      */
-    public DonneeVolException(File file) {
+    public DonneeEroneException(File file) {
         super("Le fichier " + file.getName() + " n'a pas de données valable");
     }
 }

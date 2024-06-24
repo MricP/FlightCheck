@@ -4,7 +4,7 @@
  */
 
 import graphe.Aeroport;
-import graphe.DonneeVolException;
+import graphe.DonneeEroneException;
 import graphe.FichierTropVolumineux;
 import graphe.ListeAeroport;
 import graphe.ListeVols;
@@ -97,7 +97,7 @@ public class MainTest {
             }
            catch(FichierTropVolumineux eg){}
         }
-        catch(DonneeVolException e){
+        catch(DonneeEroneException e){
             System.err.println(e.getMessage());
         }
         assertEquals(605, main.getlisteVols().taille());
@@ -110,7 +110,7 @@ public class MainTest {
         try {
             main.setvolaeroports(testFile);
             fail("Expected DonneeVolException to be thrown");
-        } catch (DonneeVolException e) {
+        } catch (DonneeEroneException e) {
             System.err.println(e.getMessage());
         } catch (FichierTropVolumineux e) {
             fail("Unexpected FichierTropVolumineux exception: " + e.getMessage());

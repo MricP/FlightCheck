@@ -57,7 +57,7 @@ public class CSVcolorationmaker {
                             list2 = main.CreateGraphText(path.toFile());
                             list3 = main.CreateGraphText(path.toFile());
                             list4 = main.CreateGraphText(path.toFile());
-                        } catch (DonneeVolException e) {
+                        } catch (DonneeEroneException e) {
                             // Gérer l'exception des données de vol incorrectes
                         } catch (FichierTropVolumineux ex) {
                             Logger.getLogger(CSVcolorationmaker.class.getName()).log(Level.SEVERE, null, ex);

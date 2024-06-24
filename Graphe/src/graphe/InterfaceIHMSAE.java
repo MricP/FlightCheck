@@ -581,7 +581,7 @@ public class InterfaceIHMSAE extends JFrame {
                     System.err.println(e.getMessage());
                     JOptionPane.showMessageDialog(null, "The file is too big", "Please enter a valid file", JOptionPane.ERROR_MESSAGE);
                 }
-            } catch (DonneeVolException e) {
+            } catch (DonneeEroneException e) {
                 System.err.println(e.getMessage());
                 JOptionPane.showMessageDialog(null, "Please enter a valid file", "Wrong airport data", JOptionPane.ERROR_MESSAGE);
             }
@@ -607,7 +607,7 @@ public class InterfaceIHMSAE extends JFrame {
                     System.err.println(e.getMessage());
                     JOptionPane.showMessageDialog(null, "File is too big", "Please enter a valid file", JOptionPane.ERROR_MESSAGE);
                 }
-            } catch (DonneeVolException e) {
+            } catch (DonneeEroneException e) {
                 System.err.println(e.getMessage());
                 JOptionPane.showMessageDialog(null, "Please enter a valid file", "Wrong flights data", JOptionPane.ERROR_MESSAGE);
 
@@ -640,7 +640,7 @@ public class InterfaceIHMSAE extends JFrame {
                     JOptionPane.showMessageDialog(null, "File is too big", "Please enter a valid file", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
-            } catch (DonneeVolException e) {
+            } catch (DonneeEroneException e) {
                 System.err.println(e.getMessage());
                 JOptionPane.showMessageDialog(null, "Please enter a valid File", "Wrong graph data", JOptionPane.ERROR_MESSAGE);
                 return;

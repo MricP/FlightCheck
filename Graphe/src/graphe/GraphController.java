@@ -245,12 +245,12 @@ public class GraphController {
      * @param file le fichier contenant les données du graphe
      * @return un objet ListeVols représentant le graphe
      */
-    public ListeVols CreateGraphText(File file) throws DonneeVolException,FichierTropVolumineux {
+    public ListeVols CreateGraphText(File file) throws DonneeEroneException,FichierTropVolumineux {
         
         // Vérifier si le fichier existe
         if (!file.exists()) {
             System.out.println("Le fichier n'existe pas.");
-            throw new DonneeVolException(file);
+            throw new DonneeEroneException(file);
             
         }else{
             System.out.println("Le fichier existe .");
@@ -262,12 +262,12 @@ public class GraphController {
                 System.out.println("Le fichier ne contient que des caractères chiffrés.");
             } else {
                 System.out.println("Le fichier contient des caractères non chiffrés ou n'est pas un fichier texte valide.");
-                throw new DonneeVolException(file);
+                throw new DonneeEroneException(file);
                 
             }
         } catch (IOException e) {
             System.out.println("Une erreur s'est produite lors de la lecture du fichier : " + e.getMessage());
-            throw new DonneeVolException(file);
+            throw new DonneeEroneException(file);
         }
         int nbsommets = 0;
         // Déclarer un BufferedReader pour lire le fichier
@@ -295,18 +295,18 @@ public class GraphController {
                 }else{
                     String[] tab = line.split(" ");
                     if(tab.length != 2){
-                        throw new DonneeVolException(file);
+                        throw new DonneeEroneException(file);
                     }
                     if(file.length() > (1000000000 * 10)){
                         throw new FichierTropVolumineux();
                     }
                     int x = Integer.valueOf(tab[0]);
                     if(0 > x || nbsommets < x){
-                        throw new DonneeVolException(file);
+                        throw new DonneeEroneException(file);
                     }
                     int y = Integer.valueOf(tab[1]);
                     if(0 > y || nbsommets < y){
-                        throw new DonneeVolException(file);
+                        throw new DonneeEroneException(file);
                     }
                     Vol Vol1 = LVol.getVolnumero(x);
                     Vol Vol2 = LVol.getVolnumero(y);
@@ -402,9 +402,9 @@ public class GraphController {
     /**
      * Lit les données des vols à partir d'un fichier et les stocke dans un objet ListeVols.
      * @param file le fichier contenant les données des vols
-     * @throws graphe.DonneeVolException
+     * @throws graphe.DonneeEroneException
      */
-    public void setvolaeroports(File file) throws DonneeVolException,FichierTropVolumineux {
+    public void setvolaeroports(File file) throws DonneeEroneException,FichierTropVolumineux {
         LV = new ListeVols();
         
         // Vérifier si le fichier existe
@@ -427,7 +427,7 @@ public class GraphController {
                 String[] tab = line.split(";");
                 
                 if (tab.length != 6 || tab[1].length()!= 3 ||tab[2].length() != 3 || tab[3].length() > 2 || Integer.valueOf(tab[3]) > 23 || Integer.valueOf(tab[4]) < 0 || Integer.valueOf(tab[4]) > 180 || Integer.valueOf(tab[4]) > 59 || Integer.valueOf(tab[4]) < 0) {
-                    throw new DonneeVolException(file);
+                    throw new DonneeEroneException(file);
                 }
                 
                 Vol Vol = new Vol(tab[0],tab[1],tab[2],Integer.valueOf(tab[3]),Integer.valueOf(tab[4]),Integer.valueOf(tab[5]));
@@ -443,7 +443,7 @@ public class GraphController {
      * Lit les données des aéroports à partir d'un fichier et les stocke dans la liste appropriée.
      * @param file le fichier contenant les données des aéroports
      */
-    public void setAeroportlist(File file) throws DonneeVolException,FichierTropVolumineux{
+    public void setAeroportlist(File file) throws DonneeEroneException,FichierTropVolumineux{
         
         // Vérifier si le fichier existe
         if (!file.exists()) {
@@ -464,7 +464,7 @@ public class GraphController {
                 String[] tab = line.split(";");
                 // ex : EBU;Saint-Etienne;45;32;26;N;4;17;47;E
                 if (tab.length != 10 || tab[0].length() != 3 || tab[5].length() != 1 || tab[9].length() != 1) {
-                throw new DonneeVolException(file);
+                throw new DonneeEroneException(file);
                 }
                 if(file.length() > 1000000000 * 10){
                         throw new FichierTropVolumineux();
