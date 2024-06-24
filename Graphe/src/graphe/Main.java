@@ -255,20 +255,12 @@ public class Main {
      * @return un objet ListeVols représentant le graphe
      */
     public ListeVols CreateGraphText(File file) throws DonneeVolException,FichierTropVolumineux {
-        /*
-        System.out.println("rentrez le chemin d'acces de votre graphe sous forme .txt:");
         
-        String FilePath = "C:/Users/Aspect-PC/Desktop/SAE-GIT/sae_mathieu_petit_pirrera/DataTest/graph-test2.txt";
-        //String FilePath = "C:/Users/Aspect-PC/Desktop/SAE-IMH/sae_mathieu_petit_pirrera/DataTest/graph-test2.txt";
-        
-        
-        // Créer un objet File en utilisant le chemin du fichier
-        File file = new File(FilePath);
-        */
         // Vérifier si le fichier existe
         if (!file.exists()) {
             System.out.println("Le fichier n'existe pas.");
-            return null;
+            throw new DonneeVolException(file);
+            
         }else{
             System.out.println("Le fichier existe .");
             
@@ -383,7 +375,7 @@ public class Main {
         Graph graph = new MultiGraph("multi graphe");
         ArrayList<String> couleurs = new ArrayList<>();
         Random random = new Random();
-
+        
         // Générer des couleurs aléatoires pour chaque couleur utilisée dans la coloration
         for (int i = 0; i < liste.maxcouleur(); i++) {
             String couleur = String.format("#%02x%02x%02x", random.nextInt(256), random.nextInt(256), random.nextInt(256));
@@ -393,7 +385,11 @@ public class Main {
         // Ajouter tous les nœuds au graphe
         for (Vol vol : liste.getArraylist()) {
             String nodeId = Integer.toString(vol.getid());
-            graph.addNode(nodeId);
+            if (vol.hasname()){
+                graph.addNode(nodeId).addAttribute("ui.label", vol.getnom());
+            }else{
+                graph.addNode(nodeId).addAttribute("ui.label", vol.getid());
+            }
             graph.getNode(nodeId).addAttribute("ui.style", couleurs.get(vol.getcouleur() - 1));
         }
 
@@ -427,7 +423,11 @@ public class Main {
             return;
         }else{
             System.out.println("Le fichier existe .");
-        }       
+        }      
+        
+        if(file.length() > 1000000000 * 10){
+            throw new FichierTropVolumineux();
+        }
         // Déclarer un BufferedReader pour lire le fichier
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             String line;
@@ -435,12 +435,11 @@ public class Main {
             while ((line = reader.readLine()) != null) {
                 // Afficher chaque ligne lue
                 String[] tab = line.split(";");
-                if (tab.length != 6 || tab[1].length()!= 3 ||tab[2].length() != 3 || tab[3].length() > 2 || Integer.valueOf(tab[3]) > 23 || tab[4].length() > 2 || Integer.valueOf(tab[4]) > 59) {
-                throw new DonneeVolException(file);
+                
+                if (tab.length != 6 || tab[1].length()!= 3 ||tab[2].length() != 3 || tab[3].length() > 2 || Integer.valueOf(tab[3]) > 23 || Integer.valueOf(tab[4]) < 0 || Integer.valueOf(tab[4]) > 180 || Integer.valueOf(tab[4]) > 59 || Integer.valueOf(tab[4]) < 0) {
+                    throw new DonneeVolException(file);
                 }
-                if(file.length() > 1000000000 * 10){
-                        throw new FichierTropVolumineux();
-                    }
+                
                 Vol Vol = new Vol(tab[0],tab[1],tab[2],Integer.valueOf(tab[3]),Integer.valueOf(tab[4]),Integer.valueOf(tab[5]));
                 LV.ajMembre(Vol);
             }           

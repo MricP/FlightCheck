@@ -29,7 +29,8 @@ public class Vol {
     private ArrayList<Integer> adjacentsid;
     private int distance;
     private boolean traite;
-
+    private boolean hasname;
+    
     /**
      * Construit un nouveau Vol avec un ID spécifié.
      *
@@ -41,6 +42,7 @@ public class Vol {
         adjacents = new ArrayList<Vol>();
         adjacentsid = new ArrayList<Integer>();
         composante = -1;
+        hasname = false;
     }
 
     /**
@@ -68,6 +70,7 @@ public class Vol {
         lastnum++;
         couleur = -1;
         composante = -1;
+        hasname = true;
     }
 
     /**
@@ -104,6 +107,10 @@ public class Vol {
      */
     public boolean gettraite() {
         return traite;
+    }
+    
+    public boolean hasname(){
+        return hasname;
     }
 
     /**

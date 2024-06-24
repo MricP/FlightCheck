@@ -90,16 +90,4 @@ public class StatisticsFrame extends JFrame {
         }
     }
 
-    /**
-     * Méthode principale pour lancer l'interface des statistiques.
-     *
-     * @param args Les arguments de la ligne de commande.
-     */
-    public static void main(String[] args) {
-        Statistiques stats = new Statistiques(3.5, 2, 100, 150, 12.3, 4); // Exemple de statistiques
-        SwingUtilities.invokeLater(() -> {
-            StatisticsFrame frame = new StatisticsFrame(stats,"test");
-            frame.setVisible(true);
-        });
-    }
 }

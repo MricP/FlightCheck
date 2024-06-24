@@ -14,6 +14,11 @@ import org.graphstream.graph.implementations.*;
 import org.graphstream.ui.view.Viewer;
 
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 import org.graphstream.ui.view.View;
 
 /**
@@ -25,7 +30,9 @@ import org.graphstream.ui.view.View;
  * </p>
  */
 public class GraphStreamFrame extends JFrame {
-
+    
+    private double currentCenterX, currentCenterY;
+    private int lastX, lastY;
     /**
      * Constructeur de la classe GraphStreamFrame.
      * <p>
@@ -62,7 +69,22 @@ public class GraphStreamFrame extends JFrame {
         // Utilisation de GridBagLayout pour une meilleure organisation
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
-
+        
+        // Ajoute la possibilité de zoomer en avant et en arrière
+        graphPanel.addMouseWheelListener(new MouseWheelListener() {
+            @Override
+            public void mouseWheelMoved(MouseWheelEvent e) {
+                double zoomFactor = 1.1;
+                if (e.getWheelRotation() < 0) {
+                    // Zoom avant
+                    view.getCamera().setViewPercent(view.getCamera().getViewPercent() / zoomFactor);
+                } else {
+                    // Zoom arrière
+                    view.getCamera().setViewPercent(view.getCamera().getViewPercent() * zoomFactor);
+                }
+            }
+        });
+        
         // Configuration des contraintes de GridBag
         gbc.insets = new Insets(10, 10, 10, 10);
 
@@ -80,7 +102,7 @@ public class GraphStreamFrame extends JFrame {
         gbc.weighty = 1.0;
         add(graphPanel, gbc);
     }
-
+    
     /**
      * Méthode principale pour démarrer l'application de visualisation de graphe.
      * <p>
@@ -99,7 +121,7 @@ public class GraphStreamFrame extends JFrame {
         graph.addEdge("AB", "A", "B").addAttribute("ui.label", "AB");
         graph.addEdge("BC", "B", "C").addAttribute("ui.label", "BC");
         graph.addEdge("CA", "C", "A").addAttribute("ui.label", "CA");
-
+        
         // Création et affichage de la fenêtre
         SwingUtilities.invokeLater(new Runnable() {
             @Override

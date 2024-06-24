@@ -232,7 +232,7 @@ public class InterfaceIHMSAE extends JFrame {
         rc.gridy = 1;
         rightControlPanel.add(colorationCheckbox, rc);
 
-        JLabel dureecolLabel = new JLabel("temps collision : ");
+        JLabel dureecolLabel = new JLabel("safety margin : ");
         dureecolLabel.setForeground(Color.WHITE);
         rc.gridx = 0;
         rc.gridy = 3;
@@ -620,7 +620,7 @@ public class InterfaceIHMSAE extends JFrame {
         G2.display();
          */
     }
-
+    
     /**
      * Ouvre un sélecteur de fichiers pour choisir un fichier d'aéroports.
      */
@@ -699,7 +699,7 @@ public class InterfaceIHMSAE extends JFrame {
                 }
             } catch (DonneeVolException e) {
                 System.err.println(e.getMessage());
-                JOptionPane.showMessageDialog(null, "Veuillez saisir un fichier valide", "Wrong graph data", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Please enter a valid File", "Wrong graph data", JOptionPane.ERROR_MESSAGE);
                 return;
             }
             modele.setListeVolGraphe(modele.getMain().FullGreedyColor(modele.getListeVolGraphe()));
@@ -711,7 +711,7 @@ public class InterfaceIHMSAE extends JFrame {
 
         }
     }
-
+    
     /**
      * Ajoute des marqueurs pour chaque aéroport de la liste des aéroports.
      */
@@ -720,7 +720,7 @@ public class InterfaceIHMSAE extends JFrame {
             System.out.println("Aucun aéroport à afficher.");
             return;
         }
-
+        
         waypoints.clear();
         codeaero.clear();
         geoCondition.clear();
@@ -736,7 +736,7 @@ public class InterfaceIHMSAE extends JFrame {
         dessinerpoints();
         System.out.println("Les aéroports sont maintenant affichés");
     }
-
+    
     /**
      * Dessine toutes les lignes des vols avec coloration.
      */
