@@ -264,10 +264,12 @@ public class ListeVolsTest {
         assertEquals(vol, liste.getVolId(vol.getid()));
     }
     
-@Test
+    @Test
     public void getcouleursTest() {
-        liste.ajMembre(vol);
-        liste.ajMembre(vol2);
+        liste = new ListeVols();
+        liste.ajMembre(new Vol(1));
+        //System.out.println(vol.getid());
+        liste.ajMembre(new Vol(2));
         liste.RandomColoration(3);
         ArrayList<Integer> couleurs = liste.getcouleurs();
         assertEquals(2, couleurs.size());
@@ -277,6 +279,8 @@ public class ListeVolsTest {
     
     @Test
     public void adresscouleursTest() {
+        vol = new Vol(1);
+        vol2 = new Vol(2);
         liste.ajMembre(vol);
         liste.ajMembre(vol2);
         ArrayList<Integer> couleurs = new ArrayList<>();
