@@ -132,6 +132,7 @@ public class InterfaceIHMSAE extends JFrame {
                 } else {
                     // Set back to default (light) mode tile source
                     mapViewer.setTileFactory(new DefaultTileFactory(new OSMTileFactoryInfo()));
+                    mapViewer.setZoom(13);
                 }
             }
         });
