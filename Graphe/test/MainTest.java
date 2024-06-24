@@ -64,11 +64,13 @@ public class MainTest {
         testListeVols.ajMembre(v2);
         ListeVols graphe = main.creationgraphe(testListeVols, 15);
         assertEquals(2, graphe.taille());
+        assertNotNull(graphe.taille());
     }
 
     @Test
     public void testIntersection() {
         assertFalse(Main.intersection(v1, v2, 15));
+        assertNotNull(Main.intersection(v1, v2, 15));
     }
 
     @Test
@@ -99,11 +101,26 @@ public class MainTest {
             System.err.println(e.getMessage());
         }
         assertEquals(605, main.getlisteVols().taille());
+
+    }
+
+    @Test
+    public void testException() {
+        File testFile = new File("C:/Users/Emric/OneDrive/Bureau/S2/SaeFin/sae_mathieu_petit_pirrera/DataTest/volTestPasBonneDonnées.csv");
+        try {
+            main.setvolaeroports(testFile);
+            fail("Expected DonneeVolException to be thrown");
+        } catch (DonneeVolException e) {
+            System.err.println(e.getMessage());
+        } catch (FichierTropVolumineux e) {
+            fail("Unexpected FichierTropVolumineux exception: " + e.getMessage());
+        } 
     }
 
     @Test
     public void testSetAeroportlist() {      
         assertEquals(2, main.getlisteaero().taillelisteaero());
+        assertNotNull(main.getlisteaero().taillelisteaero());
     }
 
     @Test
@@ -111,6 +128,7 @@ public class MainTest {
         ListeVols graphe = main.creationgraphe(testListeVols, 15);
         double diametre = main.getDiametre(graphe);
         assertTrue(diametre > 0);
+        assertNotNull(diametre);
     }
     
     @Test
@@ -121,6 +139,9 @@ public class MainTest {
         assertTrue(testListeVols.goodcoloration());
         assertEquals(1,testListeVols.maxcouleur());
         assertTrue(testListeVols.getnbconflit() == 0);
+        assertNotNull(testListeVols.goodcoloration());
+        assertNotNull(testListeVols.maxcouleur());
+        assertNotNull(testListeVols.getnbconflit());
     }
     
     @Test
@@ -131,6 +152,9 @@ public class MainTest {
         assertTrue(testListeVols.goodcoloration());
         assertEquals(1,testListeVols.maxcouleur());
         assertTrue(testListeVols.getnbconflit() == 0);
+        assertNotNull(testListeVols.goodcoloration());
+        assertNotNull(testListeVols.maxcouleur());
+        assertNotNull(testListeVols.getnbconflit());
     }
 }
 

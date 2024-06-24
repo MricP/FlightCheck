@@ -33,13 +33,18 @@ public class AeroportTest {
         aeroport = new Aeroport("CDG", "Paris-Charles de Gaulle",49, 0, 35, "N",2, 32, 52, "E");
     }
     @Test
-    public void testOpenfile() throws IOException{
-        String filePath = "C:/Users/Emric/OneDrive/Bureau/S2/SaeFin/sae_mathieu_petit_pirrera/DataTest/aeroports.txt";
-        File file = new File(filePath);
-        BufferedReader reader = new BufferedReader(new FileReader(file));
-        String line = reader.readLine();
-        reader.close();
+    public void testOpenfile() {
+        try{
+            String filePath = "C:/Users/Emric/OneDrive/Bureau/S2/SaeFin/sae_mathieu_petit_pirrera/DataTest/aeroports.txt";
+            File file = new File(filePath);
+            BufferedReader reader = new BufferedReader(new FileReader(file));
+            String line = reader.readLine();
+            reader.close();
+        }catch(IOException e){
+        fail();}
+        
     }
+    
     
     @Test
     public void getlongitudeTest(){
@@ -72,7 +77,6 @@ public class AeroportTest {
         double expectedX = 6371 * Math.cos(Math.toRadians(aeroport.getlongitude())) * Math.sin(Math.toRadians(aeroport.getlatitude()));
         assertEquals(expectedX, aeroport.getX(),0.0001);
         assertNotNull(aeroport.getX());
-
     }
 
     @Test

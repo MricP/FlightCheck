@@ -115,6 +115,7 @@ public class ListeVolsTest {
         liste.setkmax(3);
         int nbCouleurs = liste.MAXWelshPowell();
         assertTrue(nbCouleurs <= 3);
+        assertNotNull(nbCouleurs);
     }
     
     @Test
@@ -123,6 +124,7 @@ public class ListeVolsTest {
         liste.ajMembre(vol2);
         int nbCouleurs = liste.WelshPowell();
         assertTrue(nbCouleurs > 0);
+        assertNotNull(nbCouleurs);
     }
     
     @Test
@@ -132,6 +134,8 @@ public class ListeVolsTest {
         liste.RandomColoration(3);
         assertTrue(vol.getcouleur() > 0 && vol.getcouleur() <= 3);
         assertTrue(vol2.getcouleur() > 0 && vol2.getcouleur() <= 3);
+        assertNotNull(vol.getcouleur());
+        assertNotNull(vol2.getcouleur());
     }
     
     @Test
@@ -141,6 +145,8 @@ public class ListeVolsTest {
         liste.GreedyColor();
         assertTrue(vol.getcouleur() > 0);
         assertTrue(vol2.getcouleur() > 0);
+        assertNotNull(vol.getcouleur());
+        assertNotNull(vol2.getcouleur());
     }
     
     @Test
@@ -150,6 +156,8 @@ public class ListeVolsTest {
         liste.Dsatur();
         assertTrue(vol.getcouleur() > 0);
         assertTrue(vol2.getcouleur() > 0);
+        assertNotNull(vol.getcouleur());
+        assertNotNull(vol2.getcouleur());
     }
     
     @Test
@@ -158,6 +166,8 @@ public class ListeVolsTest {
         ArrayList<Vol> vols = liste.getList();
         assertEquals(1, vols.size());
         assertEquals(vol, vols.get(0));
+        assertNotNull(vols.size());
+        assertNotNull(vols.get(0));
     }
     
     @Test
@@ -169,6 +179,7 @@ public class ListeVolsTest {
         liste.RandomColoration(3);
         int conflits = liste.getnbconflit();
         assertTrue(conflits >= 0);
+        assertNotNull(conflits);
     }
     
     @Test
@@ -179,6 +190,7 @@ public class ListeVolsTest {
         vol2.addadjacent(vol);
         liste.RandomColoration(3);
         assertTrue(liste.goodcoloration());
+        assertNotNull(liste.goodcoloration());
     }
     
     @Test      
@@ -188,6 +200,7 @@ public class ListeVolsTest {
         liste.RandomColoration(3);
         int maxCouleur = liste.maxcouleur();
         assertTrue(maxCouleur > 0 && maxCouleur <= 3);
+        assertNotNull(maxCouleur);
     }
     
     @Test
@@ -196,6 +209,7 @@ public class ListeVolsTest {
         vol.setcouleur(1);
         liste.setcouleurdefault();
         assertEquals(-1, vol.getcouleur());
+        assertNotNull(vol.getcouleur());
     }
     
     @Test
@@ -205,6 +219,7 @@ public class ListeVolsTest {
         vol.addadjacent(vol2);
         vol2.addadjacent(vol);
         assertEquals(1.0, liste.getdegremoyen(), 0.001);
+        assertNotNull(liste.getdegremoyen());
     }
    
     @Test 
@@ -212,6 +227,7 @@ public class ListeVolsTest {
         liste.ajMembre(vol);
         liste.ajMembre(vol2);
         assertEquals(2, liste.getnbcomposante());
+        assertNotNull(liste.getnbcomposante());
     }
     
     @Test
@@ -221,6 +237,7 @@ public class ListeVolsTest {
         vol.addadjacent(vol2);
         vol2.addadjacent(vol);
         assertEquals(1, liste.getdiametre());
+        assertNotNull(liste.getdiametre());
     }
     
     @Test
@@ -230,6 +247,7 @@ public class ListeVolsTest {
         vol.addadjacent(vol2);
         vol2.addadjacent(vol);
         assertEquals(1, liste.Dijkstra(vol, vol2));
+        assertNotNull(liste.Dijkstra(vol, vol2));
     }
 
     @Test
@@ -237,6 +255,7 @@ public class ListeVolsTest {
         liste.ajMembre(vol);
         liste.ajMembre(vol2);
         assertEquals(2, liste.getnbcomposantede(vol.getcomposante()));
+        assertNotNull(liste.getnbcomposantede(vol.getcomposante()));
     }
     
     @Test
@@ -251,17 +270,21 @@ public class ListeVolsTest {
         ArrayList<Vol> vols = liste.getArraylist();
         assertEquals(1, vols.size());
         assertEquals(vol, vols.get(0));
+        assertNotNull(vols.size());
+        assertNotNull(vols.get(0));
     }
     
     @Test
     public void getListVolsTest() {
         assertEquals(liste, liste.getListVols());
+        assertNotNull(liste.getListVols());
     }
     
     @Test
     public void getVolIdTest() {
         liste.ajMembre(vol);
         assertEquals(vol, liste.getVolId(vol.getid()));
+        assertNotNull(liste.getVolId(vol.getid()));
     }
     
     @Test
@@ -275,6 +298,8 @@ public class ListeVolsTest {
         assertEquals(2, couleurs.size());
         assertTrue(couleurs.get(0) > 0 && couleurs.get(0) <= 3);
         assertTrue(couleurs.get(1) > 0 && couleurs.get(1) <= 3);
+        assertNotNull(couleurs.get(0));
+        assertNotNull(couleurs.get(1));
     }
     
     @Test
@@ -289,5 +314,7 @@ public class ListeVolsTest {
         liste.adresscouleurs(couleurs);
         assertEquals(1, vol.getcouleur());
         assertEquals(2, vol2.getcouleur());
+        assertNotNull(couleurs.get(0));
+        assertNotNull(couleurs.get(1));
     }
 }

@@ -28,30 +28,36 @@ public class StatitiquesTest {
     @Test
     public void getDegreMoyenTest() {
         assertTrue(stat.getDegreMoyen() == 2.0);
+        assertNotNull(stat.getDegreMoyen());
     }
 
     @Test
     public void getNbComposantesTest() {
         assertTrue(stat.getNbComposantes() == 2);
+        assertNotNull(stat.getNbComposantes());
     }
 
     @Test
     public void getNbNoeudsTest() {
         assertEquals(5,stat.getNbNoeuds(),1);
+        assertNotNull(stat.getNbNoeuds());
     }
 
     @Test
     public void getNbAretesTest() {
         assertEquals(4,stat.getNbAretes(),1);
+        assertNotNull(stat.getNbAretes());
     }
 
     @Test
     public void getDiametreTest() {
         assertTrue(stat.getDiametre() == 2.0);
+        assertNotNull(stat.getDiametre());
     }
     
     @Test
     public void getConflitTest() {
         assertTrue(stat.getConflit()== 0);
+        assertNotNull(stat.getConflit());
     }
 }
