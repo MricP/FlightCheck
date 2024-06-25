@@ -45,14 +45,20 @@ public class GraphStreamFrame extends JFrame {
      * @param nom le titre de la fenêtre et du graphe
      */
     public GraphStreamFrame(Graph graph, String nom) {
-        // Configuration de la fenêtre principale
+        constrFen(graph, nom);
+    }
+        
+    public void constrFen(Graph graph, String nom){
+    
         ImageIcon logoIcon = new ImageIcon(getClass().getResource("/graphe/logo.png"));
         setIconImage(logoIcon.getImage());
         setTitle("Visualisation de Graphe via GraphStream");
         setSize(800, 600);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
-
+        constrPan(graph,nom);
+    }
+    public void constrPan(Graph graph, String nom){
         // Création des composants Swing
         JLabel titleLabel = new JLabel(nom, SwingConstants.CENTER);
         titleLabel.setFont(new Font("Arial", Font.BOLD, 16));

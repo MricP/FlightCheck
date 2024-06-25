@@ -21,6 +21,10 @@ public class StatisticsFrame extends JFrame {
      * @param stats Les statistiques à afficher.
      */
     public StatisticsFrame(Statistiques stats, String Nom) {
+        constrFen(stats,Nom);
+    }
+    
+    public void constrFen(Statistiques stats, String Nom){
         ImageIcon logoIcon = new ImageIcon(getClass().getResource("/graphe/logo.png"));
         setIconImage(logoIcon.getImage());
         setTitle("Statistiques "+Nom);
@@ -28,7 +32,10 @@ public class StatisticsFrame extends JFrame {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
-        
+        constrPan(stats,Nom);
+    }
+    public void constrPan(Statistiques stats, String Nom){
+        GridBagConstraints gbc = new GridBagConstraints();
         Color bgColor = Color.decode("#283C4F");
         getContentPane().setBackground(bgColor);
         

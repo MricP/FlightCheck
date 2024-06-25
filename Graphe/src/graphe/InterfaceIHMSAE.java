@@ -1,5 +1,6 @@
 package graphe;
 
+import graphe.Modele;
 import org.jxmapviewer.JXMapViewer;
 import org.jxmapviewer.OSMTileFactoryInfo;
 import org.jxmapviewer.input.CenterMapListener;
@@ -65,16 +66,26 @@ public class InterfaceIHMSAE extends JFrame {
     private static JSpinner dureecolision;
 
     public InterfaceIHMSAE() {
+        constrFen();
+    }
+    
+    public void constrFen(){
         allgood = false;
         modele = new Modele();
         colorList = new ArrayList<>();
         airportIcon = new ImageIcon(getClass().getResource("/graphe/aero.png"));
         logoIcon = new ImageIcon(getClass().getResource("/graphe/logo.png"));
+
         setIconImage(logoIcon.getImage());
         setTitle("FlightSAE 1.0.0");
         setSize(1000, 800);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(new GridBagLayout());
+        constrPan();
+    }
+        
+    public void constrPan(){
+    
         GridBagConstraints gbc = new GridBagConstraints();
 
         JMenuBar menuBar = new JMenuBar();
@@ -556,7 +567,7 @@ public class InterfaceIHMSAE extends JFrame {
         gbc.anchor = GridBagConstraints.NORTHEAST;
         add(exitButton, gbc);
 
-        waypoints = new HashSet<>();
+        waypoints = new HashSet<>();        
     }
     
     /**

@@ -17,13 +17,18 @@ import java.util.List;
 public class ListeVolsFrame extends JFrame {
 
     public ListeVolsFrame(Object[][] data, String code) {
+        constrFen(data,code);
+    }
+    public void constrFen(Object[][] data, String code){  
         // Configuration de la JFrame
         ImageIcon logoIcon = new ImageIcon(getClass().getResource("/graphe/logo.png"));
         setIconImage(logoIcon.getImage());
         setTitle("Tableau des vols de l'aéroport "+code);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(800, 600);
-        
+        constrPan(data,code);
+    }
+    public void constrPan(Object[][] data, String code){
         // Filtrer les lignes vides
         Object[][] filteredData = filterEmptyRows(data);
 
