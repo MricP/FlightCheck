@@ -105,7 +105,7 @@ public class CSVcolorationmaker {
      * @throws IOException si une erreur d'E/S se produit
      */
     private static void createTextFileWithFirstLine(File inputFile, int fileNumber) throws IOException {
-        String outputFileName = "C:/Users/Robi6/OneDrive/Bureau/results/" + deb + fileNumber + fin;
+        String outputFileName = "C:/Users/Emric/OneDrive/Bureau/S2/SAEFin/sae_mathieu_petit_pirrera/results/" + deb + fileNumber + fin;
         try (BufferedReader reader = new BufferedReader(new FileReader(inputFile));
              FileWriter writer = new FileWriter(outputFileName)) {
             for (int i = 1; i <= list.taille(); i++) {
@@ -120,8 +120,8 @@ public class CSVcolorationmaker {
      * @param args les arguments de la ligne de commande
      */
     public static void main(String[] args) {
-        String folderPath = "C:/Users/Robi6/OneDrive/Bureau/DataGraphTest";
-        String csvFilePath = "C:/Users/Robi6/OneDrive/Bureau/results/result.csv";
+        String folderPath = "C:/Users/Emric/OneDrive/Bureau/S2/SAEFin/sae_mathieu_petit_pirrera/DataGraphTest";
+        String csvFilePath = "C:/Users/Emric/OneDrive/Bureau/S2/SAEFin/sae_mathieu_petit_pirrera/results/result.csv";
         
         CSVcolorationmaker(folderPath, csvFilePath);
         

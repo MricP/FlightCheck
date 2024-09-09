@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite errors="0" failures="0" hostname="MSI" name="ListeVolsTest" skipped="0" tests="32" time="0.11" timestamp="2024-06-24T14:33:44">
+<testsuite errors="0" failures="0" hostname="MSI" name="ListeVolsTest" skipped="0" tests="32" time="0.125" timestamp="2024-06-25T05:59:37">
   <properties>
     <property name="libs.spring-framework300.classpath" value="C:\Program Files\NetBeans-21\netbeans\platform\modules\org-apache-commons-logging.jar;C:\Program Files\NetBeans-21\netbeans\java\modules\ext\cglib-2.2.jar;C:\Program Files\NetBeans-21\netbeans\java\modules\ext\spring-3.0\spring-aop-3.2.18.RELEASE.jar;C:\Program Files\NetBeans-21\netbeans\java\modules\ext\spring-3.0\spring-aspects-3.2.18.RELEASE.jar;C:\Program Files\NetBeans-21\netbeans\java\modules\ext\spring-3.0\spring-beans-3.2.18.RELEASE.jar;C:\Program Files\NetBeans-21\netbeans\java\modules\ext\spring-3.0\spring-context-3.2.18.RELEASE.jar;C:\Program Files\NetBeans-21\netbeans\java\modules\ext\spring-3.0\spring-context-support-3.2.18.RELEASE.jar;C:\Program Files\NetBeans-21\netbeans\java\modules\ext\spring-3.0\spring-core-3.2.18.RELEASE.jar;C:\Program Files\NetBeans-21\netbeans\java\modules\ext\spring-3.0\spring-expression-3.2.18.RELEASE.jar;C:\Program Files\NetBeans-21\netbeans\java\modules\ext\spring-3.0\spring-instrument-3.2.18.RELEASE.jar;C:\Program Files\NetBeans-21\netbeans\java\modules\ext\spring-3.0\spring-instrument-tomcat-3.2.18.RELEASE.jar;C:\Program Files\NetBeans-21\netbeans\java\modules\ext\spring-3.0\spring-jdbc-3.2.18.RELEASE.jar;C:\Program Files\NetBeans-21\netbeans\java\modules\ext\spring-3.0\spring-jms-3.2.18.RELEASE.jar;C:\Program Files\NetBeans-21\netbeans\java\modules\ext\spring-3.0\spring-orm-3.2.18.RELEASE.jar;C:\Program Files\NetBeans-21\netbeans\java\modules\ext\spring-3.0\spring-oxm-3.2.18.RELEASE.jar;C:\Program Files\NetBeans-21\netbeans\java\modules\ext\spring-3.0\spring-struts-3.2.18.RELEASE.jar;C:\Program Files\NetBeans-21\netbeans\java\modules\ext\spring-3.0\spring-test-3.2.18.RELEASE.jar;C:\Program Files\NetBeans-21\netbeans\java\modules\ext\spring-3.0\spring-tx-3.2.18.RELEASE.jar;C:\Program Files\NetBeans-21\netbeans\java\modules\ext\spring-3.0\spring-web-3.2.18.RELEASE.jar;C:\Program Files\NetBeans-21\netbeans\java\modules\ext\spring-3.0\spring-webmvc-3.2.18.RELEASE.jar;C:\Program Files\NetBeans-21\netbeans\java\modules\ext\spring-3.0\spring-webmvc-portlet-3.2.18.RELEASE.jar" />
     <property name="javac.test.classpath" value="..\..\..\..\Downloads\jar_files\jxmapviewer2-2.8.jar:..\..\..\..\Downloads\jar_files\commons-logging-1.2.jar:../../../../Downloads/graphstream/gs-ui-1.1.2.jar:../../../../Downloads/graphstream/gs-core-1.1.2.jar:../../../../Downloads/graphstream/gs-algo-1.1.2.jar:../../../../Downloads/gs-core-2.0 (1).jar:..\..\..\..\..\Downloads\jar_files\jxmapviewer2-2.8.jar:..\..\..\..\..\Downloads\gs-algo-1.3.jar:..\..\..\..\..\Downloads\gs-core-1.3.jar:..\..\..\..\..\Downloads\gs-core-2.0 (1).jar:..\..\..\..\..\Downloads\gs-ui-1.3.jar:..\..\..\..\..\Downloads\jar_files\commons-logging-1.2.jar:C:\Users\Emric\OneDrive\Bureau\S2\SAE2\SAEJava\lib\gs-algo-1.3.jar:C:\Users\Emric\OneDrive\Bureau\S2\SAE2\SAEJava\lib\gs-core-1.3.jar:C:\Users\Emric\OneDrive\Bureau\S2\SAE2\SAEJava\lib\gs-ui-1.3.jar:C:\Users\Emric\Downloads\commons-logging-1.2.jar:C:\Users\Emric\Downloads\jxmapviewer2-2.8.jar:..\..\..\..\..\Downloads\Junit\hamcrest-core-1.3.jar:..\..\..\..\..\Downloads\Junit\hamcrest-junit-2.0.0.0.jar:..\..\..\..\..\Downloads\Junit\java-hamcrest-2.0.0.0.jar:..\..\..\..\..\Downloads\Junit\junit-4.12.jar:..\..\..\Librarie SAE\commons-logging-1.2.jar:..\..\..\Librarie SAE\gs-algo-1.3.jar:..\..\..\Librarie SAE\gs-core-1.3.jar:..\..\..\Librarie SAE\gs-core-2.0.jar:..\..\..\Librarie SAE\gs-ui-1.3.jar:..\..\..\Librarie SAE\jxmapviewer2-2.8.jar:C:\Users\Emric\OneDrive\Bureau\S2\QualitéDev\TP4\hamcrest-core-1.3.jar:C:\Users\Emric\OneDrive\Bureau\S2\QualitéDev\TP4\hamcrest-junit-2.0.0.0.jar:C:\Users\Emric\OneDrive\Bureau\S2\QualitéDev\TP4\java-hamcrest-2.0.0.0.jar:C:\Users\Emric\OneDrive\Bureau\S2\QualitéDev\TP4\junit-4.12.jar:build/classes" />
@@ -18,7 +18,7 @@
     <property name="libs.jsp-compilation.src" value="" />
     <property name="libs.JWSAntTasks.javadoc" value="" />
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk-22\bin" />
-    <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner ListeVolsTest skipNonTests=false filtertrace=true haltOnError=false haltOnFailure=false showoutput=true outputtoformatters=true logfailedtests=true threadid=0 logtestlistenerevents=true formatter=org.apache.tools.ant.taskdefs.optional.junit.BriefJUnitResultFormatter formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,C:\Users\Emric\OneDrive\Bureau\S2\SAEFin\sae_mathieu_petit_pirrera\Graphe\build\test\results\TEST-ListeVolsTest.xml crashfile=C:\Users\Emric\OneDrive\Bureau\S2\SAEFin\sae_mathieu_petit_pirrera\Graphe\build\junitvmwatcher14533718420412571765.properties propsfile=C:\Users\Emric\OneDrive\Bureau\S2\SAEFin\sae_mathieu_petit_pirrera\Graphe\build\junit4707122667710278440.properties" />
+    <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner ListeVolsTest skipNonTests=false filtertrace=true haltOnError=false haltOnFailure=false showoutput=true outputtoformatters=true logfailedtests=true threadid=0 logtestlistenerevents=true formatter=org.apache.tools.ant.taskdefs.optional.junit.BriefJUnitResultFormatter formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,C:\Users\Emric\OneDrive\Bureau\S2\SAEFin\sae_mathieu_petit_pirrera\Graphe\build\test\results\TEST-ListeVolsTest.xml crashfile=C:\Users\Emric\OneDrive\Bureau\S2\SAEFin\sae_mathieu_petit_pirrera\Graphe\build\junitvmwatcher3029576205510789615.properties propsfile=C:\Users\Emric\OneDrive\Bureau\S2\SAEFin\sae_mathieu_petit_pirrera\Graphe\build\junit2494905999962419982.properties" />
     <property name="jdk.debug" value="release" />
     <property name="libs.spring-framework300.src" value="" />
     <property name="javadoc.use" value="true" />
@@ -460,15 +460,15 @@
     <property name="libs.jsp-compiler.classpath" value="C:\Program Files\NetBeans-21\netbeans\enterprise\ant\extra\jspcompile.jar" />
     <property name="libs.javaee-endorsed-api-6.0.classpath" value="C:\Program Files\NetBeans-21\netbeans\enterprise\modules\ext\javaee6-endorsed\javax.annotation.jar;C:\Program Files\NetBeans-21\netbeans\enterprise\modules\ext\javaee6-endorsed\jaxb-api-osgi.jar;C:\Program Files\NetBeans-21\netbeans\enterprise\modules\ext\javaee6-endorsed\webservices-api-osgi.jar" />
   </properties>
-  <testcase classname="ListeVolsTest" name="tailleTest" time="0.002" />
-  <testcase classname="ListeVolsTest" name="getnbconflitTest" time="0.0" />
+  <testcase classname="ListeVolsTest" name="tailleTest" time="0.003" />
+  <testcase classname="ListeVolsTest" name="getnbconflitTest" time="0.001" />
   <testcase classname="ListeVolsTest" name="DsaturTest" time="0.0" />
   <testcase classname="ListeVolsTest" name="DijkstraTest" time="0.0" />
   <testcase classname="ListeVolsTest" name="setcouleurdefaultTest" time="0.0" />
   <testcase classname="ListeVolsTest" name="getVolindiceTest" time="0.0" />
   <testcase classname="ListeVolsTest" name="WelshPowellTest" time="0.0" />
-  <testcase classname="ListeVolsTest" name="getnbarrteTest" time="0.001" />
-  <testcase classname="ListeVolsTest" name="getnbcomposanteTest" time="0.0" />
+  <testcase classname="ListeVolsTest" name="getnbarrteTest" time="0.0" />
+  <testcase classname="ListeVolsTest" name="getnbcomposanteTest" time="0.001" />
   <testcase classname="ListeVolsTest" name="getListTest" time="0.0" />
   <testcase classname="ListeVolsTest" name="getArraylistTest" time="0.0" />
   <testcase classname="ListeVolsTest" name="ajMembreTest" time="0.0" />
@@ -476,14 +476,14 @@
   <testcase classname="ListeVolsTest" name="getdiametreTest" time="0.0" />
   <testcase classname="ListeVolsTest" name="MAXWelshPowellTest" time="0.0" />
   <testcase classname="ListeVolsTest" name="maxcouleurTest" time="0.001" />
-  <testcase classname="ListeVolsTest" name="shownumcomposanteTest" time="0.006" />
-  <testcase classname="ListeVolsTest" name="RandomColorationTest" time="0.0" />
+  <testcase classname="ListeVolsTest" name="shownumcomposanteTest" time="0.005" />
+  <testcase classname="ListeVolsTest" name="RandomColorationTest" time="0.001" />
   <testcase classname="ListeVolsTest" name="accesMembrenomTest" time="0.0" />
-  <testcase classname="ListeVolsTest" name="getcouleursTest" time="0.001" />
-  <testcase classname="ListeVolsTest" name="goodcolorationTest" time="0.0" />
-  <testcase classname="ListeVolsTest" name="accesMembrenumTest" time="0.0" />
-  <testcase classname="ListeVolsTest" name="setkmaxTest" time="0.0" />
-  <testcase classname="ListeVolsTest" name="getkmaxTest" time="0.002" />
+  <testcase classname="ListeVolsTest" name="getcouleursTest" time="0.0" />
+  <testcase classname="ListeVolsTest" name="goodcolorationTest" time="0.001" />
+  <testcase classname="ListeVolsTest" name="accesMembrenumTest" time="0.001" />
+  <testcase classname="ListeVolsTest" name="setkmaxTest" time="0.001" />
+  <testcase classname="ListeVolsTest" name="getkmaxTest" time="0.0" />
   <testcase classname="ListeVolsTest" name="getdegremoyenTest" time="0.0" />
   <testcase classname="ListeVolsTest" name="adresscouleursTest" time="0.0" />
   <testcase classname="ListeVolsTest" name="GreedyColorTest" time="0.0" />
